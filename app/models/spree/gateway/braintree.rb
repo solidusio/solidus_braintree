@@ -110,11 +110,6 @@ module Spree
       handle_result(result)
     end
 
-    # order id for braintree is "#{order.number}-#{payment.number}"
-    def get_order_id_for_auth(order_id)
-      order_id && order_id.split('-')[0]
-    end
-
     def capture(money, authorization_code, options = {})
       result = braintree_gateway.transaction.submit_for_settlement(authorization_code, amount(money))
       handle_result(result)
@@ -214,9 +209,6 @@ module Spree
         params[:payment_method_token] = creditcard.gateway_payment_profile_id
         params.delete(:billing_address)
       end
-
-      # Is this necessary? Or FRT specific?
-      params[:order_id] = get_order_id_for_auth(params[:order_id])
 
       # if has profile, set the customer_id to the profile_id and delete the customer key
       if creditcard.respond_to?(:gateway_customer_profile_id) && creditcard.gateway_customer_profile_id
