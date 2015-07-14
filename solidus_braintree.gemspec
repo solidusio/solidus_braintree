@@ -6,12 +6,12 @@ require 'solidus_braintree/version'
 Gem::Specification.new do |spec|
   spec.name          = "solidus_braintree"
   spec.version       = SolidusBraintree::VERSION
-  spec.authors       = ["Jack Chu"]
-  spec.email         = ["jack@jackchu.com"]
+  spec.authors       = ["Bonobos"]
+  spec.email         = ["engineering@bonobos.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Adds Solidus support for Braintree v.zero Gateway.}
+  spec.description   = %q{Adds Solidus support for Braintree v.zero Gateway.}
+  spec.homepage      = "https://bonobos.com"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
@@ -27,7 +27,21 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "solidus_core", [">= 1.0.0pre", "< 2"]
+  spec.add_dependency "braintree"
+
   spec.add_development_dependency "bundler", "~> 1.10"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency 'factory_girl', '~> 4.4'
+  spec.add_development_dependency 'rspec-rails'
+  spec.add_development_dependency 'ffaker'
   spec.add_development_dependency "rspec"
+  spec.add_development_dependency "guard"
+  spec.add_development_dependency "guard-rspec"
+  spec.add_development_dependency "pry"
+  spec.add_development_dependency "pry-byebug"
+  spec.add_development_dependency 'sqlite3'
+  spec.add_development_dependency 'database_cleaner', '~> 1.2.0'
+  spec.add_development_dependency "vcr"
+  spec.add_development_dependency "webmock"
 end

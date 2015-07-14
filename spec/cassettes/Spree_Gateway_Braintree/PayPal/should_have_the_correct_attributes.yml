@@ -1,0 +1,96 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ym9djwqpkxbv3xzt:4ghghkyp2yy6yqc8@api.sandbox.braintreegateway.com/merchants/zbn5yzq9t7wmwx42/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <first-name>John</first-name>
+          <last-name>Doe</last-name>
+          <email>yvonne@kertzmann.us</email>
+          <credit-card>
+            <billing-address>
+              <first-name>John</first-name>
+              <last-name>Doe</last-name>
+              <street-address>10 Lovely Street</street-address>
+              <extended-address>Northwest</extended-address>
+              <company>Company</company>
+              <locality>Herndon</locality>
+              <region>Alabama</region>
+              <country-code-alpha3>USA</country-code-alpha3>
+              <postal-code>35005</postal-code>
+            </billing-address>
+            <payment-method-nonce>fake-paypal-future-nonce</payment-method-nonce>
+            <options>
+              <verify-card type="boolean">true</verify-card>
+            </options>
+          </credit-card>
+          <device-data>{"name":"device_data","value":"{\"device_session_id\":\"d99cb85002cc4ac9e9a23c4a79d943ea\",\"fraud_merchant_id\":\"600000\",\"correlation_id\":\"c3c1356c70a3565af86e9add0d09315f\"}"}</device-data>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.46.0
+      X-Apiversion:
+      - '4'
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 14 Jul 2015 22:50:26 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      X-Authentication:
+      - basic_auth
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000; includeSubDomains
+      X-User:
+      - s8282g6qcjgm2dfk
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - '"39adfbbcbb157070cd7c405d5ef433f5"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 58b7bca99723aa65889231dee940f6d0
+      X-Runtime:
+      - '0.261291'
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIADKSpVUAA6RTS3ObMBC+51cw3EE2Y5LYI+McOj30nF56ySxojZVIKyIJ
+        2/jXV4BfLb10cvwe+9B+wDdHraI9WicNreN5OosjpMoISfU6/vn6PXmON8UD
+        r1rnjUZbPEQRl6JYzPJ8mT8vOQug54JW7YB8EvCppLw7fS7900EfjouMs3u1
+        d2+ldT4h0Fj8MDvi7I7odQUX9M0gZzfYi5XRDVAXkVTr2NsWYzbwqEGqotsb
+        Inz5QOtPGojS1nE2Sr2p2RnCSekWjhPugKWTfuqtLIJHkYCPfNfgOhYBeqkx
+        LrLZPE9mT8l88Zplq3y2yh5/cXYrGOrbRvxf/a1gnD9EkWwlKuGuKwnpkwqs
+        cOemYC10540b6BpQCVSVacn/6egNE8tIBtqbD6Tiscr32nI2oos23vQdCFNh
+        8AWPoBuFaUjn7t6DU+AWWnV5bmmMQqC46G/K2Vm8mqWGGpPWqmLnfeNWjIFz
+        6F1aWpDkLWIdrnGArp/Ewt4ayb9p9Dsj3pSpDRvfkjZUb5D20hrqLWsHJEpz
+        DF/sdcJl5hcjHXp8Mdahh2tLV1nZ+PAz/iPI4GDToP7m3ECCEBbD4SZtwvLX
+        f/k3AAAA//8DAI6CySr+AwAA
+    http_version: 
+  recorded_at: Tue, 14 Jul 2015 22:50:26 GMT
+recorded_with: VCR 2.9.3
