@@ -18,5 +18,3 @@ module SolidusBraintree
     end
   end
 end
-
-Spree::Payment.include SolidusBraintree::PaymentBraintreeNonceConcern
