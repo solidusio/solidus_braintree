@@ -17,14 +17,14 @@ module Solidus
       'MasterCard' => 'master',
       'Solo' => 'solo',
       'Switch' => 'switch',
-      'Visa' => 'visa'
+      'Visa' => 'visa',
     }
 
     ENVIRONMENTS = {
       'development' => :sandbox,
       'qa' => :sandbox,
       'sandbox' => :sandbox,
-      'production' => :production
+      'production' => :production,
     }
 
     def gateway_options
@@ -33,7 +33,7 @@ module Solidus
         merchant_id: preferred_merchant_id,
         public_key: preferred_public_key,
         private_key: preferred_private_key,
-        logger: ::Braintree::Configuration.logger.clone
+        logger: ::Braintree::Configuration.logger.clone,
       }
     end
 
@@ -58,9 +58,9 @@ module Solidus
           billing_address: map_address(address),
           payment_method_nonce: nonce,
           options: {
-            verify_card: true
+            verify_card: true,
           },
-        }
+        },
       }
 
       params.merge!(options)
@@ -70,20 +70,20 @@ module Solidus
       if result.success?
         card = result.customer.payment_methods.last
 
-        user.credit_cards.create! do |spree_cc|
+        user.credit_cards.create! do |solidus_cc|
           if card.is_a?(::Braintree::PayPalAccount)
-            spree_cc.cc_type = 'paypal'
-            spree_cc.name = card.email
+            solidus_cc.cc_type = 'paypal'
+            solidus_cc.name = card.email
           else
-            spree_cc.name = "#{address.firstname} #{address.lastname}"
-            spree_cc.cc_type = card.card_type.downcase
-            spree_cc.month = card.expiration_month
-            spree_cc.year = card.expiration_year
-            spree_cc.last_digits = card.last_4
+            solidus_cc.name = "#{address.firstname} #{address.lastname}"
+            solidus_cc.cc_type = card.card_type.downcase
+            solidus_cc.month = card.expiration_month
+            solidus_cc.year = card.expiration_year
+            solidus_cc.last_digits = card.last_4
           end
-          spree_cc.payment_method = self
-          spree_cc.gateway_customer_profile_id = customer_id(user)
-          spree_cc.gateway_payment_profile_id = card.token
+          solidus_cc.payment_method = self
+          solidus_cc.gateway_customer_profile_id = customer_id(user)
+          solidus_cc.gateway_payment_profile_id = card.token
         end
       else
         raise ::Spree::Core::GatewayError, result.message
@@ -170,7 +170,7 @@ module Solidus
         locality: addr.city,
         region: addr.state ? addr.state.name : addr.state_name,
         country_code_alpha3: addr.country.iso3,
-        postal_code: addr.zipcode
+        postal_code: addr.zipcode,
       }
     end
 
@@ -238,7 +238,7 @@ module Solidus
         params[:billing] = map_address(params.delete(:billing_address))
       end
 
-      params[:channel] ||= "Spree"
+      params[:channel] ||= "Solidus"
 
       params
     end

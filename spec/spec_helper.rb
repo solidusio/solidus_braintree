@@ -3,7 +3,7 @@ require 'solidus_braintree'
 
 ENV["RAILS_ENV"] = "test"
 
-require File.expand_path("../dummy/config/environment.rb",  __FILE__)
+require_relative "dummy/config/environment.rb"
 
 require 'rspec/rails'
 require 'database_cleaner'
@@ -14,8 +14,6 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 require 'spree/testing_support/factories'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/preferences'
-
-require_relative "../app/models/concerns/payment_braintree_nonce_concern"
 
 FactoryGirl.find_definitions
 
