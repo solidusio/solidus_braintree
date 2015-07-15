@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Gateway::Braintree, :vcr do
+describe Solidus::Gateway::BraintreeGateway, :vcr do
   let(:payment_method){ @braintree_payment_method }
   let(:user){ FactoryGirl.create :user }
   let(:address){ FactoryGirl.create :address }
@@ -8,7 +8,7 @@ describe Spree::Gateway::Braintree, :vcr do
   let(:card){ payment_method.create_profile_from_nonce(user, address, nonce, { device_data: device_data }) }
 
   before do
-    @braintree_payment_method = Spree::Gateway::Braintree.create!(
+    @braintree_payment_method = Solidus::Gateway::BraintreeGateway.create!(
       name: 'Braintree Gateway',
       environment: 'sandbox',
       active: true

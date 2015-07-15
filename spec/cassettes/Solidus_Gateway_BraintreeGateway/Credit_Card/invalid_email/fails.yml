@@ -10,7 +10,7 @@ http_interactions:
         <customer>
           <first-name>John</first-name>
           <last-name>Doe</last-name>
-          <email>yvonne@kertzmann.us</email>
+          <email>quux@foo_bar.com</email>
           <credit-card>
             <billing-address>
               <first-name>John</first-name>
@@ -23,7 +23,7 @@ http_interactions:
               <country-code-alpha3>USA</country-code-alpha3>
               <postal-code>35005</postal-code>
             </billing-address>
-            <payment-method-nonce>fake-paypal-future-nonce</payment-method-nonce>
+            <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
             <options>
               <verify-card type="boolean">true</verify-card>
             </options>
@@ -43,11 +43,11 @@ http_interactions:
       - application/xml
   response:
     status:
-      code: 201
-      message: Created
+      code: 422
+      message: Unprocessable Entity
     headers:
       Date:
-      - Tue, 14 Jul 2015 22:50:26 GMT
+      - Wed, 15 Jul 2015 16:03:10 GMT
       Content-Type:
       - application/xml; charset=utf-8
       Transfer-Encoding:
@@ -67,30 +67,30 @@ http_interactions:
       - gzip
       X-Ua-Compatible:
       - IE=Edge,chrome=1
-      Etag:
-      - '"39adfbbcbb157070cd7c405d5ef433f5"'
       Cache-Control:
-      - max-age=0, private, must-revalidate
+      - no-cache
       X-Request-Id:
-      - 58b7bca99723aa65889231dee940f6d0
+      - 6806499f8424ac7608644baeaf34d29b
       X-Runtime:
-      - '0.261291'
+      - '0.130275'
       X-Frame-Options:
       - SAMEORIGIN
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIADKSpVUAA6RTS3ObMBC+51cw3EE2Y5LYI+McOj30nF56ySxojZVIKyIJ
-        2/jXV4BfLb10cvwe+9B+wDdHraI9WicNreN5OosjpMoISfU6/vn6PXmON8UD
-        r1rnjUZbPEQRl6JYzPJ8mT8vOQug54JW7YB8EvCppLw7fS7900EfjouMs3u1
-        d2+ldT4h0Fj8MDvi7I7odQUX9M0gZzfYi5XRDVAXkVTr2NsWYzbwqEGqotsb
-        Inz5QOtPGojS1nE2Sr2p2RnCSekWjhPugKWTfuqtLIJHkYCPfNfgOhYBeqkx
-        LrLZPE9mT8l88Zplq3y2yh5/cXYrGOrbRvxf/a1gnD9EkWwlKuGuKwnpkwqs
-        cOemYC10540b6BpQCVSVacn/6egNE8tIBtqbD6Tiscr32nI2oos23vQdCFNh
-        8AWPoBuFaUjn7t6DU+AWWnV5bmmMQqC46G/K2Vm8mqWGGpPWqmLnfeNWjIFz
-        6F1aWpDkLWIdrnGArp/Ewt4ayb9p9Dsj3pSpDRvfkjZUb5D20hrqLWsHJEpz
-        DF/sdcJl5hcjHXp8Mdahh2tLV1nZ+PAz/iPI4GDToP7m3ECCEBbD4SZtwvLX
-        f/k3AAAA//8DAI6CySr+AwAA
+        H4sIAD6EplUAA5RUS2/bMAy+91cIvitO0HXoQVFX7IFhGHbpeh4Yi06E6eFR
+        chb/+8lO4keSttnJ5veR1CdSpHjYWcO2SEF7t8wWs3nG0BVeabdeZs8/v/D7
+        7EHeCKg0RyJPnDBU3gWUN4yJDgrtb2+w2FS4zIAImiw/UEUdordIe/Oy75E7
+        soPdJvAK5f3i/fydyLv/MQkxkl7VEQ/5QmNX3mQSLWgj8p6eBFkMAdYoP7dO
+        TAcGjmm3BaMVKz1ZiDORH50GaflE28EMvV1BY9FFbjFuvDq90sXitFkuh4mC
+        UOnIC6BrUyV6pY1J3eOgVOpVmFz6jdD8hdhU81MlCRr1dFyHVAMCG17qfKkp
+        RO7AovzmN07kI+DoY+CIfPIo8sHsn0/bNPmnrncfSu9/rYBmhbdJRYe/Xr7X
+        6nOFuKsEdk4hEmLsz1nM2Xe/RdOwp44Q+YnDpFG7iE6h6skfnuLmL4YUdsZN
+        B8VW4Br5cf9tp2UPTOT7Ir3z2MivSE75dM8eGbsRrtNWkI8GVmBB5Ad7elzt
+        IjW8nUkOptrArXx+emyPPSfGgZUPEUxHy9u7+fwuDcEIevtNng0bd94VKEv4
+        jbwb4z1wOlwHtyGLr2K61bSKaSHqstm/nEh1SjJGRuLOgoXCrS6QhyQ1MTxt
+        E6fNMmuzTGatJKhV0kTFBpK4y35XDN4wbf+50tJivLDU/wEAAP//AwAaGrb+
+        EQYAAA==
     http_version: 
-  recorded_at: Tue, 14 Jul 2015 22:50:26 GMT
+  recorded_at: Wed, 15 Jul 2015 16:03:10 GMT
 recorded_with: VCR 2.9.3

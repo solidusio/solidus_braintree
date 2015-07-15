@@ -1,7 +1,7 @@
 require "braintree"
 
-module Spree
-  class Gateway::Braintree < ::Spree::Gateway
+module Solidus
+  class Gateway::BraintreeGateway < ::Spree::Gateway
     preference :environment, :string
     preference :merchant_id, :string
     preference :public_key, :string
@@ -70,20 +70,20 @@ module Spree
       if result.success?
         card = result.customer.payment_methods.last
 
-        user.credit_cards.create! do |spree_cc|
+        user.credit_cards.create! do |solidus_cc|
           if card.is_a?(::Braintree::PayPalAccount)
-            spree_cc.cc_type = 'paypal'
-            spree_cc.name = card.email
+            solidus_cc.cc_type = 'paypal'
+            solidus_cc.name = card.email
           else
-            spree_cc.name = "#{address.firstname} #{address.lastname}"
-            spree_cc.cc_type = card.card_type.downcase
-            spree_cc.month = card.expiration_month
-            spree_cc.year = card.expiration_year
-            spree_cc.last_digits = card.last_4
+            solidus_cc.name = "#{address.firstname} #{address.lastname}"
+            solidus_cc.cc_type = card.card_type.downcase
+            solidus_cc.month = card.expiration_month
+            solidus_cc.year = card.expiration_year
+            solidus_cc.last_digits = card.last_4
           end
-          spree_cc.payment_method = self
-          spree_cc.gateway_customer_profile_id = customer_id(user)
-          spree_cc.gateway_payment_profile_id = card.token
+          solidus_cc.payment_method = self
+          solidus_cc.gateway_customer_profile_id = customer_id(user)
+          solidus_cc.gateway_payment_profile_id = card.token
         end
       else
         raise Core::GatewayError, result.message
@@ -238,7 +238,7 @@ module Spree
         params[:billing] = map_address(params.delete(:billing_address))
       end
 
-      params[:channel] ||= "Spree"
+      params[:channel] ||= "Solidus"
 
       params
     end
