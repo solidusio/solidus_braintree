@@ -49,21 +49,24 @@ module Solidus
       braintree_gateway.client_token.generate(options)
     end
 
-    def create_profile_from_nonce(user, address, nonce, options = {})
+    def create_profile(payment)
+      return if payment.source.gateway_customer_profile_id.present? || payment.payment_method_nonce.nil?
+
+      user = payment.order.user
+      address = payment.order.bill_address
+
       params = {
         first_name: address.firstname,
         last_name: address.lastname,
         email: user.email,
         credit_card: {
           billing_address: map_address(address),
-          payment_method_nonce: nonce,
+          payment_method_nonce: payment.payment_method_nonce,
           options: {
             verify_card: true,
           },
         },
       }
-
-      params.merge!(options)
 
       result = braintree_gateway.customer.create(params)
 
@@ -82,7 +85,7 @@ module Solidus
             solidus_cc.last_digits = card.last_4
           end
           solidus_cc.payment_method = self
-          solidus_cc.gateway_customer_profile_id = customer_id(user)
+          solidus_cc.gateway_customer_profile_id = result.customer.id
           solidus_cc.gateway_payment_profile_id = card.token
         end
       else
@@ -135,10 +138,6 @@ module Solidus
     end
 
     private
-    def customer_id(user)
-      "user_#{user.id}"
-    end
-
     def message_from_result(result)
       if result.success?
         "OK"
