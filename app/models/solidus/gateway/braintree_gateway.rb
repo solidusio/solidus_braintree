@@ -50,7 +50,9 @@ module Solidus
     end
 
     def create_profile(payment)
-      return if payment.source.gateway_customer_profile_id.present? || payment.payment_method_nonce.nil?
+      source = payment.source
+
+      return if source.gateway_customer_profile_id.present? || payment.payment_method_nonce.nil?
 
       user = payment.order.user
       address = payment.order.bill_address
@@ -60,6 +62,7 @@ module Solidus
         last_name: address.lastname,
         email: user.email,
         credit_card: {
+          cardholder_name: source.name,
           billing_address: map_address(address),
           payment_method_nonce: payment.payment_method_nonce,
           options: {
@@ -72,13 +75,12 @@ module Solidus
 
       if result.success?
         card = result.customer.payment_methods.last
-
-        user.credit_cards.create! do |solidus_cc|
+        source.tap do |solidus_cc|
           if card.is_a?(::Braintree::PayPalAccount)
             solidus_cc.cc_type = 'paypal'
             solidus_cc.name = card.email
           else
-            solidus_cc.name = "#{address.firstname} #{address.lastname}"
+            solidus_cc.name = card.cardholder_name
             solidus_cc.cc_type = card.card_type.downcase
             solidus_cc.month = card.expiration_month
             solidus_cc.year = card.expiration_year
@@ -88,6 +90,7 @@ module Solidus
           solidus_cc.gateway_customer_profile_id = result.customer.id
           solidus_cc.gateway_payment_profile_id = card.token
         end
+        source.save!
       else
         raise ::Spree::Core::GatewayError, result.message
       end
