@@ -23,7 +23,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
   end
   let(:card) { payment.source }
 
-  before do
+  before(:all) do
     @braintree_payment_method = Solidus::Gateway::BraintreeGateway.create!(
       name: 'Braintree Gateway',
       environment: 'sandbox',
@@ -151,6 +151,18 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       expect(capture.authorization).to be_present
     end
 
+    it "succeeds capture on pending settlement" do
+      auth = payment_method.authorize(400200, card, {})
+      expect(auth).to be_success
+      expect(auth.authorization).to be_present
+
+      capture = payment_method.capture(400200, auth.authorization, {})
+      expect(capture).to be_success
+
+      expect(Spree::CreditCard.count).to eql(1)
+      expect(Spree::CreditCard.first.gateway_payment_profile_id).to be_present
+    end
+
     it "fails capture with settlement declined" do
       card.gateway_customer_profile_id = nil
       auth = payment_method.authorize(400100, card, {})
@@ -160,19 +172,6 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       capture = payment_method.capture(400100, auth.authorization, {})
       expect(capture).to_not be_success
       expect(capture.message).to eq 'settlement_declined'
-
-      expect(Spree::CreditCard.count).to eql(1)
-      expect(Spree::CreditCard.first.gateway_payment_profile_id).to be_present
-    end
-
-    xit "fails capture on pending settlement" do
-      auth = payment_method.authorize(400200, card, {})
-      expect(auth).to be_success
-      expect(auth.authorization).to be_present
-
-      capture = payment_method.capture(400200, auth.authorization, {})
-      expect(capture).to_not be_success
-      expect(capture.message).to eq 'settlement_pending'
 
       expect(Spree::CreditCard.count).to eql(1)
       expect(Spree::CreditCard.first.gateway_payment_profile_id).to be_present
@@ -209,7 +208,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
         xit "can be refunded" do
           payment.capture!
           refund = payment.credit!(50.00)
-          expect(refund.amount).to eq -50.00
+          expect(refund.amount).to eq(-50.00)
           expect(refund).to be_completed
         end
 
