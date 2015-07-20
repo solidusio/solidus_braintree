@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Solidus::Gateway::BraintreeGateway, :vcr do
-  let(:payment_method){ @braintree_payment_method }
+  let(:payment_method){ create_braintree_payment_method }
   let(:user){ FactoryGirl.create :user }
   let(:address){ FactoryGirl.create :address }
   # let(:card){ payment_method.create_profile_from_nonce(user, address, nonce, { device_data: device_data }) }
@@ -22,19 +22,6 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
     )
   end
   let(:card) { payment.source }
-
-  before(:all) do
-    @braintree_payment_method = Solidus::Gateway::BraintreeGateway.create!(
-      name: 'Braintree Gateway',
-      environment: 'development',
-      active: true
-    )
-    @braintree_payment_method.set_preference(:environment, 'development')
-    @braintree_payment_method.set_preference(:merchant_id, 'zbn5yzq9t7wmwx42')
-    @braintree_payment_method.set_preference(:public_key,  'ym9djwqpkxbv3xzt')
-    @braintree_payment_method.set_preference(:private_key, '4ghghkyp2yy6yqc8')
-    @braintree_payment_method.save!
-  end
 
   context 'a customer profile' do
     let(:nonce){ Braintree::Test::Nonce::Transactable }

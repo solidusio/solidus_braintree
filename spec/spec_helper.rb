@@ -15,6 +15,26 @@ require 'spree/testing_support/preferences'
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/url_helpers'
 
+module SolidusGateway
+  module Helpers
+    module BraintreeGateway
+      def create_braintree_payment_method
+        gateway = Solidus::Gateway::BraintreeGateway.create!(
+          name: 'Braintree Gateway',
+          environment: 'development',
+          active: true
+        )
+        gateway.set_preference(:environment, 'development')
+        gateway.set_preference(:merchant_id, 'zbn5yzq9t7wmwx42')
+        gateway.set_preference(:public_key,  'ym9djwqpkxbv3xzt')
+        gateway.set_preference(:private_key, '4ghghkyp2yy6yqc8')
+        gateway.save!
+        gateway
+      end
+    end
+  end
+end
+
 FactoryGirl.find_definitions
 
 VCR.configure do |c|
@@ -34,6 +54,7 @@ RSpec.configure do |config|
   config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::UrlHelpers, type: :controller
+  config.include SolidusGateway::Helpers::BraintreeGateway
 
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
