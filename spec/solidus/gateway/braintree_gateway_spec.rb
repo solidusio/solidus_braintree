@@ -4,7 +4,6 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
   let(:payment_method){ create_braintree_payment_method }
   let(:user){ FactoryGirl.create :user }
   let(:address){ FactoryGirl.create :address }
-  # let(:card){ payment_method.create_profile_from_nonce(user, address, nonce, { device_data: device_data }) }
   # #create_profile doesn't support options, does it need to?
   # let(:device_data){'{"name":"device_data","value":"{\"device_session_id\":\"d99cb85002cc4ac9e9a23c4a79d943ea\",\"fraud_merchant_id\":\"600000\",\"correlation_id\":\"c3c1356c70a3565af86e9add0d09315f\"}"}'}
 
@@ -190,20 +189,6 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           payment.capture!
           payment.void!
           expect(payment).to be_void
-        end
-
-        xit "can be refunded" do
-          payment.capture!
-          refund = payment.credit!(50.00)
-          expect(refund.amount).to eq(-50.00)
-          expect(refund).to be_completed
-        end
-
-        xit "errors on bad refund" do
-          payment.capture!
-          expect{
-            payment.credit!(51.00)
-          }.to raise_error(Spree::Core::GatewayError, 'Refund amount is too large. (91521)')
         end
       end
 
