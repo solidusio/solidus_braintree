@@ -1,14 +1,12 @@
-module VZeroCreditCardConcern
+module SkipRequireCardNumbersConcern
   extend ActiveSupport::Concern
   included do
-    attr_accessor :v_zero_supported
-
     prepend(InstanceMethods)
   end
 
   module InstanceMethods
     def require_card_numbers?
-      super && !self.v_zero_supported
+      super && !self.payment_method.kind_of?(Solidus::Gateway::BraintreeGateway)
     end
   end
 end

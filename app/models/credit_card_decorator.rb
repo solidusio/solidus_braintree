@@ -1,1 +1,1 @@
-Spree::CreditCard.include SolidusBraintree::VZeroCreditCardConcern
+Spree::CreditCard.include SolidusBraintree::SkipRequireCardNumbersConcern
