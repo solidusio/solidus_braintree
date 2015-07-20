@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Payment do
+describe Spree::Payment, type: :model do
   it "has a payment_method_nonce accessor" do
     payment = Spree::Payment.new
     expect { payment.payment_method_nonce = "abc123" }.not_to raise_error

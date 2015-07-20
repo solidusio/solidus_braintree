@@ -1,9 +1,7 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'solidus_braintree'
 
-ENV["RAILS_ENV"] = "test"
-
-require_relative "dummy/config/environment.rb"
+require_relative "dummy/config/environment"
 
 require 'rspec/rails'
 require 'database_cleaner'
@@ -14,6 +12,8 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 require 'spree/testing_support/factories'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/preferences'
+require 'spree/testing_support/controller_requests'
+require 'spree/testing_support/url_helpers'
 
 FactoryGirl.find_definitions
 
@@ -32,6 +32,8 @@ RSpec.configure do |config|
 
   config.include FactoryGirl::Syntax::Methods
   config.include Spree::TestingSupport::Preferences
+  config.include Spree::TestingSupport::ControllerRequests, type: :controller
+  config.include Spree::TestingSupport::UrlHelpers, type: :controller
 
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
@@ -47,5 +49,4 @@ RSpec.configure do |config|
   config.after do
     DatabaseCleaner.clean
   end
-
 end

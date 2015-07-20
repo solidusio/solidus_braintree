@@ -23,6 +23,7 @@ module Solidus
     # TODO: There's only 2 environments, so we should change this code
     ENVIRONMENTS = {
       'development' => :sandbox,
+      'test' => :sandbox,
       'qa' => :sandbox,
       'sandbox' => :sandbox,
       'production' => :production,
