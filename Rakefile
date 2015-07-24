@@ -4,6 +4,8 @@ require 'spree/testing_support/common_rake'
 
 RSpec::Core::RakeTask.new(:spec)
 
+Bundler::GemHelper.install_tasks
+
 task default: :spec
 
 desc "Generates a dummy app for testing"

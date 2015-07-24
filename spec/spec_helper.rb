@@ -1,11 +1,15 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+ENV["RAILS_ENV"] = "test"
+
 require 'solidus_braintree'
 
 require_relative "dummy/config/environment"
-
 require 'rspec/rails'
 require 'database_cleaner'
 require 'ffaker'
+require 'vcr'
+require 'webmock'
+require 'pry-byebug'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
@@ -21,10 +25,10 @@ module SolidusGateway
       def create_braintree_payment_method
         gateway = Solidus::Gateway::BraintreeGateway.create!(
           name: 'Braintree Gateway',
-          environment: 'development',
+          environment: 'test',
           active: true
         )
-        gateway.set_preference(:environment, 'development')
+        gateway.set_preference(:environment, 'test')
         gateway.set_preference(:merchant_id, 'zbn5yzq9t7wmwx42')
         gateway.set_preference(:public_key,  'ym9djwqpkxbv3xzt')
         gateway.set_preference(:private_key, '4ghghkyp2yy6yqc8')
