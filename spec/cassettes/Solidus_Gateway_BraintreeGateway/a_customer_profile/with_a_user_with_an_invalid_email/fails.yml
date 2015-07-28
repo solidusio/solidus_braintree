@@ -8,20 +8,17 @@ http_interactions:
       string: |
         <?xml version="1.0" encoding="UTF-8"?>
         <customer>
-          <first-name>John</first-name>
-          <last-name>Doe</last-name>
+          <first-name>Card</first-name>
+          <last-name>Holder</last-name>
           <email>quux@foo_bar.com</email>
           <credit-card>
             <cardholder-name>Card Holder</cardholder-name>
             <billing-address>
-              <first-name>John</first-name>
-              <last-name>Doe</last-name>
               <street-address>10 Lovely Street</street-address>
               <extended-address>Northwest</extended-address>
-              <company>Company</company>
               <locality>Herndon</locality>
-              <region>Alabama</region>
-              <country-code-alpha3>USA</country-code-alpha3>
+              <region>AL</region>
+              <country-code-alpha2>US</country-code-alpha2>
               <postal-code>35005</postal-code>
             </billing-address>
             <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
@@ -47,7 +44,7 @@ http_interactions:
       message: Unprocessable Entity
     headers:
       Date:
-      - Thu, 16 Jul 2015 17:22:52 GMT
+      - Tue, 28 Jul 2015 20:50:44 GMT
       Content-Type:
       - application/xml; charset=utf-8
       Transfer-Encoding:
@@ -70,27 +67,26 @@ http_interactions:
       Cache-Control:
       - no-cache
       X-Request-Id:
-      - d1b2a4a25d1c9c1fd14224437778ac30
+      - afc56437112eb4fd6ccb136fd0de1915
       X-Runtime:
-      - '0.132499'
+      - '0.095276'
       X-Frame-Options:
       - SAMEORIGIN
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAGzop1UAA5RVTW/bMAy991cIvitO0HXoQVFXdBuKYdil63lgLDoWpg+P
-        krP63092EsdO0jY7xXyPpPihp4i7F2vYBilo75bZYjbPGLrCK+3Wy+z551d+
-        m93JKwG15kjkiROG2ruA8oox0UOh+xwMFtsalxkQQZvlO6poQvQWaWue991z
-        e/Zgdwm8Qnm7+Dj/IPL+e0xCjKRXTcRdvtDalTeZRAvaiHygJ0EWQ4A1yi+d
-        E9OBgWPabcBoxUpPFuJM5HunQ2n5pLadGQa7htaii9xirLw6bunscLos58NE
-        Qah05AXQpakSvdLGpO1xUCrtKkyafic0fyU2zfy4kgSNdjqeQ5oBgQ2vbb7U
-        FCJ3YFF+85UT+QjY+xjYI589ivxgDtenW5r80zQvn0rvf62AZoW3qYoef3t8
-        nVl5o5C2OR+SzR57IDV1RF421gt6uqiv3ilEQozDOYs5++43aFr21BMiP3KY
-        7PclolOoBvKHp1j9xZDCTripvmwNrpUP299OZFtgUr4vkjxiKx+RnPKpzwEZ
-        uxGu02Mi7w2swILId/b0uMZFanknZQ6mruBaPj/dd8eeEuPA2ocIpqfl9c18
-        fpO0M4Lev8onGuXOuwJlCb+R9+rfAsea3Lkdsvg6pq6mU0zvqC7b7YWL1KQk
-        Y2RU3EmwULjRBfKQSk0MT4+Q02aZdVkmEi0JGpVqoqKCVNx5vwv0ehDpf76E
-        6T0981/wDwAA//8DALZPALpIBgAA
+        H4sIACTrt1UAA5RUTW/bMAy991cIvitOtnXoQVE3DBt6KHbpeh4Ui06E6cOj
+        5Cz+96Pd+CtJ1+wmvkdSFKlHcX9wlu0Bowl+na0Wy4yBL4I2frvOnn9843fZ
+        vbwRqjIcEANyhFgFH0HeMCY6KLbHwWCpqWCdKUTVZPmRKuqYggN8MS/79lzP
+        jnabIGiQd6uPyw8i785TUqWEZlMnOOaLjdsEm0lwyliRD/QsyEGMagvya+vE
+        TGTKM+P3yhrNyoBOpYXIe6extHxW29GMg12pxoFP3EHaBX36pIvNabNcDhMF
+        gjaJFwqvTUX0xlhL0+NKa5pVnD36jdD8lVjq+WklBE1mOu0D9QCVi69NvjQY
+        E/fKgfxC2UQ+AXofq3rkIVgNKPIRGX5QOzf5u64Pn8oQfm4ULorgqJAO/3cH
+        W3PXZR4LYf1Vp+R1nY0JAdJArZbsMezBNuypI0R+4jCbyiGB16AH8nvAtPsD
+        kcLOuGmgDQX919TIB0Cvg6c+9cjUDWFL6pafH0V+PM6lVfuEDW9lxZWtduqd
+        fH5qZXaOT+OqEJOyHS3f3y6Xt/SNJ9Dbv+pMLtwHX4As1S/gnRBfgFN5HN3G
+        LKFK9Kh5a2ilmbJ5GXzCmpJMkUlxZ8FCw94UwCOVSgynfeCNXWdtlplaSlS1
+        ppqw2Ckq7rLfFdIZ9fKfS4lW24W1/BcAAP//AwDqfmK70wUAAA==
     http_version: 
-  recorded_at: Thu, 16 Jul 2015 17:22:52 GMT
+  recorded_at: Tue, 28 Jul 2015 20:50:46 GMT
 recorded_with: VCR 2.9.3

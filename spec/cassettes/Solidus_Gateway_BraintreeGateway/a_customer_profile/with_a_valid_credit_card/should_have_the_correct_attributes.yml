@@ -8,20 +8,17 @@ http_interactions:
       string: |
         <?xml version="1.0" encoding="UTF-8"?>
         <customer>
-          <first-name>John</first-name>
-          <last-name>Doe</last-name>
-          <email>kennedi.graham@schowalter.info</email>
+          <first-name>Card</first-name>
+          <last-name>Holder</last-name>
+          <email>brianne@jaskolski.info</email>
           <credit-card>
             <cardholder-name>Card Holder</cardholder-name>
             <billing-address>
-              <first-name>John</first-name>
-              <last-name>Doe</last-name>
               <street-address>10 Lovely Street</street-address>
               <extended-address>Northwest</extended-address>
-              <company>Company</company>
               <locality>Herndon</locality>
-              <region>Alabama</region>
-              <country-code-alpha3>USA</country-code-alpha3>
+              <region>AL</region>
+              <country-code-alpha2>US</country-code-alpha2>
               <postal-code>35005</postal-code>
             </billing-address>
             <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
@@ -47,7 +44,7 @@ http_interactions:
       message: Created
     headers:
       Date:
-      - Thu, 16 Jul 2015 17:22:54 GMT
+      - Tue, 28 Jul 2015 20:50:47 GMT
       Content-Type:
       - application/xml; charset=utf-8
       Transfer-Encoding:
@@ -68,49 +65,49 @@ http_interactions:
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Etag:
-      - '"26cba87b4c3853d1c14e98f5c59e22b4"'
+      - '"cff443a95121b9ebc373b9f18dccd7f6"'
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 475cad7556a1b42aacde338430b47af4
+      - f4a371f4612583b90d7ec7a349d0227e
       X-Runtime:
-      - '0.829404'
+      - '2.046298'
       X-Frame-Options:
       - SAMEORIGIN
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        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
-        AP//AwCtp5NTJRYAAA==
+        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
+        AA==
     http_version: 
-  recorded_at: Thu, 16 Jul 2015 17:22:54 GMT
+  recorded_at: Tue, 28 Jul 2015 20:50:49 GMT
 recorded_with: VCR 2.9.3

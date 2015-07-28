@@ -57,11 +57,11 @@ module Solidus
       return if source.gateway_customer_profile_id.present? || payment.payment_method_nonce.nil?
 
       user = payment.order.user
-      address = payment.order.bill_address
+      address = payment.order.bill_address.try(:active_merchant_hash)
 
       params = {
-        first_name: address.firstname,
-        last_name: address.lastname,
+        first_name: source.first_name,
+        last_name: source.last_name,
         email: user.email,
         credit_card: {
           cardholder_name: source.name,
@@ -166,15 +166,12 @@ module Solidus
 
     def map_address(addr)
       {
-        first_name: addr.firstname,
-        last_name: addr.lastname,
-        street_address: addr.address1,
-        extended_address: addr.address2,
-        company: addr.company,
-        locality: addr.city,
-        region: addr.state ? addr.state.name : addr.state_name,
-        country_code_alpha3: addr.country.iso3,
-        postal_code: addr.zipcode,
+        street_address: addr[:address1],
+        extended_address: addr[:address2],
+        locality: addr[:city],
+        region: addr[:state],
+        country_code_alpha2: addr[:country],
+        postal_code: addr[:zip],
       }
     end
 
@@ -184,12 +181,9 @@ module Solidus
 
     def transaction_authorize_or_purchase_params(cents, creditcard, options = {})
       params = options.select {|k| %i[
-        billing
         billing_address_id
         channel
         custom_fields
-        customer
-        customer_id
         descriptor
         device_data
         device_session_id
@@ -199,50 +193,36 @@ module Solidus
         purchase_order_number
         recurring
         service_fee_amount
-        shipping
         shipping_address_id
         tax_amount
         tax_exempt
       ].include?(k)}
 
       params[:options] ||= {}
-
       params[:amount] = amount(cents)
+      params[:channel] ||= "Solidus"
+      params[:shipping] = map_address(options[:shipping_address]) if options[:shipping_address]
 
-      if params[:payment_method_nonce].nil?
+      if options[:payment_method_nonce]
+        params[:payment_method_nonce] = options[:payment_method_nonce]
+        params[:billing] = map_address(options[:billing_address]) if options[:billing_address]
+      else
         params[:payment_method_token] = creditcard.gateway_payment_profile_id
-        params.delete(:billing_address)
       end
 
       # if has profile, set the customer_id to the profile_id and delete the customer key
-      if creditcard.respond_to?(:gateway_customer_profile_id) && creditcard.gateway_customer_profile_id
+      if creditcard.try(:gateway_customer_profile_id)
         params[:customer_id] = creditcard.gateway_customer_profile_id
-        params.delete(:customer)
       # if no profile, define the customer key, delete the customer_id because they are
       # mutually exclusive
       else
         params[:customer] = {
-          id: params[:customer_id],
+          id: options[:customer_id],
           email: options[:customer],
           first_name: creditcard.first_name,
           last_name: creditcard.last_name,
         }
-        params.delete(:customer_id)
       end
-
-      # delete the shipping price in options
-      params.delete(:shipping)
-
-      # if there's a shipping_address/billing_address, set it to the shipping/billing key
-      # and convert the address into a format Braintree understands
-      if params[:shipping_address]
-        params[:shipping] = map_address(params.delete(:shipping_address))
-      end
-      if params[:billing_address]
-        params[:billing] = map_address(params.delete(:billing_address))
-      end
-
-      params[:channel] ||= "Solidus"
 
       params
     end

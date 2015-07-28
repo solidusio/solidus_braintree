@@ -8,20 +8,17 @@ http_interactions:
       string: |
         <?xml version="1.0" encoding="UTF-8"?>
         <customer>
-          <first-name>John</first-name>
-          <last-name>Doe</last-name>
-          <email>mercedes@okuneva.ca</email>
+          <first-name>Card</first-name>
+          <last-name>Holder</last-name>
+          <email>delta@nolan.biz</email>
           <credit-card>
             <cardholder-name>Card Holder</cardholder-name>
             <billing-address>
-              <first-name>John</first-name>
-              <last-name>Doe</last-name>
               <street-address>10 Lovely Street</street-address>
               <extended-address>Northwest</extended-address>
-              <company>Company</company>
               <locality>Herndon</locality>
-              <region>Alabama</region>
-              <country-code-alpha3>USA</country-code-alpha3>
+              <region>AL</region>
+              <country-code-alpha2>US</country-code-alpha2>
               <postal-code>35005</postal-code>
             </billing-address>
             <payment-method-nonce>fake-paypal-future-nonce</payment-method-nonce>
@@ -47,7 +44,7 @@ http_interactions:
       message: Created
     headers:
       Date:
-      - Thu, 16 Jul 2015 17:23:08 GMT
+      - Tue, 28 Jul 2015 20:51:10 GMT
       Content-Type:
       - application/xml; charset=utf-8
       Transfer-Encoding:
@@ -68,29 +65,29 @@ http_interactions:
       X-Ua-Compatible:
       - IE=Edge,chrome=1
       Etag:
-      - '"ca8201276ee217bdbcff8c562d718515"'
+      - '"e8807c1f07857a2085c549179f3788b4"'
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - 6d83b516072f5e70a41bc1cd6cd46717
+      - d95b3cc5f6b7bd7b8124ce11e0a7d816
       X-Runtime:
-      - '0.250154'
+      - '0.282431'
       X-Frame-Options:
       - SAMEORIGIN
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAHzop1UAA6RTuXLbMBDt/RUc9iQkOdY1EOUikyK106TxLImViBhYIAAo
-        if76gKQuh2kyLt+xB/aRfHvSKjmg89LQJp3mkzRBqoyQtN+kP16+Zct0Wzzw
-        qvHBaHTFQ5JwKYr5bDZ5XCxXnEXQcVGraqCQRfxe0lP7/nsVFkd9PH2ZcXav
-        du6ddD5kBBqL76Ymzu6ITldwQV8NcnaDnVgZbYHahKTapME1mLKeRw1SFd0o
-        FOifzVtDeIC8As4GqTPZ2hCOSndwGnFHLL0MY2/lEAKKDEISWoubVEQYpMa0
-        mE2mT9lkkU3nL9PFeva4nix/cnYr6OsbK/6v/lYwzO+jyHYSlfDXlYQMWQVO
-        +HNTcA7a88YWWgsqg6oyDYWPjs4wsgxkpIN5QypWC1u7OWcDumjDTX8BYS4M
-        PuMJtFWYx3Tu7t07Be6gUZfnlsYoBEqL7qacncWrWWrYY9Y4VdQhWL9mDLzH
-        4PPSgaTgEPfxGkdou0ks7q2RwqvGUBvxqszesOEtuaX9FukgnaHOsvFAojSn
-        +MVeJ1xmfjLSvscnY+17+Kb0lZM2xJ/xH0FGBxsH9TfnexKEcBgPN2oTl7/+
-        y38AAAD//wMAGgKFn/4DAAA=
+        H4sIAD7rt1UAA6RTy27bMBC85ysE3SXKTlynBi0HKFD0A9JLL8FKXNtMyaVK
+        rmLLX19Kih+teily3JnZB2ckuTlak7yhD9rROp3lRZog1U5p2q3T789fs8d0
+        U97Jug3sLPryLkmkVuWn+2I5mxcPUsSixyJX74E4i/WpokV3+vWZlwd7OD7M
+        pbhle/VW+8AZgcXyC3glxQ3Q8wbO1TdnFHoprkjP1842QF1C2qxT9i2mYsDR
+        gjalQsPwRM4A5ZU+STHCvaDZO8JJ2xaOE+yAVdA81dYegVFlwAl3Da5TFUvW
+        FtNyXswWWbHM5o/P82K1mK1mxQ8prg1Df9uo/+u/Noz7hySyrUajwuUkpTmr
+        o5PhfSh4D937xQ10DZgM6tq1xH8qesFEMoIRZvcTqXxlqu8PUozVmRs9fQXC
+        XDl8wiPYxmAek7nxe1Aq3EJrzs+tnDMIlJa9p1K8kxextrDDrPWm3DM3YSUE
+        hIAc8sqDJvaIu+jGAbp+k4h3WyR+sch7p16M2zkxviVvaLdBetPeUS9ZByBV
+        uWP8YC8bzjs/GOkw44OxDjNCW4Xa64bjv/iPIKNCTIP6GwsDCEp5jMZNxsTj
+        L7/ybwAAAP//AwDtfSRQ/QMAAA==
     http_version: 
-  recorded_at: Thu, 16 Jul 2015 17:23:08 GMT
+  recorded_at: Tue, 28 Jul 2015 20:51:12 GMT
 recorded_with: VCR 2.9.3
