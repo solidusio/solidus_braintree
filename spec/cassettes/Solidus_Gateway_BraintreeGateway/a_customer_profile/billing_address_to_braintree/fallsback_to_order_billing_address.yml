@@ -1,0 +1,113 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ym9djwqpkxbv3xzt:4ghghkyp2yy6yqc8@api.sandbox.braintreegateway.com/merchants/zbn5yzq9t7wmwx42/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <first-name>Card</first-name>
+          <last-name>Holder</last-name>
+          <email>ole_stoltenberg@hermann.co.uk</email>
+          <credit-card>
+            <cardholder-name>Card Holder</cardholder-name>
+            <billing-address>
+              <street-address>10 Lovely Street</street-address>
+              <extended-address>Northwest</extended-address>
+              <locality>Herndon</locality>
+              <region>AL</region>
+              <country-code-alpha2>US</country-code-alpha2>
+              <postal-code>35005</postal-code>
+            </billing-address>
+            <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
+            <options>
+              <verify-card type="boolean">true</verify-card>
+            </options>
+          </credit-card>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.46.0
+      X-Apiversion:
+      - '4'
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Wed, 29 Jul 2015 14:21:54 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      X-Authentication:
+      - basic_auth
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000; includeSubDomains
+      X-User:
+      - s8282g6qcjgm2dfk
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - '"df0f4322caeb43391425bca1014fc1d0"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 47c94ebd1b9247b6d3d38d8cc95bcf2e
+      X-Runtime:
+      - '0.729711'
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+        FQAA
+    http_version: 
+  recorded_at: Wed, 29 Jul 2015 14:21:57 GMT
+recorded_with: VCR 2.9.3

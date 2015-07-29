@@ -1,0 +1,223 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ym9djwqpkxbv3xzt:4ghghkyp2yy6yqc8@api.sandbox.braintreegateway.com/merchants/zbn5yzq9t7wmwx42/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <first-name>Card</first-name>
+          <last-name>Holder</last-name>
+          <email>deshaun_ebert@krisleannon.biz</email>
+          <credit-card>
+            <cardholder-name>Card Holder</cardholder-name>
+            <billing-address>
+              <street-address>10 Lovely Street</street-address>
+              <extended-address>Northwest</extended-address>
+              <locality>Herndon</locality>
+              <region>AL</region>
+              <country-code-alpha2>US</country-code-alpha2>
+              <postal-code>35005</postal-code>
+            </billing-address>
+            <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
+            <options>
+              <verify-card type="boolean">true</verify-card>
+            </options>
+          </credit-card>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.46.0
+      X-Apiversion:
+      - '4'
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Wed, 29 Jul 2015 15:27:34 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      X-Authentication:
+      - basic_auth
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000; includeSubDomains
+      X-User:
+      - s8282g6qcjgm2dfk
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - '"848cf8cef06147a676add26b355f21e3"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - d34ecbb5c8a7c46dc88c0c17f16a37c6
+      X-Runtime:
+      - '0.783503'
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+        P/EVAAA=
+    http_version: 
+  recorded_at: Wed, 29 Jul 2015 15:27:37 GMT
+- request:
+    method: post
+    uri: https://ym9djwqpkxbv3xzt:4ghghkyp2yy6yqc8@api.sandbox.braintreegateway.com/merchants/zbn5yzq9t7wmwx42/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <first-name>Card</first-name>
+          <last-name>Holder</last-name>
+          <email>deshaun_ebert@krisleannon.biz</email>
+          <credit-card>
+            <cardholder-name>Card Holder</cardholder-name>
+            <billing-address>
+              <street-address>10 Lovely Street</street-address>
+              <extended-address>Northwest</extended-address>
+              <locality>Herndon</locality>
+              <region>AL</region>
+              <country-code-alpha2>US</country-code-alpha2>
+              <postal-code>35005</postal-code>
+            </billing-address>
+            <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
+            <options>
+              <verify-card type="boolean">true</verify-card>
+            </options>
+          </credit-card>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.46.0
+      X-Apiversion:
+      - '4'
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Wed, 29 Jul 2015 15:27:35 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      X-Authentication:
+      - basic_auth
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000; includeSubDomains
+      X-User:
+      - s8282g6qcjgm2dfk
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - '"e9f371c1ab7cb45a288630ffc4aa1edc"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - cfb07daed09e29dbee6b6825d82c7f61
+      X-Runtime:
+      - '0.725854'
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+        xzAJbfEVAAA=
+    http_version: 
+  recorded_at: Wed, 29 Jul 2015 15:27:38 GMT
+recorded_with: VCR 2.9.3

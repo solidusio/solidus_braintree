@@ -1,3 +1,6 @@
+class Spree::CreditCard
+  attr_accessor :address
+end
 require 'spec_helper'
 
 describe Solidus::Gateway::BraintreeGateway, :vcr do
@@ -207,6 +210,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
     end
   end
 
+  # tests that the right transformed params get sent to Braintree, without querying Braintree for what it received
   context "braintree attributes" do
     let(:nonce) { Braintree::Test::Nonce::Transactable }
     let(:creditcard) { FactoryGirl.create(:credit_card)}
@@ -237,16 +241,90 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
         expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
         payment_method.authorize(500, creditcard, options)
       end
+    end
 
-      context "with a payment method nonce" do
+    context "creating a profile" do
+      let(:nonce){ Braintree::Test::Nonce::Transactable }
+
+      context "billing address to braintree" do
+
+        context "with source address" do
+          let(:source_address) { FactoryGirl.create(:address,
+                                                 address1: "123 Source St",
+                                                ) }
+          it "sends payment source address" do
+            card.gateway_customer_profile_id = nil
+            card.address = source_address
+            expected_params = {
+              first_name: card.first_name,
+              last_name: card.last_name,
+              email: user.email,
+              credit_card: {
+                cardholder_name: card.name,
+                billing_address: {
+                  street_address: source_address.address1,
+                  extended_address: source_address.address2,
+                  locality: source_address.city,
+                  region: source_address.state_text,
+                  country_code_alpha2: source_address.country.iso,
+                  postal_code: source_address.zipcode
+                },
+                payment_method_nonce: nonce,
+                options: {
+                  verify_card: true
+                }
+              }
+            }
+            expect_any_instance_of(::Braintree::CustomerGateway).to receive(:create).with(expected_params).and_call_original
+            payment_method.create_profile(payment)
+          end
+        end
+
+        context "without a source address" do
+          let(:billing_address) { payment.order.bill_address }
+          it "fallsback to order billing address" do
+            card.gateway_customer_profile_id = nil
+            expected_params = {
+              first_name: card.first_name,
+              last_name: card.last_name,
+              email: user.email,
+              credit_card: {
+                cardholder_name: card.name,
+                billing_address: {
+                  street_address: billing_address.address1,
+                  extended_address: billing_address.address2,
+                  locality: billing_address.city,
+                  region: billing_address.state_text,
+                  country_code_alpha2: billing_address.country.iso,
+                  postal_code: billing_address.zipcode
+                },
+                payment_method_nonce: nonce,
+                options: {
+                  verify_card: true
+                }
+              }
+            }
+            expect_any_instance_of(::Braintree::CustomerGateway).to receive(:create).with(expected_params).and_call_original
+            payment_method.create_profile(payment)
+          end
+        end
+      end
+    end
+
+    context "creating a transaction" do
+
+      let(:nonce) { Braintree::Test::Nonce::Transactable }
+      let(:creditcard) { FactoryGirl.create(:credit_card)}
+      let(:address) { FactoryGirl.create(:address) }
+
+      context "with a credit card" do
         let(:options) { {
           customer_id: user.id,
-          payment_method_nonce: nonce,
           shipping: "20.00",
           customer: user.email
         } }
 
-        it "should send a nonce" do
+        it "should send payment method token" do
           expected_params = {
             customer: {
               id: user.id,
@@ -256,7 +334,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
             },
             options: {},
             amount: "5.00",
-            payment_method_nonce: nonce,
+            payment_method_token: creditcard.gateway_payment_profile_id,
             channel: "Solidus"
           }
 
@@ -264,71 +342,99 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
           payment_method.authorize(500, creditcard, options)
         end
-      end
 
-      context "with existing customer" do
-        before { creditcard.update_attributes(gateway_customer_profile_id: 5) }
-        let(:options) { {
-          customer_id: user.id,
-          payment_method_nonce: nonce,
-          shipping: "20.00",
-          customer: user.email
-        } }
-
-        it "should only send customer id" do
-          expected_params = {
-            customer_id: creditcard.gateway_customer_profile_id,
-            options: {},
-            amount: "5.00",
+        context "with a payment method nonce" do
+          let(:options) { {
+            customer_id: user.id,
             payment_method_nonce: nonce,
-            channel: "Solidus"
-          }
+            shipping: "20.00",
+            customer: user.email
+          } }
 
-          expect(payment_method).to receive(:handle_result)
-          expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
-          payment_method.authorize(500, creditcard, options)
+          it "should send a nonce" do
+            expected_params = {
+              customer: {
+                id: user.id,
+                email: user.email,
+                first_name: creditcard.first_name,
+                last_name: creditcard.last_name
+              },
+              options: {},
+              amount: "5.00",
+              payment_method_nonce: nonce,
+              channel: "Solidus"
+            }
+
+            payment_method.stub(:handle_result)
+            expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
+            payment_method.authorize(500, creditcard, options)
+          end
         end
-      end
 
-      context "with billing or shipping address" do
-        before { creditcard.update_attributes(gateway_customer_profile_id: 5) }
-        let(:options) { {
-          customer_id: user.id,
-          payment_method_nonce: nonce,
-          shipping_address: address.active_merchant_hash,
-          billing_address: address.active_merchant_hash,
-          shipping: "20.00",
-          customer: user.email
-        } }
-
-        it "should send billing and shipping address" do
-          expected_params = {
-            customer_id:  creditcard.gateway_customer_profile_id,
-            options: {},
-            amount: "5.00",
-            shipping: {
-              street_address: address.address1,
-              extended_address: address.address2,
-              locality: address.city,
-              region: address.state_text,
-              country_code_alpha2: address.country.iso,
-              postal_code: address.zipcode,
-            },
-            billing: {
-              street_address: address.address1,
-              extended_address: address.address2,
-              locality: address.city,
-              region: address.state_text,
-              country_code_alpha2: address.country.iso,
-              postal_code: address.zipcode,
-            },
+        context "with existing customer" do
+          before { creditcard.update_attributes(gateway_customer_profile_id: 5) }
+          let(:options) { {
+            customer_id: user.id,
             payment_method_nonce: nonce,
-            channel: "Solidus"
-          }
+            shipping: "20.00",
+            customer: user.email
+          } }
 
-          expect(payment_method).to receive(:handle_result)
-          expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
-          payment_method.authorize(500, creditcard, options)
+          it "should only send customer id" do
+            expected_params = {
+              customer_id: creditcard.gateway_customer_profile_id,
+              options: {},
+              amount: "5.00",
+              payment_method_nonce: nonce,
+              channel: "Solidus"
+            }
+
+            payment_method.stub(:handle_result)
+            expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
+            payment_method.authorize(500, creditcard, options)
+          end
+        end
+
+        context "with billing or shipping address" do
+          before { creditcard.update_attributes(gateway_customer_profile_id: 5) }
+          let(:options) { {
+            customer_id: user.id,
+            payment_method_nonce: nonce,
+            shipping_address: address.active_merchant_hash,
+            billing_address: address.active_merchant_hash,
+            shipping: "20.00",
+            customer: user.email
+          } }
+
+          it "should send billing and shipping address" do
+            expected_params = {
+              customer_id:  creditcard.gateway_customer_profile_id,
+              options: {},
+              amount: "5.00",
+              shipping: {
+                street_address: address.address1,
+                extended_address: address.address2,
+                locality: address.city,
+                region: address.state_text,
+                country_code_alpha2: address.country.iso,
+                postal_code: address.zipcode,
+              },
+              billing: {
+                street_address: address.address1,
+                extended_address: address.address2,
+                locality: address.city,
+                region: address.state_text,
+                country_code_alpha2: address.country.iso,
+                postal_code: address.zipcode,
+              },
+              payment_method_nonce: nonce,
+              channel: "Solidus"
+            }
+
+            payment_method.stub(:handle_result)
+            expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
+            payment_method.authorize(500, creditcard, options)
+          end
         end
       end
     end
