@@ -6,6 +6,7 @@ module Solidus
     preference :merchant_id, :string
     preference :public_key, :string
     preference :private_key, :string
+    preference :always_send_bill_address, :boolean, default: false
 
     CARD_TYPE_MAPPING = {
       'American Express' => 'american_express',
@@ -205,9 +206,14 @@ module Solidus
 
       if options[:payment_method_nonce]
         params[:payment_method_nonce] = options[:payment_method_nonce]
-        params[:billing] = map_address(options[:billing_address]) if options[:billing_address]
       else
         params[:payment_method_token] = creditcard.gateway_payment_profile_id
+      end
+
+      # Send the bill address if we're using a nonce (i.e. doing a one-time
+      # payment) or if we're configured to always send the bill address
+      if options[:payment_method_nonce] || preferred_always_send_bill_address
+        params[:billing] = map_address(options[:billing_address]) if options[:billing_address]
       end
 
       # if has profile, set the customer_id to the profile_id and delete the customer key
