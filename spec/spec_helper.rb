@@ -39,6 +39,8 @@ module SolidusGateway
   end
 end
 
+Braintree::Configuration.logger = Rails.logger
+
 FactoryGirl.find_definitions
 
 VCR.configure do |c|
