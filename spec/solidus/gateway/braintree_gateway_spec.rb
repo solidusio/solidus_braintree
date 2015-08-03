@@ -209,7 +209,9 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
 
   context "braintree attributes" do
     let(:nonce) { Braintree::Test::Nonce::Transactable }
-    let(:creditcard) { FactoryGirl.create(:credit_card)}
+    let(:creditcard) do
+      FactoryGirl.create(:credit_card, gateway_payment_profile_id: 'abc123')
+    end
     let(:address) { FactoryGirl.create(:address) }
 
     context "with a credit card" do
@@ -229,7 +231,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           },
           options: {},
           amount: "5.00",
-          payment_method_token: creditcard.gateway_payment_profile_id,
+          payment_method_token: 'abc123',
           channel: "Solidus"
         }
 
