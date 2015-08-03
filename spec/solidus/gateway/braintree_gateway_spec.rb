@@ -290,6 +290,68 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
           payment_method.authorize(500, creditcard, options)
         end
+
+        context 'when a billing address is provided' do
+          let(:bill_address) do
+            create(:address, address1: '1234 bill address')
+          end
+
+          let(:options) do
+            {
+              customer_id: user.id,
+              billing_address: bill_address.active_merchant_hash,
+            }
+          end
+
+          context 'when preferred_always_send_bill_address is true' do
+            before do
+              payment_method.update!(preferred_always_send_bill_address: true)
+            end
+
+            it 'sends a bill address' do
+              expected_params = {
+                billing: {
+                  street_address: "1234 bill address",
+                  extended_address: address.address2,
+                  locality: address.city,
+                  region: address.state_text,
+                  country_code_alpha2: address.country.iso,
+                  postal_code: address.zipcode,
+                },
+                customer_id: creditcard.gateway_customer_profile_id,
+                payment_method_token: 'abc123',
+                options: {},
+                amount: "5.00",
+                channel: "Solidus"
+              }
+
+              allow(payment_method).to receive(:handle_result)
+              expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
+              payment_method.authorize(500, creditcard, options)
+            end
+          end
+
+          context 'when preferred_always_send_bill_address is true' do
+            before do
+              payment_method.update!(preferred_always_send_bill_address: false)
+            end
+
+            it 'does not send a bill address' do
+              expected_params = {
+                customer_id: creditcard.gateway_customer_profile_id,
+                payment_method_token: 'abc123',
+                options: {},
+                amount: "5.00",
+                channel: "Solidus"
+              }
+
+              allow(payment_method).to receive(:handle_result)
+              expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
+              payment_method.authorize(500, creditcard, options)
+            end
+          end
+
+        end
       end
 
       context "with billing or shipping address" do
