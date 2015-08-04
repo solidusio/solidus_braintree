@@ -18,6 +18,7 @@ describe Spree::Api::BraintreeClientTokenController, :vcr, type: :controller do
     it "returns a client_token" do
       body = JSON.parse(response.body)
       expect(body["client_token"]).to be_present
+      expect(body["payment_method_id"]).to be_present
     end
   end
 end
