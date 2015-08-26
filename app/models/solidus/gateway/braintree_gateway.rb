@@ -21,18 +21,9 @@ module Solidus
       'Visa' => 'visa',
     }
 
-    # TODO: There's only 2 environments, so we should change this code
-    ENVIRONMENTS = {
-      'development' => :sandbox,
-      'test' => :sandbox,
-      'qa' => :sandbox,
-      'sandbox' => :sandbox,
-      'production' => :production,
-    }
-
     def gateway_options
       {
-        environment: ENVIRONMENTS.fetch(preferred_environment),
+        environment: preferred_environment.to_sym,
         merchant_id: preferred_merchant_id,
         public_key: preferred_public_key,
         private_key: preferred_private_key,
