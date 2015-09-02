@@ -6,12 +6,12 @@ require 'solidus_braintree/version'
 Gem::Specification.new do |spec|
   spec.name          = "solidus_braintree"
   spec.version       = SolidusBraintree::VERSION
-  spec.authors       = ["Bonobos"]
-  spec.email         = ["engineering@bonobos.com"]
+  spec.authors       = ["Solidus Team"]
+  spec.email         = ["contact@solidus.io"]
 
   spec.summary       = %q{Adds Solidus support for Braintree v.zero Gateway.}
   spec.description   = %q{Adds Solidus support for Braintree v.zero Gateway.}
-  spec.homepage      = "https://bonobos.com"
+  spec.homepage      = "https://solidus.io"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
