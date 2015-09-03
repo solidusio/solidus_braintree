@@ -1,28 +1,24 @@
-# SolidusBraintree
+# solidus_braintree
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/solidus_braintree`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+`solidus_braintree` is a gem that adds [Braintree v.zero](https://www.braintreepayments.com/v.zero) support to the [solidus](http://solidus.io/) E-commerce platform.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Add this line to your solidus application's Gemfile:
 
 ```ruby
-gem 'solidus_braintree'
+gem "solidus_braintree"
 ```
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install solidus_braintree
-
 ## Usage
 
-TODO: Write usage instructions here
+This gem extends your solidus application by adding a `POST /api/payment_client_token` endpoint to you application to generate Braintree payment client token. This endpoint requires an authentication token in your request header.
+
+It also creates a new `PaymentMethod` class called `Solidus::Gateway::BraintreeGateway`. You can configure this payment method in the admin and add your Braintree public/private keys and merchant id. The admin will render a Braintree dropin container when prompting you to create an order payment.
 
 ## Development
 
@@ -34,8 +30,6 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/solidusio/solidus_braintree.
 
-
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
