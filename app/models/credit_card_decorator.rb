@@ -1,1 +1,2 @@
 Spree::CreditCard.include SolidusBraintree::SkipRequireCardNumbersConcern
+Spree::CreditCard.include SolidusBraintree::AddNameValidationConcern
