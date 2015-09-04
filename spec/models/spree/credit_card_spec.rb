@@ -21,5 +21,14 @@ describe Spree::CreditCard, type: :model do
     it "require_card_numbers? returns false" do
       expect(credit_card.require_card_numbers?).not_to be
     end
+
+    it "validate presence of name on create" do
+      expect do
+        credit_card = FactoryGirl.create(:credit_card,
+          payment_method: payment_method,
+          name: nil
+        )
+      end.to raise_error(ActiveRecord::RecordInvalid, /Name can't be blank/)
+    end
   end
 end
