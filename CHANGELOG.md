@@ -1,5 +1,14 @@
 ## HEAD
 
+## 0.1.3
+
+* Add back in name validation on `CreditCard`.
+
+## 0.1.2
+
+* Upgrade braintree to 2.13.0-beta for the abiltiy to destroy/teardown.
+* Fix bug related to using existing credit cards in admin.
+
 ## 0.1.1
 
 * Get the client token and attach the dropin on page load to support the create
