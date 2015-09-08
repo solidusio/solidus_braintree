@@ -1,0 +1,112 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ym9djwqpkxbv3xzt:4ghghkyp2yy6yqc8@api.sandbox.braintreegateway.com/merchants/zbn5yzq9t7wmwx42/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <first-name>Card</first-name>
+          <last-name>Holder</last-name>
+          <email>bettye_stroman@jast.biz</email>
+          <credit-card>
+            <cardholder-name>Card Holder</cardholder-name>
+            <billing-address>
+              <street-address>10 Lovely Street</street-address>
+              <extended-address>Northwest</extended-address>
+              <locality>Herndon</locality>
+              <region>AL</region>
+              <country-code-alpha2>US</country-code-alpha2>
+              <postal-code>35005</postal-code>
+            </billing-address>
+            <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
+            <options>
+              <verify-card type="boolean">true</verify-card>
+            </options>
+          </credit-card>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.47.0
+      X-Apiversion:
+      - '4'
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Tue, 08 Sep 2015 18:11:12 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - close
+      X-Authentication:
+      - basic_auth
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000; includeSubDomains
+      X-User:
+      - s8282g6qcjgm2dfk
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      X-Ua-Compatible:
+      - IE=Edge,chrome=1
+      Etag:
+      - '"cef5896cd9391f2436f0ad1b801ff7ea"'
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 02bdec428253968c0985e95307c8d8cf
+      X-Runtime:
+      - '3.050001'
+      X-Frame-Options:
+      - SAMEORIGIN
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Tue, 08 Sep 2015 18:11:16 GMT
+recorded_with: VCR 2.9.3
