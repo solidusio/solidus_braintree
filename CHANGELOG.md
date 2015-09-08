@@ -1,6 +1,6 @@
 ## HEAD
 
-## 0.1.4
+## 0.1.5
 
 * Use mapping to set cc_type conventionally.
 
