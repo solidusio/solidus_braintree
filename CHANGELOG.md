@@ -1,5 +1,9 @@
 ## HEAD
 
+## 0.1.4
+
+* Use mapping to set cc_type conventionally.
+
 ## 0.1.3
 
 * Add back in name validation on `CreditCard`.

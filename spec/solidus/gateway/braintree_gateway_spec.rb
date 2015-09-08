@@ -42,18 +42,38 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
         payment_method.create_profile(payment)
       end
 
-      it "should have the correct attributes" do
-        expect(card.user).to eq user
-        expect(card.payment_method).to eq payment_method
-        expect(card.cc_type).to eq 'visa'
-        expect(card.last_digits).to eq '1881'
-        expect(card.name).to eq "Card Holder"
+      context "visa" do
+        it "should have the correct attributes" do
+          expect(card.user).to eq user
+          expect(card.payment_method).to eq payment_method
+          expect(card.cc_type).to eq 'visa'
+          expect(card.last_digits).to eq '1881'
+          expect(card.name).to eq "Card Holder"
 
-        expect(card.month).to eq '12'
-        expect(card.year).to eq '2020'
+          expect(card.month).to eq '12'
+          expect(card.year).to eq '2020'
 
-        expect(card.gateway_payment_profile_id).to be_present
-        expect(card.gateway_customer_profile_id).to be_present
+          expect(card.gateway_payment_profile_id).to be_present
+          expect(card.gateway_customer_profile_id).to be_present
+        end
+      end
+
+      context "amex" do
+        let(:nonce) { "fake-valid-amex-nonce"}
+
+        it "should have the correct attributes" do
+          expect(card.user).to eq user
+          expect(card.payment_method).to eq payment_method
+          expect(card.cc_type).to eq 'american_express'
+          expect(card.last_digits).to eq '0005'
+          expect(card.name).to eq "Card Holder"
+
+          expect(card.month).to eq '12'
+          expect(card.year).to eq '2020'
+
+          expect(card.gateway_payment_profile_id).to be_present
+          expect(card.gateway_customer_profile_id).to be_present
+        end
       end
 
 

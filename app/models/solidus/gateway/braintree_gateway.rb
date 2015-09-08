@@ -75,7 +75,7 @@ module Solidus
             solidus_cc.name = card.email
           else
             solidus_cc.name = card.cardholder_name
-            solidus_cc.cc_type = card.card_type.downcase
+            solidus_cc.cc_type = CARD_TYPE_MAPPING[card.card_type]
             solidus_cc.month = card.expiration_month
             solidus_cc.year = card.expiration_year
             solidus_cc.last_digits = card.last_4
