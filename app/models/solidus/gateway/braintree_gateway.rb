@@ -72,7 +72,10 @@ module Solidus
         source.tap do |solidus_cc|
           if card.is_a?(::Braintree::PayPalAccount)
             solidus_cc.cc_type = 'paypal'
-            solidus_cc.name = card.email
+            data = {
+              email: card.email
+            }
+            solidus_cc.data = data.to_json
           else
             solidus_cc.name = card.cardholder_name
             solidus_cc.cc_type = CARD_TYPE_MAPPING[card.card_type]

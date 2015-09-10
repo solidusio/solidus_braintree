@@ -140,7 +140,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       expect(card.user).to eq user
       expect(card.payment_method).to eq payment_method
       expect(card.cc_type).to eq 'paypal'
-      expect(card.name).to eq 'jane.doe@example.com'
+      expect(card.email).to eq 'jane.doe@example.com'
 
       expect(card.gateway_payment_profile_id).to be_present
       expect(card.gateway_customer_profile_id).to be_present
@@ -182,6 +182,24 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       expect(Spree::CreditCard.count).to eql(1)
       expect(Spree::CreditCard.first.gateway_payment_profile_id).to be_present
     end
+
+    it "credits a completed payment" do
+      card.gateway_customer_profile_id = nil
+      auth = payment_method.authorize(5000, card, {})
+      expect(auth).to be_success
+      capture = payment_method.capture(5000, auth.authorization, {})
+      expect(capture).to be_success
+      credit = payment_method.credit(5000, card, auth.authorization, {})
+      expect(credit).to be_success
+    end
+
+    it "voids a authorized payment" do
+      card.gateway_customer_profile_id = nil
+      auth = payment_method.authorize(5000, card, {})
+      expect(auth).to be_success
+      void = payment_method.void(auth.authorization, card, {})
+      expect(void).to be_success
+    end
   end
 
   context 'on a payment' do
@@ -191,7 +209,6 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       before do
         payment.source.gateway_customer_profile_id = nil
         payment.source.save!
-        payment.payment_method.environment = Rails.env
         payment.authorize!
         expect(payment).to be_pending
         expect(payment.response_code).to be_present

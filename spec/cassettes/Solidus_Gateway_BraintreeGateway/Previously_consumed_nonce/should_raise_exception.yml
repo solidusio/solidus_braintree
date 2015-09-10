@@ -10,7 +10,7 @@ http_interactions:
         <customer>
           <first-name>Card</first-name>
           <last-name>Holder</last-name>
-          <email>shaniya_quitzon@jacobs.us</email>
+          <email>johnathan_halvorson@prohaskamaggio.us</email>
           <credit-card>
             <cardholder-name>Card Holder</cardholder-name>
             <billing-address>
@@ -33,7 +33,7 @@ http_interactions:
       Accept:
       - application/xml
       User-Agent:
-      - Braintree Ruby Gem 2.46.0
+      - Braintree Ruby Gem 2.48.1
       X-Apiversion:
       - '4'
       Content-Type:
@@ -44,13 +44,22 @@ http_interactions:
       message: Unprocessable Entity
     headers:
       Date:
-      - Tue, 28 Jul 2015 20:51:09 GMT
+      - Mon, 14 Sep 2015 16:43:42 GMT
       Content-Type:
       - application/xml; charset=utf-8
       Transfer-Encoding:
       - chunked
       Connection:
       - close
+      X-Frame-Options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Ua-Compatible:
+      - chrome=1
       X-Authentication:
       - basic_auth
       Strict-Transport-Security:
@@ -62,32 +71,28 @@ http_interactions:
       - Accept-Encoding
       Content-Encoding:
       - gzip
-      X-Ua-Compatible:
-      - IE=Edge,chrome=1
       Cache-Control:
       - no-cache
       X-Request-Id:
-      - d80da1450e7e7ae0c6651d3badd9fe8e
+      - 50ab942e-6dba-45f4-9b01-db0fb1c3fb56
       X-Runtime:
-      - '0.067464'
-      X-Frame-Options:
-      - SAMEORIGIN
+      - '0.113054'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAD3rt1UAA9xVTY/TMBC991dYubtpqVYLkpsFIaE9rLgse67ceNoaHDuM
-        nbLh1zNJk9RN22UFnLjZ782XX2Ym4u65MGwP6LWzy2Q+nSUMbO6Utttl8vTl
-        E3+b3GUTIUvNAdEhR/Clsx6yCWOihXxzHC4s1CUsE4ko6yTtqLzywRWAh+uL
-        tkSWsi7ABl5A2DnVw5e9jmzPx0iT2inI3i3ms1uRtudTWoaAel0F6KL6ulg7
-        k2RdDatDDSvrbA4iHaxHUQrwXm4h+yitdYFVHphkl0KwwiGl2knLmutUpL1r
-        /I509JAO8INC6WWJRI6gdOC5xH8j2/x2Mf9/ZCNkrY2h1uZSKWpkfy7DlZ5s
-        gl3xJX3GqhMUNXxcBvU2ysJfG4uNRh+4lUWjCSqRRkBvY2SP3DujAEV6RIbx
-        KqQ2mSe9dC1X3ysdfjr7/qvM3dpPK08VtQYvt01z3bUpjhWxPueYfJ3EPiBA
-        GKj5jD24PZiaPbaESEcGJ5/nOYBVoAbys8Ow+wGe3M642NG4XBod6uwe0Cpn
-        SbAeic0QtrQDsw8PIu2OMZu7ygaseTMLXJpyJ99kT4/NbJzjsV/pfJCmpbPF
-        zWx2Q7MbQb9vr7N9yNuJyDbyG1AM66sCOmy8FjrLYyBXBnrXqTq0+/WmPnz7
-        gBUFiZGovjNnoWCvc+CeqiWGa8WsNsukiXIyORuUlaKaMKeGDFfsXjFGx9n5
-        880x+ZtdQ5vswn/wFwAAAP//AwCJ7vRuRAcAAA==
+        H4sIAD759lUAA9xVTW/bMAy951cIvjtOFhTdAMXdMGDoodil6zlgLCbWqg+D
+        krP630927ERxkrbYdtpNeo+kqCeS4ncvWrEdkpPWLJP5dJYwNIUV0myXydOP
+        b+nH5C6fcKhkikSWUkJXWeMwnzDGO8i1y8OG+abCZQJE0CRZTxW181Yj7bev
+        2gaygkaj8alGX1oxwJe9juzAx0h7tBWYf1rMZ7c869anNHhPcl177KO6Rq+t
+        SvI+h9U+h5WxpkCeHaxHUTQ6B1vMv4Ix1rPaIQN2KQTTlsJRJRjWbqc8G1zj
+        e2Sji/SAOyiUXZaIF4RC+rQA+jeyzW8X8/9HtoCspVKhtFMQIhSyO5fhSk22
+        wa74Bn3GqgcoKvg4jVDbBNpda4uNJOdTA7rVhATPImCwUTAg91YJJJ4dkUN7
+        aZAq/2lLA61oqxLULmRgzeeKbAnuGTRst9JOaxey64xfL6F2W3bHHbNjw/lj
+        8n1yO0+I/kDNZ+zB7lA17LEjeDYyOHmqF49GoDiQ3y358he64HbGxY7KFqCk
+        b/J7JCOsCeINSGxGGMQx+ZcHnvXLmC1sbTw1adsXKaiqhA/502PbJ+d47FdZ
+        50F1dL64mc1uQh9H0NuldjYb06478g08Y4hhXK2xx8Yjorc8BrKVD/c6VSf8
+        A3LT7N/eUx2CxEiU35kzF7iTBaYuZBuYVApmpFombZSTLtoQ1CLkREWoS3/F
+        7h0tdeyjP58ik7+ZO2GqXfgTfwMAAP//AwBqsz9rUAcAAA==
     http_version: 
-  recorded_at: Tue, 28 Jul 2015 20:51:11 GMT
+  recorded_at: Mon, 14 Sep 2015 16:43:42 GMT
 recorded_with: VCR 2.9.3
