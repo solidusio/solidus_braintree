@@ -2,10 +2,16 @@ require 'spec_helper'
 
 describe Spree::Api::BraintreeClientTokenController, :vcr, type: :controller do
   describe "POST create" do
+    let(:current_api_user) do
+      user = Spree.user_class.new(:email => "spree@example.com")
+      user.generate_spree_api_key!
+      user
+    end
+
     context "with a payment method id" do
       before do
         gateway = create_braintree_payment_method
-        post :create, id: gateway.id
+        post :create, payment_method_id: gateway.id, token: current_api_user.spree_api_key
       end
 
       it "returns an http success" do
@@ -26,7 +32,7 @@ describe Spree::Api::BraintreeClientTokenController, :vcr, type: :controller do
     context "without a payment method id" do
       before do
         create_braintree_payment_method
-        post :create
+        post :create, token: current_api_user.spree_api_key
       end
 
       it "returns an http success" do

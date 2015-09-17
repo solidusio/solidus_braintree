@@ -33,7 +33,7 @@ http_interactions:
       Accept:
       - application/xml
       User-Agent:
-      - Braintree Ruby Gem 2.46.0
+      - Braintree Ruby Gem 2.48.1
       X-Apiversion:
       - '4'
       Content-Type:
@@ -44,7 +44,7 @@ http_interactions:
       message: Unprocessable Entity
     headers:
       Date:
-      - Tue, 28 Jul 2015 20:50:44 GMT
+      - Mon, 14 Sep 2015 16:43:22 GMT
       Content-Type:
       - application/xml; charset=utf-8
       Transfer-Encoding:
@@ -67,15 +67,15 @@ http_interactions:
       Cache-Control:
       - no-cache
       X-Request-Id:
-      - afc56437112eb4fd6ccb136fd0de1915
+      - 90dba0b3bba5f345d64333950a864d2e
       X-Runtime:
-      - '0.095276'
+      - '0.140704'
       X-Frame-Options:
       - SAMEORIGIN
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIACTrt1UAA5RUTW/bMAy991cIvitOtnXoQVE3DBt6KHbpeh4Ui06E6cOj
+        H4sIACr59lUAA5RUTW/bMAy991cIvitOtnXoQVE3DBt6KHbpeh4Ui06E6cOj
         5Cz+96Pd+CtJ1+wmvkdSFKlHcX9wlu0Bowl+na0Wy4yBL4I2frvOnn9843fZ
         vbwRqjIcEANyhFgFH0HeMCY6KLbHwWCpqWCdKUTVZPmRKuqYggN8MS/79lzP
         jnabIGiQd6uPyw8i785TUqWEZlMnOOaLjdsEm0lwyliRD/QsyEGMagvya+vE
@@ -88,5 +88,5 @@ http_interactions:
         LKFK9Kh5a2ilmbJ5GXzCmpJMkUlxZ8FCw94UwCOVSgynfeCNXWdtlplaSlS1
         ppqw2Ckq7rLfFdIZ9fKfS4lW24W1/BcAAP//AwDqfmK70wUAAA==
     http_version: 
-  recorded_at: Tue, 28 Jul 2015 20:50:46 GMT
+  recorded_at: Mon, 14 Sep 2015 16:43:21 GMT
 recorded_with: VCR 2.9.3
