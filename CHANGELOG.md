@@ -1,5 +1,7 @@
 ## HEAD
 
+* Upgrade braintree to 2.14.0 for hosted field and teardown support.
+
 ## 0.1.5
 
 * Use mapping to set cc_type conventionally.
