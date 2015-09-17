@@ -7,15 +7,15 @@ module UseDataFieldConcern
   module InstanceMethods
 
     def email
-      details["email"]
+      data["email"]
     end
 
     def display_number
       cc_type == 'paypal' ? email : super
     end
 
-    def details
-      @details ||= (data.is_a?(String) ? JSON.parse(data) : data)
+    def data
+      super.is_a?(String) ? JSON.parse(super) : super
     end
   end
 end
