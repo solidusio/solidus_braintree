@@ -1,5 +1,8 @@
 ## HEAD
 
+## 0.2.0
+
+* Add functionality around PayPal by adding a json or text field on credit card for storing extra data coming back from Braintree.
 * Upgrade braintree to 2.14.0 for hosted field and teardown support.
 
 ## 0.1.5
