@@ -160,7 +160,14 @@ module Solidus
     end
 
     def map_address(addr)
+      full_name = addr.fetch(:name, "")
+      *first_name_parts, last_name = full_name.split(" ")
+      first_name = first_name_parts.join(" ")
+      last_name ||= ""
+
       {
+        first_name: first_name,
+        last_name: last_name,
         street_address: addr[:address1],
         extended_address: addr[:address2],
         locality: addr[:city],
