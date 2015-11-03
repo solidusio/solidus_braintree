@@ -348,6 +348,8 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
             it 'sends a bill address' do
               expected_params = {
                 billing: {
+                  first_name: address.first_name,
+                  last_name: address.last_name,
                   street_address: "1234 bill address",
                   extended_address: address.address2,
                   locality: address.city,
@@ -408,6 +410,8 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
             options: {},
             amount: "5.00",
             shipping: {
+              first_name: address.first_name,
+              last_name: address.last_name,
               street_address: address.address1,
               extended_address: address.address2,
               locality: address.city,
@@ -416,6 +420,8 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
               postal_code: address.zipcode,
             },
             billing: {
+              first_name: address.first_name,
+              last_name: address.last_name,
               street_address: address.address1,
               extended_address: address.address2,
               locality: address.city,
@@ -430,6 +436,35 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           expect(payment_method).to receive(:handle_result)
           expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
           payment_method.authorize(500, creditcard, options)
+        end
+      end
+    end
+
+    context "first and last name splitting" do
+      # since the address_hash comes from Spree::Address#active_merchant_hash which throws away
+      # information by only giving a concatenated full name in the :name field, we have to do a best
+      # guess here to split it back out. PayPal actually requires first_name and last_name on the
+      # shipping address in order to provide seller protection. Having something there is better
+      # than nothing.
+      let(:mapped_address) { payment_method.send(:map_address, {name: name}) }
+
+      context "simple 2 word name" do
+        let(:name) { "Luke Skywalker" }
+
+        it "splits" do
+          address = mapped_address
+          expect(address[:first_name]).to eq "Luke"
+          expect(address[:last_name]).to eq "Skywalker"
+        end
+      end
+
+      context "3 word name" do
+        let(:name) { "Obi Wan Kenobi" }
+
+        it "splits" do
+          address = mapped_address
+          expect(address[:first_name]).to eq "Obi Wan"
+          expect(address[:last_name]).to eq "Kenobi"
         end
       end
     end
