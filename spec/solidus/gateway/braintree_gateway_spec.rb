@@ -87,6 +87,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           capture = payment_method.capture(5000, auth.authorization, {})
           expect(capture).to be_success
           expect(capture.authorization).to be_present
+          expect(capture.avs_result["code"]).to eq "M"
         end
       end
 
@@ -151,10 +152,12 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       auth = payment_method.authorize(5000, card, {})
       expect(auth).to be_success
       expect(auth.authorization).to be_present
+      expect(auth.avs_result["code"]).to eq "I"
 
       capture = payment_method.capture(5000, auth.authorization, {})
       expect(capture).to be_success
       expect(capture.authorization).to be_present
+      expect(capture.avs_result["code"]).to eq "I"
     end
 
     it "succeeds capture on pending settlement" do
