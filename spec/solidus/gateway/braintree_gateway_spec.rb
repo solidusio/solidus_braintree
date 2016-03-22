@@ -348,14 +348,14 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
             it 'sends a bill address' do
               expected_params = {
                 billing: {
-                  first_name: address.first_name,
-                  last_name: address.last_name,
-                  street_address: "1234 bill address",
-                  extended_address: address.address2,
-                  locality: address.city,
-                  region: address.state_text,
-                  country_code_alpha2: address.country.iso,
-                  postal_code: address.zipcode,
+                  first_name: bill_address.first_name,
+                  last_name: bill_address.last_name,
+                  street_address: bill_address.address1,
+                  extended_address: bill_address.address2,
+                  locality: bill_address.city,
+                  region: bill_address.state_text,
+                  country_code_alpha2: bill_address.country.iso,
+                  postal_code: bill_address.zipcode,
                 },
                 customer_id: creditcard.gateway_customer_profile_id,
                 payment_method_token: 'abc123',
