@@ -9,7 +9,8 @@ require 'database_cleaner'
 require 'ffaker'
 require 'vcr'
 require 'webmock'
-require 'pry-byebug'
+require 'pry'
+require 'byebug'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
