@@ -151,11 +151,15 @@ module Solidus
     end
 
     def build_results_hash(result)
-      {}.tap do |results_hash|
-        results_hash.merge!({
+      if result.success?
+        {
           authorization: result.transaction.id,
-          avs_result: { code: result.transaction.avs_street_address_response_code }
-        }) if result.success?
+          avs_result: {
+            code: result.transaction.avs_street_address_response_code
+          }
+        }
+      else
+        {}
       end
     end
 
