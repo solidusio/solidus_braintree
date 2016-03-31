@@ -150,12 +150,25 @@ module Solidus
       end
     end
 
+    def build_results_hash(result)
+      if result.success?
+        {
+          authorization: result.transaction.id,
+          avs_result: {
+            code: result.transaction.avs_street_address_response_code
+          }
+        }
+      else
+        {}
+      end
+    end
+
     def handle_result(result)
       ActiveMerchant::Billing::Response.new(
         result.success?,
         message_from_result(result),
         {},
-        { authorization: (result.transaction.id if result.success?) }
+        build_results_hash(result)
       )
     end
 
