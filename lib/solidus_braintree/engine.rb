@@ -11,7 +11,7 @@ module SolidusBraintree
 
     def self.activate
       Rails.application.config.assets.precompile += [
-        'lib/assets/javascripts/spree/backend/solidus_braintree.js'
+        'lib/assets/javascripts/spree/backend/solidus_braintree.js',
       ]
 
       Dir.glob(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb")) do |c|
