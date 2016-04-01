@@ -21,6 +21,10 @@ module Solidus
       'Visa' => 'visa',
     }
 
+    def method_type
+      'braintree'
+    end
+
     def gateway_options
       {
         environment: preferred_environment.to_sym,
