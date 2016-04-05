@@ -14,20 +14,6 @@
     <div class="clear"></div>
 
     <div class="alpha four columns">
-      <div data-hook="card_number">
-        <div class="field">
-          <%= hidden_field_tag "#{param_prefix}[cc_type]", '', {class: 'ccType'} %>
-          <%= label_tag "card_number#{payment_method.id}", Spree::CreditCard.human_attribute_name(:number), class: 'required' %>
-          <%= text_field_tag "#{param_prefix}[number]", '', :class => 'required fullwidth cardNumber', :id => "card_number#{payment_method.id}", :maxlength => 19 %>
-          <span id="card_type" style="display:none;">
-            ( <span id="looks_like" ><%= Spree.t(:card_type_is) %> <span id="type"></span></span>
-              <span id="unrecognized"><%= Spree.t(:unrecognized_card_type) %></span>
-            )
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="alpha four columns">
       <div data-hook="card_name">
         <div class="field">
           <%= label_tag "card_name#{payment_method.id}", Spree::CreditCard.human_attribute_name(:name), class: 'required' %>
@@ -35,21 +21,10 @@
         </div>
       </div>
     </div>
-    <div class="three columns">
-      <div data-hook="card_expiration" class="field">
-        <%= label_tag "card_expiry#{payment_method.id}", Spree::CreditCard.human_attribute_name(:expiration), class: 'required' %>
-        <%= text_field_tag "#{param_prefix}[expiry]", '', id: "card_expiry#{payment_method.id}", class: "required cardExpiry", placeholder: "MM / YY" %>
-      </div>
-    </div>
-    <div class="omega two columns">
-      <div data-hook="card_code" class="field">
-        <%= label_tag "card_code#{payment_method.id}", Spree::CreditCard.human_attribute_name(:card_code), class: 'required' %>
-        <%= text_field_tag "#{param_prefix}[verification_value]", '', id: "card_code#{payment_method.id}", class: 'required fullwidth cardCode', size: 5 %>
-        <a href="/content/cvv" class="info cvvLink" target="_blank">
-          (<%= Spree.t(:what_is_this) %>)
-        </a>
-      </div>
-    </div>
+
+    <%= javascript_include_tag "spree/backend/braintree/solidus_braintree", "data-turbolinks-track" => true, "crossorigin" => "anonymous" %>
+    <div id="braintree-dropin"></div>
+    <input type="hidden" id="payment_method_nonce" name="payment[payment_method_nonce]">
 
     <div class="clear"></div>
 
