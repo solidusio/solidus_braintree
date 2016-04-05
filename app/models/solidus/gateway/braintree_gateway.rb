@@ -119,9 +119,19 @@ module Solidus
     end
 
     def void(authorization_code, source = {}, options = {})
-      result = braintree_gateway.transaction.void(authorization_code)
-
-      handle_result(result)
+      # Allows voiding payments that are in a checkout state
+      if authorization_code.nil?
+        # Fake response since we don't need to void anything with Braintree
+        ActiveMerchant::Billing::Response.new(
+          true,
+          "OK",
+          {},
+          {}
+        )
+      else
+        result = braintree_gateway.transaction.void(authorization_code)
+        handle_result(result)
+      end
     end
 
     def credit(cents, source, authorization_code, options = {})
