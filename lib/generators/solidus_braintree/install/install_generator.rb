@@ -5,6 +5,7 @@ module SolidusBraintree
 
       def add_javascripts
         append_file "vendor/assets/javascripts/spree/frontend/all.js", "//= require spree/frontend/braintree/solidus_braintree\n"
+        append_file "vendor/assets/javascripts/spree/backend/all.js", "//= require spree/backend/braintree/solidus_braintree\n"
       end
 
       def add_migrations
