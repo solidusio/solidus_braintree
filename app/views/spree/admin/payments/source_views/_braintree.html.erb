@@ -8,7 +8,7 @@
         <dd><%= payment.number %></dd>
 
         <dt><%= Spree.t(:response_code) %>:</dt>
-        <dd><%= payment.response_code %></dd>
+        <dd><%= braintree_transaction_link(payment.response_code) %></dd>
 
         <dt><%= Spree.t(:name_on_card) %>:</dt>
         <dd><%= payment.source.name %></dd>
