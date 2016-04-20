@@ -53,12 +53,13 @@ module Solidus
       return if source.gateway_customer_profile_id.present? || payment.payment_method_nonce.nil?
 
       user = payment.order.user
+      email = user ? user.email : payment.order.email
       address = (payment.source.address || payment.order.bill_address).try(:active_merchant_hash)
 
       params = {
         first_name: source.first_name,
         last_name: source.last_name,
-        email: user.email,
+        email: email,
         credit_card: {
           cardholder_name: source.name,
           billing_address: map_address(address),
