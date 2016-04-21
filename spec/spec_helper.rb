@@ -20,6 +20,10 @@ require 'spree/testing_support/preferences'
 require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/url_helpers'
 
+require 'capybara/rspec'
+require 'capybara/poltergeist'
+Capybara.javascript_driver = :poltergeist
+
 module SolidusGateway
   module Helpers
     module BraintreeGateway
@@ -46,6 +50,7 @@ FactoryGirl.find_definitions
 VCR.configure do |c|
   c.cassette_library_dir = "spec/cassettes"
   c.hook_into :webmock
+  c.ignore_localhost = true
   c.configure_rspec_metadata!
 end
 
