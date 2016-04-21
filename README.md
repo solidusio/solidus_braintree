@@ -19,6 +19,13 @@ And then execute:
     $ bundle
     $ bundle exec rails g solidus_braintree:install
 
+
+## Fraud detection
+
+This gem has support for the advanced fraud tools flow from Braintree, to activate
+fully the associated Braintree account must enable advanced fraud tools in the
+Control Panel.
+
 ## Usage
 
 This gem extends your solidus application by adding a `POST /api/payment_client_token` endpoint to you application to generate Braintree payment client token. This endpoint requires an authentication token in your request header.
