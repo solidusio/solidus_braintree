@@ -102,6 +102,18 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
         end
       end
 
+      context 'with checkout payment' do
+        # Set response_code to nil when in checkout state
+        before do
+          payment.update(response_code: nil)
+        end
+        it "can be voided" do
+          expect(payment).to be_checkout
+          void = payment_method.void(payment.response_code, payment.source, {})
+          expect(void).to be_success
+        end
+      end
+
       context 'with completed payment' do
         let!(:auth) do
           card.gateway_customer_profile_id = nil
