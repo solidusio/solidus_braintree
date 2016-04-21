@@ -68,6 +68,7 @@ module Solidus
             verify_card: true,
           },
         },
+        device_data: payment.device_data
       }
 
       result = braintree_gateway.customer.create(params)
