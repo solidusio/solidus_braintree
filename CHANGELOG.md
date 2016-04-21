@@ -1,5 +1,7 @@
 ## HEAD
 
+* Upgrade braintree to 2.23.0 for bug fixes and fraud detection with deviceData.
+
 ## 0.2.0
 
 * Add functionality around PayPal by adding a json or text field on credit card for storing extra data coming back from Braintree.
