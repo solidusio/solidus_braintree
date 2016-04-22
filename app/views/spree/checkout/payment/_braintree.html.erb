@@ -1,7 +1,10 @@
-<%= hidden_field_tag "order[payments_attributes][][device_data]", '', :id => "device_data" %>
+<%= render 'spree/checkout/payment/braintree_initialization', payment_method: payment_method %>
+
+<% hidden_field_tag "device_data", '', :id => "device_data" %>
 
 <%= image_tag 'credit_cards/credit_card.gif', :id => 'credit-card-image' %>
 <% param_prefix = "payment_source[#{payment_method.id}]" %>
+<% hidden_field_tag "#{param_prefix}[device_data]", '', :id => "device_data" %>
 
 <p class="field">
   <%= label_tag "name_on_card_#{payment_method.id}", Spree.t(:name_on_card) %><span class="required">*</span><br />
