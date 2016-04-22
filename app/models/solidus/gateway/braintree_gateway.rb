@@ -71,7 +71,6 @@ module Solidus
         device_data: payment.device_data
       }
 
-      binding.pry
       result = braintree_gateway.customer.create(params)
 
       if result.success?
@@ -109,14 +108,12 @@ module Solidus
     end
 
     def authorize(cents, creditcard, options = {})
-      binding.pry
       result = braintree_gateway.transaction.sale(transaction_authorize_or_purchase_params(cents, creditcard, options))
 
       handle_result(result)
     end
 
     def purchase(cents, creditcard, options = {})
-      binding.pry
       params = transaction_authorize_or_purchase_params(cents, creditcard, options)
       params[:options][:submit_for_settlement] = true
       result = braintree_gateway.transaction.sale(params)
@@ -244,9 +241,8 @@ module Solidus
         params[:payment_method_token] = creditcard.gateway_payment_profile_id
       end
 
-      if creditcard.device_data
-        params[:device_data] = creditcard.device_data 
-      end
+      # Send device_data if present
+      params[:device_data] = creditcard.device_data if creditcard.device_data
 
       # Send the bill address if we're using a nonce (i.e. doing a one-time
       # payment) or if we're configured to always send the bill address
