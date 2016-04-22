@@ -109,7 +109,6 @@ module Solidus
 
     def authorize(cents, creditcard, options = {})
       result = braintree_gateway.transaction.sale(transaction_authorize_or_purchase_params(cents, creditcard, options))
-
       handle_result(result)
     end
 
