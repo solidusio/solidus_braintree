@@ -21,6 +21,7 @@ require 'spree/testing_support/controller_requests'
 require 'spree/testing_support/url_helpers'
 
 require 'capybara/rspec'
+require 'capybara-screenshot/rspec'
 require 'capybara/poltergeist'
 Capybara.javascript_driver = :poltergeist
 
