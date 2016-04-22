@@ -24,12 +24,14 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
     # Payment
     expect(page).to have_content(gateway.name)
 
-    fill_in 'Card Number', with: '4111111111111111'
-    fill_in 'Expiration', with: "12/20"
-    fill_in 'Card Code', with: '123'
+    braintree_fill_in 'Card Number', with: '4111111111111111'
+    braintree_fill_in 'Expiration', with: "12/20"
+    braintree_fill_in 'Card Code', with: '123'
 
     click_on 'Save and Continue'
-    click_on 'Place Order'
+
+    # Previous step can take a long time, so we allow an extra delay
+    click_on 'Place Order', wait: 30
     expect(page).to have_content('Your order has been processed successfully')
 
     # Assert the payment details were stored correctly
@@ -62,6 +64,14 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
       select country.states.first, from: "order_bill_address_attributes_state_id"
       fill_in "Zip", with: "12010"
       fill_in "Phone", with: "(555) 555-5555"
+    end
+  end
+
+  def braintree_fill_in(label_text, with:)
+    label = find(:label, label_text)
+    frame = find("##{label[:for]} iframe")
+    within_frame(frame) do
+      find('input').set(with)
     end
   end
 end
