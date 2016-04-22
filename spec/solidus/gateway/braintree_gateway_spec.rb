@@ -4,7 +4,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
   let(:payment_method){ create_braintree_payment_method }
   let(:user){ FactoryGirl.create :user }
   # #create_profile doesn't support options, does it need to?
-  # let(:device_data){'{"name":"device_data","value":"{\"device_session_id\":\"d99cb85002cc4ac9e9a23c4a79d943ea\",\"fraud_merchant_id\":\"600000\",\"correlation_id\":\"c3c1356c70a3565af86e9add0d09315f\"}"}'}
+  let(:device_data){"{\"device_session_id\":\"75197918b634416368241bb8996b560c\",\"fraud_merchant_id\":\"600000\"}"}
 
   let(:payment) do
     FactoryGirl.create(:payment,
@@ -341,6 +341,24 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           expect(payment_method).to receive(:handle_result)
           expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
           payment_method.authorize(500, creditcard, options)
+        end
+
+        context 'device_data is present' do
+          before { creditcard.device_data = device_data }
+          it 'should send device data' do
+            expected_params = {
+              customer_id: creditcard.gateway_customer_profile_id,
+              options: {},
+              amount: "5.00",
+              payment_method_nonce: nonce,
+              channel: "Solidus",
+              device_data: device_data
+            }
+
+            expect(payment_method).to receive(:handle_result)
+            expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
+            payment_method.authorize(500, creditcard, options)
+          end
         end
 
         context 'when a billing address is provided' do
