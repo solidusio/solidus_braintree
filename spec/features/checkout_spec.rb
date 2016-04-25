@@ -13,7 +13,9 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
   end
 
   it "Accepts a CC payment" do
-    visit "/products/#{product.slug}"
+    using_wait_time(5) do
+      visit "/products/#{product.slug}"
+    end
     click_on 'Add To Cart'
     click_on 'Checkout'
 
@@ -52,7 +54,9 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
   end
 
   it "denies a fraudulent card" do
-    visit "/products/#{product.slug}"
+    using_wait_time(5) do
+      visit "/products/#{product.slug}"
+    end
     click_on 'Add To Cart'
     click_on 'Checkout'
 
