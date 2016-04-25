@@ -1,0 +1,1 @@
+Spree::OrderUpdateAttributes.include SolidusBraintree::InjectDeviceDataConcern

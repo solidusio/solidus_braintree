@@ -4,7 +4,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
   let(:payment_method){ create_braintree_payment_method }
   let(:user){ FactoryGirl.create :user }
   # #create_profile doesn't support options, does it need to?
-  # let(:device_data){'{"name":"device_data","value":"{\"device_session_id\":\"d99cb85002cc4ac9e9a23c4a79d943ea\",\"fraud_merchant_id\":\"600000\",\"correlation_id\":\"c3c1356c70a3565af86e9add0d09315f\"}"}'}
+  let(:device_data){"{\"device_session_id\":\"75197918b634416368241bb8996b560c\",\"fraud_merchant_id\":\"600000\"}"}
 
   let(:payment) do
     FactoryGirl.create(:payment,
@@ -34,6 +34,38 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
         expect{
           payment_method.create_profile(payment)
         }.to raise_error(Spree::Core::GatewayError, 'Email is an invalid format.')
+      end
+    end
+
+    context 'payment has associated device_data' do
+      it 'sends it to Braintree' do
+        payment = FactoryGirl.build(:payment,
+          order: FactoryGirl.create(:order,
+                                    user: user),
+          source: FactoryGirl.create(:credit_card,
+                                     name: "Card Holder",
+                                     user: user),
+          payment_method: payment_method,
+          payment_method_nonce: nonce,
+          device_data: device_data)
+        address = (payment.source.address || payment.order.bill_address).try(:active_merchant_hash)
+
+        expected_params = {
+          first_name: payment.source.first_name,
+          last_name: payment.source.last_name,
+          email: user.email,
+          credit_card: {
+            cardholder_name: payment.source.name,
+            payment_method_nonce: payment.payment_method_nonce,
+            billing_address: payment_method.send(:map_address, address),
+            options: {
+              verify_card: true,
+            },
+          },
+          device_data: payment.device_data
+        }
+        expect_any_instance_of(::Braintree::CustomerGateway).to receive(:create).with(expected_params).and_call_original
+        payment_method.create_profile(payment)
       end
     end
 
@@ -341,6 +373,24 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           expect(payment_method).to receive(:handle_result)
           expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
           payment_method.authorize(500, creditcard, options)
+        end
+
+        context 'device_data is present' do
+          before { creditcard.device_data = device_data }
+          it 'should send device data' do
+            expected_params = {
+              customer_id: creditcard.gateway_customer_profile_id,
+              options: {},
+              amount: "5.00",
+              payment_method_nonce: nonce,
+              channel: "Solidus",
+              device_data: device_data
+            }
+
+            expect(payment_method).to receive(:handle_result)
+            expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
+            payment_method.authorize(500, creditcard, options)
+          end
         end
 
         context 'when a billing address is provided' do

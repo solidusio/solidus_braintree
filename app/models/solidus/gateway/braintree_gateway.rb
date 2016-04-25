@@ -68,6 +68,7 @@ module Solidus
             verify_card: true,
           },
         },
+        device_data: payment.device_data
       }
 
       result = braintree_gateway.customer.create(params)
@@ -238,6 +239,9 @@ module Solidus
       else
         params[:payment_method_token] = creditcard.gateway_payment_profile_id
       end
+
+      # Send device_data if present
+      params[:device_data] = creditcard.device_data if creditcard.device_data
 
       # Send the bill address if we're using a nonce (i.e. doing a one-time
       # payment) or if we're configured to always send the bill address

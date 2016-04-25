@@ -13,7 +13,9 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
   end
 
   it "Accepts a CC payment" do
-    visit "/products/#{product.slug}"
+    using_wait_time(5) do
+      visit "/products/#{product.slug}"
+    end
     click_on 'Add To Cart'
     click_on 'Checkout'
 
@@ -49,6 +51,34 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
     expect(card.cc_type).to eq("visa")
     expect(card.gateway_customer_profile_id).to be_present
     expect(card.gateway_payment_profile_id).to be_present
+  end
+
+  it "denies a fraudulent card" do
+    using_wait_time(5) do
+      visit "/products/#{product.slug}"
+    end
+    click_on 'Add To Cart'
+    click_on 'Checkout'
+
+    fill_in_address
+    click_on 'Save and Continue'
+    click_on 'Save and Continue'
+
+    # Payment
+    expect(page).to have_content(gateway.name)
+
+    fill_in 'Card Number', with: '4000111111111511'
+    fill_in 'Expiration', with: "12/20"
+    fill_in 'Card Code', with: '777'
+
+    click_on 'Save and Continue'
+    expect(page).to have_content('Gateway Rejected: fraud')
+    expect(page).to_not have_content('Place Order')
+
+    # Assert the payment details were not stored
+    order = Spree::Order.first
+    expect(order.state).to eq("payment")
+    expect(order.payments.count).to be(0)
   end
 
   def fill_in_address
