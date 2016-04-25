@@ -37,6 +37,38 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       end
     end
 
+    context 'payment has associated device_data' do
+      it 'sends it to Braintree' do
+        payment = FactoryGirl.build(:payment,
+          order: FactoryGirl.create(:order,
+                                    user: user),
+          source: FactoryGirl.create(:credit_card,
+                                     name: "Card Holder",
+                                     user: user),
+          payment_method: payment_method,
+          payment_method_nonce: nonce,
+          device_data: device_data)
+        address = (payment.source.address || payment.order.bill_address).try(:active_merchant_hash)
+
+        expected_params = {
+          first_name: payment.source.first_name,
+          last_name: payment.source.last_name,
+          email: user.email,
+          credit_card: {
+            cardholder_name: payment.source.name,
+            payment_method_nonce: payment.payment_method_nonce,
+            billing_address: payment_method.send(:map_address, address),
+            options: {
+              verify_card: true,
+            },
+          },
+          device_data: payment.device_data
+        }
+        expect_any_instance_of(::Braintree::CustomerGateway).to receive(:create).with(expected_params).and_call_original
+        payment_method.create_profile(payment)
+      end
+    end
+
     context "with a valid credit card" do
       before do
         payment_method.create_profile(payment)
