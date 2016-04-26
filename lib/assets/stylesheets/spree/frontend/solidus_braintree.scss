@@ -1,0 +1,26 @@
+.braintree-hosted-field {
+  display: inline-block;
+  border: 1px solid #d9d9db;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 13px;
+  height: 2em;
+  width: 16em;
+  cursor: text;
+  padding: 0 5px;
+
+  &.braintree-hosted-fields-focused {
+    border-color: #00ADEE;
+  }
+
+  &.braintree-hosted-fields-valid {
+    border-color: #63CE63;
+  }
+
+  &.braintree-hosted-fields-invalid {
+    border-color: red;
+  }
+
+  &.card-code {
+    width: 6em;
+  }
+}
