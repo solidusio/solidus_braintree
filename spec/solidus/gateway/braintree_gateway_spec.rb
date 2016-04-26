@@ -17,8 +17,11 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       ),
       payment_method: payment_method,
       payment_method_nonce: nonce,
+      amount: amount
     )
   end
+  let(:amount) { 5.00 }
+
   let(:card) { payment.source }
 
   context 'a customer profile' do
@@ -244,10 +247,10 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
         end
       end
 
-      context 'failure', transaction_clean: false do
+      context 'failure' do
+        let(:amount) { 4001.00 }
         it "fails" do
           expect{
-            payment.amount = 4001.00
             payment.capture!
           }.to raise_error(Spree::Core::GatewayError)
           expect(payment).to be_failed
