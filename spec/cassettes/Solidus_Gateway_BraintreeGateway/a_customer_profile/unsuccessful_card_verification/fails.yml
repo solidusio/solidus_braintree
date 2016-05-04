@@ -1,0 +1,106 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://ym9djwqpkxbv3xzt:4ghghkyp2yy6yqc8@api.sandbox.braintreegateway.com/merchants/zbn5yzq9t7wmwx42/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <first-name>Card</first-name>
+          <last-name>Holder</last-name>
+          <email>alfredo@carroll.com</email>
+          <credit-card>
+            <cardholder-name>Card Holder</cardholder-name>
+            <billing-address>
+              <first-name>John</first-name>
+              <last-name>Doe</last-name>
+              <street-address>10 Lovely Street</street-address>
+              <extended-address>Northwest</extended-address>
+              <locality>Herndon</locality>
+              <region>AL</region>
+              <country-code-alpha2>US</country-code-alpha2>
+              <postal-code>31456</postal-code>
+            </billing-address>
+            <payment-method-nonce>fake-processor-declined-visa-nonce</payment-method-nonce>
+            <options>
+              <verify-card type="boolean">true</verify-card>
+            </options>
+          </credit-card>
+          <device-data nil="true"/>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.60.0
+      X-Apiversion:
+      - '4'
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 422
+      message: Unprocessable Entity
+    headers:
+      Date:
+      - Wed, 04 May 2016 23:01:13 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - s8282g6qcjgm2dfk
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Cache-Control:
+      - no-cache
+      X-Request-Id:
+      - 259c91af-a8c8-408d-b7a8-5c1e74982de7
+      X-Runtime:
+      - '1.130491'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIADl/KlcAA5xWbW/bNhD+nl8h+DtrSXGctFDUFS22YOuCAm06YF8Gmjzb
+        nCVSIymn+vc7Ui+ULbnL+k28e+54rw+Vvf1WFtERtBFK3i+SV/EiAskUF3J3
+        v3j68jO5W7zNrzJaCQJaK000mEpJA/lVFGVeZNzncIhsU8H9gmpNm8XSo5YB
+        llVU07K3YLWxqgTdHlGwFdpYImkJ+XuqebYcCXpMQXvJgyo46GwZJD0GSiqK
+        nBZbDVz9xDAYVRSvmCoxFq/qgQwBwhJE8F7mpHjce+chlqi/7VwZzDaiKLBu
+        hHKOVTJBc5rZr2ov5zI7y+6DgpnUPMhYDWCHe5I4+qiOUDTRZ6/IlmeAsS18
+        syA58EH5qLTdP4NBs4nuJDLFaCFskz+AllxhCoNkDNOww1HK333Mlt3nWMtU
+        La1uCE4YEFpUe5rmT5+xqDPysV2ljKWFV+fXyepmnS3HotCD5cUm4Og1JUhL
+        SrB7xYlUkkG+pQcglVYMsTjdHBhaYwWOwtAWgjfNGQa/qrKY5mmxcKPEtmnn
+        yuoanYwlo3AnxhmHo2BADAaEGiJ4JEVxv3Be2n3qJ0rTmmNMmu0pBjePw8qe
+        TziKRmvnsus3MivxTrpzoxc9KosTLxUOfC+96vMSjNqhsTiM1NYmH2r4V19D
+        N4Ze1S378TiQR9u13zGUibAF06M54xuvnabokaNRmF7xfUBwcroz836+i2ld
+        7aiFZ9qg7m9grkz4RY2SM6EPvaPMzz/2MDcV3uBqPlW1RmFWT29P4zjGZl7Q
+        XrS1uPNn/b6Ean1gIK93/O75NlsOMXU7N0fjl8juP4kOqaKsqGxmp/oHCfCH
+        yO8FxHeZ9F5IXAMv+go8SWGBYy44SiZS2+gdjgMuXaDJUKiB8Potmz5omVUH
+        mJk/3ziZr3BwksT5kafNWeVJktx0rVmFUNE1cY98/hU5sn0P23OociW0pwhS
+        Kmn3eZK68p4JZ9ANUI2DnMYncC8dbu+4i7geeBbyz8dEOo72/z7lWS3FPzUQ
+        WZcbVAmO5I+sh4TJ6ZrdAkvXt3cbvl3fpenreI3nOOV8m6yQ8i6aDgOhoaK4
+        OU/yINWzdOvWCnrAHmhh9xgaBMxI1sM4bIQNiPY4KGuN7cT93dUFDtHotolm
+        tG6OdAQtAngkG8KnjfuXGoXfCXqAMKZ27++GykNAnUjPh15tidNT96yO7p4q
+        Qw0Vr5knxVEZB1n/zE1ePpS4nAm13V8qx6MVJSxw6pI1iW9IvPqSXr+JkzdJ
+        +qd30Rl0HuqKv9zDNXoIBp0HLcyBoIyGivH80+OnD/H1H799fXj/S+BV32Um
+        jKeWChM8gmt0J+myPPHX/WYMDzS+WjM/7v8CAAD//wMANaxU+fULAAA=
+    http_version: 
+  recorded_at: Wed, 04 May 2016 23:01:12 GMT
+recorded_with: VCR 3.0.1

@@ -40,6 +40,26 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       end
     end
 
+    context 'unsuccessful card verification' do
+      let(:nonce) { Braintree::Test::Nonce::ProcessorDeclinedVisa }
+
+      it 'fails' do
+        expect{
+          payment_method.create_profile(payment)
+        }.to raise_error(Spree::Core::GatewayError, 'Do Not Honor')
+      end
+    end
+
+    context 'fraudulent purchase' do
+      let(:nonce) { Braintree::Test::Nonce::GatewayRejectedFraud }
+
+      it 'fails' do
+        expect{
+          payment_method.create_profile(payment)
+        }.to raise_error(Spree::Core::GatewayError, 'Gateway Rejected: fraud')
+      end
+    end
+
     context 'payment has associated device_data' do
       it 'sends it to Braintree' do
         payment = FactoryGirl.build(:payment,
