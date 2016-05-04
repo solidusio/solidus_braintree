@@ -154,6 +154,35 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
     expect(order.payments.count).to be(0)
   end
 
+  it "expiration and cvv are required" do
+    using_wait_time(5) do
+      visit "/products/#{product.slug}"
+    end
+    click_on 'Add To Cart'
+    click_on 'Checkout'
+
+    fill_in_address
+    click_on 'Save and Continue'
+    click_on 'Save and Continue'
+
+    # Payment
+    expect(page).to have_content(gateway.name)
+
+    braintree_fill_in 'Card Number', with: '4111111111111111'
+    braintree_fill_in 'Expiration', with: ''
+    braintree_fill_in 'Card Code', with: ''
+
+    click_on 'Save and Continue'
+    expect(page).to have_content('cvv is required')
+    expect(page).to have_content('expirationDate is required')
+    expect(page).to_not have_content('Place Order')
+
+    # Assert the payment details were not stored
+    order = Spree::Order.first
+    expect(order.state).to eq("payment")
+    expect(order.payments.count).to be(0)
+  end
+
   def fill_in_address
     fill_in "Customer E-Mail", with: "han@example.com"
     within("#billing") do
