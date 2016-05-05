@@ -74,7 +74,7 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
     braintree_fill_in 'Card Code', with: '123'
 
     click_on 'Save and Continue'
-    expect(page).to have_content('Do Not Honor')
+    expect(page).to have_content('Do Not Honor', wait: 30)
     expect(page).to_not have_content('Place Order')
 
     # Assert the payment details were not stored
