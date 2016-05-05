@@ -1,4 +1,6 @@
 <div class="braintree-payment">
+  <%= render 'spree/checkout/payment/braintree_initialization', payment_method: payment_method %>
+
   <div class="braintree-cc-input">
     <%= image_tag 'credit_cards/credit_card.gif', :id => 'credit-card-image' %>
     <% param_prefix = "payment_source[#{payment_method.id}]" %>
