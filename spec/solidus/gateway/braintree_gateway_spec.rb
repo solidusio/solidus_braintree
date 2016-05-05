@@ -92,39 +92,41 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       end
     end
 
-    context 'order gets updated with device_data' do
-      it 'order passes device_data to create_profile' do
-        order = FactoryGirl.create(:order_with_line_items, user: user)
+    if Spree.respond_to?(:solidus_version) && Spree.solidus_version > "1.1"
+      context 'order gets updated with device_data' do
+        it 'order passes device_data to create_profile' do
+          order = FactoryGirl.create(:order_with_line_items, user: user)
 
-        bill_address = order.bill_address
-        expected_address = payment_method.send(:map_address, bill_address.try(:active_merchant_hash))
-        expected_params = {
-          first_name: "John",
-          last_name: "Doe",
-          email: user.email,
-          credit_card: {
-            cardholder_name: "John Doe",
-            billing_address: expected_address,
-            payment_method_nonce: nonce,
-            options: {
-              verify_card: true
-            }
-          },
-          device_data: device_data
-        }
-
-        update_params = { braintree_device_data: device_data,
-          payments_attributes: [
-            { amount: order.total,
-              payment_method_id: payment_method.id,
+          bill_address = order.bill_address
+          expected_address = payment_method.send(:map_address, bill_address.try(:active_merchant_hash))
+          expected_params = {
+            first_name: "John",
+            last_name: "Doe",
+            email: user.email,
+            credit_card: {
+              cardholder_name: "John Doe",
+              billing_address: expected_address,
               payment_method_nonce: nonce,
-              source_attributes:
-                { cc_type: "",
-                  name: "John Doe",
-                  address_attributes: bill_address.attributes.except("id", "created_at", "updated_at") }}]}
+              options: {
+                verify_card: true
+              }
+            },
+            device_data: device_data
+          }
 
-        expect_any_instance_of(::Braintree::CustomerGateway).to receive(:create).with(expected_params).and_call_original
-        Spree::OrderUpdateAttributes.new(order, update_params, request_env: nil).apply
+          update_params = { braintree_device_data: device_data,
+                            payments_attributes: [
+                              { amount: order.total,
+                                payment_method_id: payment_method.id,
+                                payment_method_nonce: nonce,
+                                source_attributes:
+                                  { cc_type: "",
+                                    name: "John Doe",
+                                    address_attributes: bill_address.attributes.except("id", "created_at", "updated_at") }}]}
+
+          expect_any_instance_of(::Braintree::CustomerGateway).to receive(:create).with(expected_params).and_call_original
+          Spree::OrderUpdateAttributes.new(order, update_params, request_env: nil).apply
+        end
       end
     end
 
