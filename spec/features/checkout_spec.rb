@@ -13,9 +13,7 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
   end
 
   it "accepts a CC payment" do
-    using_wait_time(5) do
-      visit "/products/#{product.slug}"
-    end
+    visit "/products/#{product.slug}"
     click_on 'Add To Cart'
     click_on 'Checkout'
 
@@ -56,9 +54,7 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
   end
 
   it "unsuccessful credit card verification" do
-    using_wait_time(5) do
-      visit "/products/#{product.slug}"
-    end
+    visit "/products/#{product.slug}"
     click_on 'Add To Cart'
     click_on 'Checkout'
 
@@ -85,9 +81,7 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
 
   it "unsuccessful credit card transaction (amount >= 2000)" do
     product = create(:product, name: "Millenium Falcon", price: 2500.00, cost_price: 2000.00)
-    using_wait_time(5) do
-      visit "/products/#{product.slug}"
-    end
+    visit "/products/#{product.slug}"
     click_on 'Add To Cart'
     click_on 'Checkout'
 
@@ -127,9 +121,7 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
   end
 
   it "denies a fraudulent card" do
-    using_wait_time(5) do
-      visit "/products/#{product.slug}"
-    end
+    visit "/products/#{product.slug}"
     click_on 'Add To Cart'
     click_on 'Checkout'
 
@@ -155,9 +147,7 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
   end
 
   it "expiration and cvv are required" do
-    using_wait_time(5) do
-      visit "/products/#{product.slug}"
-    end
+    visit "/products/#{product.slug}"
     click_on 'Add To Cart'
     click_on 'Checkout'
 
