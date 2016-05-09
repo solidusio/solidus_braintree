@@ -53,6 +53,53 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
     expect(card.gateway_payment_profile_id).to be_present
   end
 
+  it "accepts Paypal" do
+    visit "/products/#{product.slug}"
+    click_on 'Add To Cart'
+    click_on 'Checkout'
+
+    fill_in_address
+    click_on 'Save and Continue'
+    click_on 'Save and Continue'
+
+    # Payment
+    expect(page).to have_content(gateway.name)
+
+    click_on 'braintree-paypal-button'
+
+    paypal_popup = page.driver.window_handles.last
+
+    within_window(paypal_popup) do
+      expect(page).to have_content('Proceed with Sandbox Purchase')
+      click_on 'Proceed with Sandbox Purchase'
+    end
+
+    expect(page).to_not have_content('Enter a credit_card')
+    expect(page).to have_content('Cancel')
+
+    click_on 'Save and Continue'
+
+    # Previous step can take a long time, so we allow an extra delay
+    click_on 'Place Order', wait: 30
+    expect(page).to have_content('Your order has been processed successfully')
+
+    # # Assert the payment details were stored correctly
+    order = Spree::Order.first
+    expect(order).to be_complete
+    expect(order.payments.count).to be(1)
+
+    payment = order.payments.first
+    expect(payment).to be_pending
+    expect(payment.response_code).to be_present
+
+    card = payment.source
+
+    expect(card).to be_a(Spree::CreditCard)
+    expect(card.cc_type).to eq("paypal")
+    expect(card.gateway_customer_profile_id).to be_present
+    expect(card.gateway_payment_profile_id).to be_present
+  end
+
   it "unsuccessful credit card verification" do
     visit "/products/#{product.slug}"
     click_on 'Add To Cart'
