@@ -167,16 +167,21 @@ module Solidus
     end
 
     def build_results_hash(result)
-      if result.success?
-        {
-          authorization: result.transaction.id,
-          avs_result: {
-            code: result.transaction.avs_street_address_response_code
-          }
-        }
+      return {} unless result.success?
+
+      # We ignore avs response when doing a Paypal transaction
+      if result.transaction.paypal_details.authorization_id.present?
+        avs_code = nil
       else
-        {}
+        avs_code = result.transaction.avs_street_address_response_code
       end
+
+      {
+        authorization: result.transaction.id,
+        avs_result: {
+          code: avs_code
+        }
+      }
     end
 
     def handle_result(result)
