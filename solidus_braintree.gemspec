@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "byebug"
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'database_cleaner', '~> 1.2'
-  spec.add_development_dependency "vcr"
+  spec.add_development_dependency "vcr", '~> 3.0'
   spec.add_development_dependency "webmock"
   spec.add_development_dependency 'simplecov'
 end

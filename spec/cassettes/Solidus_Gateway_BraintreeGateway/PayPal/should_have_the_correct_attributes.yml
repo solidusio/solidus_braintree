@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: post
-    uri: https://ym9djwqpkxbv3xzt:4ghghkyp2yy6yqc8@api.sandbox.braintreegateway.com/merchants/zbn5yzq9t7wmwx42/customers
+    uri: https://api.sandbox.braintreegateway.com/merchants/zbn5yzq9t7wmwx42/customers
     body:
       encoding: UTF-8
       string: |
@@ -10,22 +10,25 @@ http_interactions:
         <customer>
           <first-name>Card</first-name>
           <last-name>Holder</last-name>
-          <email>pasquale@langosh.name</email>
+          <email>rubie.ankunding@luettgen.us</email>
           <credit-card>
             <cardholder-name>Card Holder</cardholder-name>
             <billing-address>
+              <first-name>John</first-name>
+              <last-name>Doe</last-name>
               <street-address>10 Lovely Street</street-address>
               <extended-address>Northwest</extended-address>
               <locality>Herndon</locality>
               <region>AL</region>
               <country-code-alpha2>US</country-code-alpha2>
-              <postal-code>35005</postal-code>
+              <postal-code>02998-0440</postal-code>
             </billing-address>
             <payment-method-nonce>fake-paypal-future-nonce</payment-method-nonce>
             <options>
               <verify-card type="boolean">true</verify-card>
             </options>
           </credit-card>
+          <device-data nil="true"/>
         </customer>
     headers:
       Accept-Encoding:
@@ -33,9 +36,11 @@ http_interactions:
       Accept:
       - application/xml
       User-Agent:
-      - Braintree Ruby Gem 2.48.1
+      - Braintree Ruby Gem 2.62.0
       X-Apiversion:
       - '4'
+      Authorization:
+      - Basic eW05ZGp3cXBreGJ2M3h6dDo0Z2hnaGt5cDJ5eTZ5cWM4
       Content-Type:
       - application/xml
   response:
@@ -44,50 +49,51 @@ http_interactions:
       message: Created
     headers:
       Date:
-      - Mon, 14 Sep 2015 16:43:43 GMT
+      - Tue, 24 May 2016 22:17:00 GMT
       Content-Type:
       - application/xml; charset=utf-8
       Transfer-Encoding:
       - chunked
-      Connection:
-      - close
+      X-Frame-Options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
       X-Authentication:
       - basic_auth
-      Strict-Transport-Security:
-      - max-age=31536000
-      - max-age=31536000; includeSubDomains
       X-User:
       - s8282g6qcjgm2dfk
       Vary:
       - Accept-Encoding
       Content-Encoding:
       - gzip
-      X-Ua-Compatible:
-      - IE=Edge,chrome=1
       Etag:
-      - '"3268f9e4dea837368f47e9dd7d4f09fa"'
+      - W/"3d9cc2afb26e5484a8d8e3c743580555"
       Cache-Control:
       - max-age=0, private, must-revalidate
       X-Request-Id:
-      - e2027e76b2ed19f701fb1884facdbd17
+      - ca95f77c-becd-466d-acf6-7b9278748d38
       X-Runtime:
-      - '0.229547'
-      X-Frame-Options:
-      - SAMEORIGIN
+      - '0.376237'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
     body:
       encoding: ASCII-8BIT
       string: !binary |-
-        H4sIAD/59lUAA6RTTW/bMAy991cYvstK0nRpCsUpMGDYD+guuxS0xTjaJEqV
-        5Cbur59sNx+rdxkK6ML3HkXxURTbo9HZK/qgLG3yeTHLM6TaSkXNJv/x9I3d
-        59vyRtRtiNagL2+yTChZ3t6vlqvFei54CnoscfUeKLIUv1V01729rOPqYA7H
-        5ULwa7ZX75QPkREYLL+Cl4JfAT2v4RR9t1qiF/yC9HxtjQPqMlJ6k0ffYs4H
-        HA0oXToILy1ofNRAjQ37os8TfCR7mdtbwknyDo4T7IBVUHGqrT1CRMkgZrFz
-        uMllCqMymJeL2fyOzdZsvnyaf3lY3qbzU/BLwpDfOvl/+ZeEsf4wD7ZTqGU4
-        P0mqyOrkZ3i/FLyH7v3FDjoHmkFd25bi34peMJGMYIKj/Y1U7mi1poPgY3Ti
-        Rk9/AWEhLT7iEYzTWKT5XPk9KCXuoNWnditrNQLlZe+p4O/kWawMNMhar8t9
-        jC48cA4hYAxF5UFR9IhNcuMAXV+Jp3cbpPhsMO6tfNa2sXzspXDUbJFelbfU
-        SzYBSFb2mL7tucKp5idHOtzxybEOd4S2CrVXLqaN/McgB02ltE4byqBJVvSN
-        pcX6+EeTjE8n+hELAwhSekwOT+qlLs+b/wcAAP//AwDyEz8mLAQAAA==
+        H4sIANzSRFcAA6RTy27bMBC8+ysE3Snaqu3WgSwHKFD0A9JLL8FKXMlsqKVK
+        UrGVry8p+RUrlyLHnZ19cHaY7Y6Nil7RWKlpGy+SeRwhlVpIqrfxr6cf7Fu8
+        y2dZ2VmnGzT5LIoyKfJ1Ol9vVst5xn0QMJ8r90CO+fitoFX/9nfjvh6aw3GZ
+        Zvw2G9iVNNYxggbz72BExm+AkFdwjn5qJdBk/IqEfKmbFqiPSKpt7EyHMR9w
+        bECq3HSFxATopaPwjkfVoXM1UtLZjI+UQG73mnDSooLjBDtgYaWbckuD4FAw
+        cJHrW9zGwodONhjn6XyxZvMVS5dPafqwWD+sNr8zfi0Y6rtW/F/9tWCcP1yF
+        VRKVsJeVhHSs9KraU1MwBvrTxi30LSgGZak7cu8ZgTChjKCHC6mUF5NBbRAb
+        HG55L8hA/KQoY4+T3dg7q92iZ6bACjp1HlVorRAozsNOGT8lL+Tx9n+AMBEa
+        H/EITasw8W668cXAlA3UyDqj8r1zrX3gHKxFZ5PCgCTnJaj9zgfoQzH3kgVF
+        nht0ey2ela41H2VMWqp3SK/SaAqUrQUShT76f3OZcJ5pu8KWRrbOf8UPbjdw
+        nH5Bysvjl37vv9UYnXOfdNP4bsvCRyVUTJJ0MuTvta1AWS/uR9RLH//6cCeq
+        9NQjGZ9a7B6zAwhCGPS6T9S4eiGf/QMAAP//AwAvGWphwwQAAA==
     http_version: 
-  recorded_at: Mon, 14 Sep 2015 16:43:43 GMT
-recorded_with: VCR 2.9.3
+  recorded_at: Tue, 24 May 2016 22:17:00 GMT
+recorded_with: VCR 3.0.3
