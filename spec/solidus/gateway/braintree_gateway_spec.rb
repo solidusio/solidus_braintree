@@ -184,6 +184,17 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
         end
       end
 
+      context 'purchase' do
+        it 'succeeds' do
+          card.gateway_customer_profile_id = nil
+          auth = payment_method.purchase(300, card, {})
+
+          expect(auth).to be_success
+          expect(auth.authorization).to be_present
+          expect(auth.avs_result["code"]).to eq "M"
+        end
+      end
+
       context 'decline' do
         it "fails" do
           card.gateway_customer_profile_id = nil
@@ -204,6 +215,18 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           expect(payment).to be_checkout
           void = payment_method.void(payment.response_code, payment.source, {})
           expect(void).to be_success
+        end
+      end
+
+      context 'with authorized payment' do
+        let!(:auth) do
+          card.gateway_customer_profile_id = nil
+          payment_method.authorize(5000, card, {})
+        end
+        let(:auth_code){ auth.authorization }
+
+        it 'is voidable' do
+          expect(payment_method.voidable?(auth_code))
         end
       end
 

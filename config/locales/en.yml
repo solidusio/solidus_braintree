@@ -1,0 +1,4 @@
+en:
+  solidus_braintree:
+    paypal_header_html: <h5>Checkout with</h5>
+    creditcard_header_html: <p class="or">or</p><h5>Enter a credit card:</h5>
