@@ -153,6 +153,18 @@ module Solidus
       ].include?(transaction.status)
     end
 
+    def card_number_placeholder
+      '4141 4141 4141 4141'
+    end
+
+    def expiration_date_placeholder
+      '01/2020'
+    end
+
+    def card_code_placeholder
+      '123'
+    end
+
     private
     def message_from_result(result)
       if result.success?
