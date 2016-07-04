@@ -619,4 +619,69 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       end
     end
   end
+
+  describe '#cancel' do
+    let(:transaction_gateway) do
+      instance_double(Braintree::TransactionGateway)
+    end
+
+    let(:braintree_transaction) do
+      instance_double(
+        Braintree::Transaction,
+        status: status
+      )
+    end
+
+    let(:cancel_transaction) do
+      instance_double(
+        Braintree::Transaction,
+        id: 'id',
+        avs_street_address_response_code: 'avs-code'
+      )
+    end
+
+    let(:response) { 'my-braintree-code' }
+    let(:result) { double(success?: true, transaction: cancel_transaction) }
+
+    before do
+      allow(payment_method.braintree_gateway).to receive(
+        :transaction
+      ).and_return(
+        transaction_gateway
+      )
+      allow(transaction_gateway).to receive(:find).with(
+        response
+      ).and_return(
+        braintree_transaction
+      )
+    end
+
+    subject { payment_method.cancel(response) }
+
+    context 'when the payment is voidable' do
+      let(:status) { Braintree::Transaction::Status::Authorized }
+
+      it 'voids the payment' do
+        expect(transaction_gateway).to receive(:void).once.with(
+          response
+        ).and_return(
+          result
+        )
+        subject
+      end
+    end
+
+    context 'when the payment is not voidable' do
+      let(:status) { Braintree::Transaction::Status::Settled }
+
+      it 'refunds the payment' do
+        expect(transaction_gateway).to receive(:refund).once.with(
+          response
+        ).and_return(
+          result
+        )
+        subject
+      end
+    end
+  end
 end
