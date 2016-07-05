@@ -165,6 +165,16 @@ module Solidus
       '123'
     end
 
+    def cancel(response)
+      if voidable?(response)
+        void(response)
+      else
+        handle_result(
+          braintree_gateway.transaction.refund(response)
+        )
+      end
+    end
+
     private
     def message_from_result(result)
       if result.success?
