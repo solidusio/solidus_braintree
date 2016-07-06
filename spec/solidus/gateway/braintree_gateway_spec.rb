@@ -61,34 +61,75 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
     end
 
     context 'payment has associated device_data' do
-      it 'sends it to Braintree' do
-        payment = FactoryGirl.build(:payment,
-          order: FactoryGirl.create(:order,
-                                    user: user,
-                                    braintree_device_data: device_data),
-          source: FactoryGirl.create(:credit_card,
-                                     name: "Card Holder",
-                                     user: user),
+      let(:payment) do
+        FactoryGirl.build(
+          :payment,
+          order: FactoryGirl.create(
+            :order,
+            user: user,
+            braintree_device_data: device_data
+          ),
+          source: FactoryGirl.create(
+            :credit_card,
+            name: "Card Holder",
+            user: user
+          ),
           payment_method: payment_method,
-          payment_method_nonce: nonce)
-        address = (payment.source.address || payment.order.bill_address).try(:active_merchant_hash)
+          payment_method_nonce: nonce
+        )
+      end
 
-        expected_params = {
+      let(:address) do
+        (
+          payment.source.address || payment.order.bill_address
+        ).try(:active_merchant_hash)
+      end
+
+      let(:expected_params) do
+        {
           first_name: payment.source.first_name,
           last_name: payment.source.last_name,
           email: user.email,
           credit_card: {
             cardholder_name: payment.source.name,
             payment_method_nonce: payment.payment_method_nonce,
-            billing_address: payment_method.send(:map_address, address),
             options: {
               verify_card: true,
             },
           },
           device_data: device_data
         }
-        expect_any_instance_of(::Braintree::CustomerGateway).to receive(:create).with(expected_params).and_call_original
-        payment_method.create_profile(payment)
+      end
+
+      context 'when verify_address is true' do
+        let(:expected_params) do
+          super().tap do |params|
+            params[:credit_card][:billing_address] = {
+              first_name: "John",
+              last_name: "Doe",
+              street_address: "10 Lovely Street",
+              extended_address: "Northwest",
+              locality: "Herndon",
+              region: "AL",
+              country_code_alpha2: "US",
+              postal_code: address[:zip]
+            }
+          end
+        end
+
+        it 'sends it to Braintree' do
+          expect_any_instance_of(::Braintree::CustomerGateway).to receive(:create).with(expected_params).and_call_original
+          payment_method.create_profile(payment)
+        end
+      end
+
+      context 'when verify_address is false' do
+        before { payment_method.preferred_verify_address = false }
+
+        it 'sends it to Braintree' do
+          expect_any_instance_of(::Braintree::CustomerGateway).to receive(:create).with(expected_params).and_call_original
+          payment_method.create_profile(payment)
+        end
       end
     end
 
@@ -493,30 +534,54 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           context 'when preferred_always_send_bill_address is true' do
             before do
               payment_method.update!(preferred_always_send_bill_address: true)
+              allow(payment_method).to receive(:handle_result)
             end
 
-            it 'sends a bill address' do
-              expected_params = {
-                billing: {
-                  first_name: bill_address.first_name,
-                  last_name: bill_address.last_name,
-                  street_address: bill_address.address1,
-                  extended_address: bill_address.address2,
-                  locality: bill_address.city,
-                  region: bill_address.state_text,
-                  country_code_alpha2: bill_address.country.iso,
-                  postal_code: bill_address.zipcode,
-                },
+            let(:expected_params) do
+              {
                 customer_id: creditcard.gateway_customer_profile_id,
                 payment_method_token: 'abc123',
                 options: {},
                 amount: "5.00",
                 channel: "Solidus"
               }
+            end
 
-              allow(payment_method).to receive(:handle_result)
-              expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
-              payment_method.authorize(500, creditcard, options)
+            context 'when verify address if false' do
+              before { payment_method.preferred_verify_address = false }
+
+              it 'does not send a bill address' do
+                expect_any_instance_of(
+                  ::Braintree::TransactionGateway
+                ).to receive(:sale).with(expected_params)
+
+                payment_method.authorize(500, creditcard, options)
+              end
+            end
+
+            context 'when verify address is true' do
+              let(:expected_params) do
+                super().tap do |params|
+                  params[:billing] = {
+                    first_name: bill_address.first_name,
+                    last_name: bill_address.last_name,
+                    street_address: bill_address.address1,
+                    extended_address: bill_address.address2,
+                    locality: bill_address.city,
+                    region: bill_address.state_text,
+                    country_code_alpha2: bill_address.country.iso,
+                    postal_code: bill_address.zipcode,
+                  }
+                end
+              end
+
+              it 'sends a bill address' do
+                expect_any_instance_of(
+                  ::Braintree::TransactionGateway
+                ).to receive(:sale).with(expected_params)
+
+                payment_method.authorize(500, creditcard, options)
+              end
             end
           end
 
@@ -544,7 +609,11 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       end
 
       context "with billing or shipping address" do
-        before { creditcard.update_attributes(gateway_customer_profile_id: 5) }
+        before do
+          creditcard.update_attributes(gateway_customer_profile_id: 5)
+          expect(payment_method).to receive(:handle_result)
+        end
+
         let(:options) { {
           customer_id: user.id,
           payment_method_nonce: nonce,
@@ -554,38 +623,55 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           customer: user.email
         } }
 
-        it "should send billing and shipping address" do
-          expected_params = {
+        let(:expected_address) do
+          {
+            first_name: address.first_name,
+            last_name: address.last_name,
+            street_address: address.address1,
+            extended_address: address.address2,
+            locality: address.city,
+            region: address.state_text,
+            country_code_alpha2: address.country.iso,
+            postal_code: address.zipcode,
+          }
+        end
+
+        let(:expected_params) do
+          {
             customer_id:  creditcard.gateway_customer_profile_id,
             options: {},
             amount: "5.00",
-            shipping: {
-              first_name: address.first_name,
-              last_name: address.last_name,
-              street_address: address.address1,
-              extended_address: address.address2,
-              locality: address.city,
-              region: address.state_text,
-              country_code_alpha2: address.country.iso,
-              postal_code: address.zipcode,
-            },
-            billing: {
-              first_name: address.first_name,
-              last_name: address.last_name,
-              street_address: address.address1,
-              extended_address: address.address2,
-              locality: address.city,
-              region: address.state_text,
-              country_code_alpha2: address.country.iso,
-              postal_code: address.zipcode,
-            },
             payment_method_nonce: nonce,
             channel: "Solidus"
           }
+        end
 
-          expect(payment_method).to receive(:handle_result)
-          expect_any_instance_of(::Braintree::TransactionGateway).to receive(:sale).with(expected_params)
-          payment_method.authorize(500, creditcard, options)
+        context 'when verify address is true' do
+          let(:expected_params) do
+            super().tap do |params|
+              params[:shipping] = expected_address
+              params[:billing] = expected_address
+            end
+          end
+
+          it "should send billing and shipping address" do
+            expect_any_instance_of(
+              ::Braintree::TransactionGateway
+            ).to receive(:sale).with(expected_params)
+            payment_method.authorize(500, creditcard, options)
+          end
+        end
+
+        context 'when verify address is false' do
+          before { payment_method.preferred_verify_address = false }
+
+
+          it "should not send billing and shipping address" do
+            expect_any_instance_of(
+              ::Braintree::TransactionGateway
+            ).to receive(:sale).with(expected_params)
+            payment_method.authorize(500, creditcard, options)
+          end
         end
       end
     end
