@@ -1,0 +1,118 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/zbn5yzq9t7wmwx42/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <first-name>Card</first-name>
+          <last-name>Holder</last-name>
+          <email>abdullah_kirlin@runolfsdottirframi.info</email>
+          <credit-card>
+            <cardholder-name>Card Holder</cardholder-name>
+            <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
+            <options>
+              <verify-card type="boolean">true</verify-card>
+            </options>
+            <billing-address>
+              <first-name>John</first-name>
+              <last-name>Doe</last-name>
+              <street-address>10 Lovely Street</street-address>
+              <extended-address>Northwest</extended-address>
+              <locality>Herndon</locality>
+              <region>AL</region>
+              <country-code-alpha2>US</country-code-alpha2>
+              <postal-code>63573</postal-code>
+            </billing-address>
+          </credit-card>
+          <device-data>{"device_session_id":"75197918b634416368241bb8996b560c","fraud_merchant_id":"600000"}</device-data>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.63.0
+      X-Apiversion:
+      - '4'
+      Authorization:
+      - Basic eW05ZGp3cXBreGJ2M3h6dDo0Z2hnaGt5cDJ5eTZ5cWM4
+      Content-Type:
+      - application/xml
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Wed, 06 Jul 2016 19:47:45 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - s8282g6qcjgm2dfk
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"b6dfc0fc9c6d697d78217328970dde2f"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 7cf9907e-4dd3-48d4-8879-efc811551463
+      X-Runtime:
+      - '0.693589'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+        6wOBY5PC4cV/AAAA//8DAJS4xZIPFgAA
+    http_version: 
+  recorded_at: Wed, 06 Jul 2016 19:47:45 GMT
+recorded_with: VCR 3.0.3
