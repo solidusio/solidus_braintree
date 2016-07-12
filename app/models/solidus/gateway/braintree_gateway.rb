@@ -7,6 +7,7 @@ module Solidus
     preference :public_key, :string
     preference :private_key, :string
     preference :always_send_bill_address, :boolean, default: false
+    preference :transmit_shipping_address, :boolean, default: true
 
     CARD_TYPE_MAPPING = {
       'American Express' => 'american_express',
@@ -254,7 +255,9 @@ module Solidus
       params[:options] ||= {}
       params[:amount] = amount(cents)
       params[:channel] ||= "Solidus"
-      params[:shipping] = map_address(options[:shipping_address]) if options[:shipping_address]
+      if (options[:shipping_address] && preferred_transmit_shipping_address)
+        params[:shipping] = map_address(options[:shipping_address])
+      end
 
       if options[:payment_method_nonce]
         params[:payment_method_nonce] = options[:payment_method_nonce]
@@ -264,8 +267,10 @@ module Solidus
 
       # Send the bill address if we're using a nonce (i.e. doing a one-time
       # payment) or if we're configured to always send the bill address
-      if options[:payment_method_nonce] || preferred_always_send_bill_address
-        params[:billing] = map_address(options[:billing_address]) if options[:billing_address]
+      if (
+          options[:payment_method_nonce] || preferred_always_send_bill_address
+        ) && options[:billing_address]
+        params[:billing] = map_address(options[:billing_address])
       end
 
       # if has profile, set the customer_id to the profile_id and delete the customer key
