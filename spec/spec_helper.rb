@@ -25,6 +25,7 @@ require 'byebug'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+require 'spree/testing_support/authorization_helpers'
 require 'spree/testing_support/factories'
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/preferences'
