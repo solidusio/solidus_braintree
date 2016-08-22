@@ -6,7 +6,13 @@ RSpec::Core::RakeTask.new(:spec)
 
 Bundler::GemHelper.install_tasks
 
-task default: :spec
+task :default do
+  if Dir["spec/dummy"].empty?
+    Rake::Task[:test_app].invoke
+    Dir.chdir("../../")
+  end
+  Rake::Task[:spec].invoke
+end
 
 desc "Generates a dummy app for testing"
 task :test_app do
