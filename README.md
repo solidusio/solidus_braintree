@@ -34,6 +34,16 @@ It creates a new `PaymentMethod` class called `Solidus::Gateway::BraintreeGatewa
 
 It adds a json or text `data` field on `Spree::CreditCard` for storing additional information received from Braintree for addtional payment methods.
 
+### Admin JS
+
+To create payments in the Solidus admin, you'll need to require some JS provided by `solidus_braintree`, that wires up Braintree's drop-in fields into the "New Payment" form.
+
+If it's not loaded by default, you can manually require it:
+
+```javascript
+//= require spree/backend/braintree/solidus_braintree
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. To run tests, first generate a test app by running `rake test_app`. Then, run `rake rspec` which will run the test suite. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
