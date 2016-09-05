@@ -10,6 +10,10 @@ end
 gem 'pg'
 gem 'mysql2'
 
+group :development do
+  gem 'listen'
+end
+
 group :development, :test do
   gem "pry-rails"
 end
