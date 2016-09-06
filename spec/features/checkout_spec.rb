@@ -74,11 +74,6 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
       click_on 'Proceed with Sandbox Purchase'
     end
 
-    expect(page).to_not have_content('Enter a credit_card')
-    expect(page).to have_content('Cancel')
-
-    click_on 'Save and Continue'
-
     # Previous step can take a long time, so we allow an extra delay
     click_on 'Place Order', wait: 30
     expect(page).to have_content('Your order has been processed successfully')

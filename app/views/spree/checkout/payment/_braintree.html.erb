@@ -5,9 +5,18 @@
     <div class="braintree-paypal-header">
       <%= t('solidus_braintree.paypal_header_html') %>
     </div>
-    <div id="#braintree_paypal_container"></div>
+    <script src="https://www.paypalobjects.com/api/button.js?"
+      data-merchant="braintree"
+      data-id="braintree-paypal-button"
+      data-button="checkout"
+      data-color="blue"
+      data-size="medium"
+      data-shape="pill"
+      data-button_type="submit"
+      data-button_disabled="true"
+    ></script>
   </div>
-  
+
   <div class="braintree-cc-input">
     <div class="braintree-cc-header">
       <%= t('solidus_braintree.creditcard_header_html') %>
