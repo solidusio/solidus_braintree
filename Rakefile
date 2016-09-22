@@ -1,9 +1,9 @@
-require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 require 'spree/testing_support/extension_rake'
 
 RSpec::Core::RakeTask.new(:spec)
 
+require 'bundler'
 Bundler::GemHelper.install_tasks
 
 task :default do
