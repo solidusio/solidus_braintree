@@ -72,7 +72,8 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
           source: FactoryGirl.create(
             :credit_card,
             name: "Card Holder",
-            user: user
+            user: user,
+            address: create(:address, last_name: "Doe")
           ),
           payment_method: payment_method,
           payment_method_nonce: nonce
@@ -405,7 +406,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
     let(:creditcard) do
       FactoryGirl.create(:credit_card, gateway_payment_profile_id: 'abc123')
     end
-    let(:address) { FactoryGirl.create(:address) }
+    let(:address) { FactoryGirl.create(:address, last_name: "Doe") }
 
     context "with a credit card" do
       let(:options) { {
@@ -505,7 +506,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
 
         context 'when a billing address is provided' do
           let(:bill_address) do
-            create(:address, address1: '1234 bill address')
+            create(:address, address1: '1234 bill address', last_name: "Doe")
           end
 
           let(:options) do
@@ -647,6 +648,18 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       # shipping address in order to provide seller protection. Having something there is better
       # than nothing.
       let(:mapped_address) { payment_method.send(:map_address, {name: name}) }
+
+      context "single name" do
+        let(:name) { "Teller" }
+
+        it "splits" do
+          # This is "wrong", but braintree accepts it, and it splits in the
+          # same way that ActiveMerchant does.
+          address = mapped_address
+          expect(address[:first_name]).to eq ""
+          expect(address[:last_name]).to eq "Teller"
+        end
+      end
 
       context "simple 2 word name" do
         let(:name) { "Luke Skywalker" }
