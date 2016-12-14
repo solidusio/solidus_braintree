@@ -1,4 +1,6 @@
-# solidus_braintree
+# Solidus Braintree
+
+[![Build Status](https://travis-ci.org/solidusio/solidus_braintree.svg?branch=master)](https://travis-ci.org/solidusio/solidus_braintree)
 
 `solidus_braintree` is a gem that adds [Braintree v.zero](https://www.braintreepayments.com/v.zero) support to the [solidus](http://solidus.io/) E-commerce platform.
 
