@@ -65,9 +65,9 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
     # Payment
     expect(page).to have_content(gateway.name)
 
-    click_on 'braintree-paypal-button'
-
-    paypal_popup = page.driver.window_handles.last
+    paypal_popup = window_opened_by do
+      click_on 'braintree-paypal-button'
+    end
 
     within_window(paypal_popup) do
       expect(page).to have_content('Proceed with Sandbox Purchase')
