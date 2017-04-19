@@ -13,7 +13,7 @@ It will add the braintree-drop-in form for payment methods in the payment form o
 Add this line to your solidus application's Gemfile:
 
 ```ruby
-gem "solidus_braintree"
+gem 'solidus_braintree', git: 'https://github.com/solidusio/solidus_braintree', branch: 'master'
 ```
 
 And then execute:
