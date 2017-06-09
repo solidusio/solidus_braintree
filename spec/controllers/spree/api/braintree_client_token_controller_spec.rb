@@ -11,7 +11,7 @@ describe Spree::Api::BraintreeClientTokenController, :vcr, type: :controller do
     context "with a payment method id" do
       before do
         gateway = create_braintree_payment_method
-        post :create, payment_method_id: gateway.id, token: current_api_user.spree_api_key
+        post :create, params: { payment_method_id: gateway.id, token: current_api_user.spree_api_key }
       end
 
       it "returns an http success" do
@@ -32,7 +32,7 @@ describe Spree::Api::BraintreeClientTokenController, :vcr, type: :controller do
     context "without a payment method id" do
       before do
         create_braintree_payment_method
-        post :create, token: current_api_user.spree_api_key
+        post :create, params: { token: current_api_user.spree_api_key }
       end
 
       it "returns an http success" do
