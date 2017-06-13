@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/solidusio/solidus_braintree.svg?branch=master)](https://travis-ci.org/solidusio/solidus_braintree)
 
-`solidus_braintree` is a gem that adds [Braintree v.zero](https://www.braintreepayments.com/v.zero) support to the [solidus](http://solidus.io/) E-commerce platform.
+`solidus_braintree` is a gem that adds [Braintree v.zero](https://www.braintreepayments.com/v-zero) support to the [solidus](http://solidus.io/) E-commerce platform.
 
 It provides support for credit card and Paypal payment methods via the `Spree::CreditCard`
 
