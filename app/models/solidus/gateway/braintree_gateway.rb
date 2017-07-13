@@ -1,7 +1,14 @@
 require "braintree"
 
 module Solidus
-  class Gateway::BraintreeGateway < ::Spree::Gateway
+  gateway_superclass =
+    if SolidusSupport.solidus_gem_version < Gem::Version.new('2.3.x')
+      ::Spree::Gateway
+    else
+      ::Spree::PaymentMethod::CreditCard
+    end
+
+  class Gateway::BraintreeGateway < gateway_superclass
     preference :environment, :string
     preference :merchant_id, :string
     preference :public_key, :string
@@ -22,8 +29,14 @@ module Solidus
       'Visa' => 'visa',
     }
 
-    def method_type
-      'braintree'
+    if SolidusSupport.solidus_gem_version < Gem::Version.new('2.3.x')
+      def method_type
+        'braintree'
+      end
+    else
+      def partial_name
+        'braintree'
+      end
     end
 
     def gateway_options
