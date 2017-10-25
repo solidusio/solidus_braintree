@@ -2,16 +2,16 @@ require 'spec_helper'
 
 describe Solidus::Gateway::BraintreeGateway, :vcr do
   let(:payment_method){ create_braintree_payment_method }
-  let(:user){ FactoryGirl.create :user }
+  let(:user){ FactoryBot.create :user }
   # #create_profile doesn't support options, does it need to?
   let(:device_data){"{\"device_session_id\":\"75197918b634416368241bb8996b560c\",\"fraud_merchant_id\":\"600000\"}"}
 
   let(:payment) do
-    FactoryGirl.create(:payment,
-      order: FactoryGirl.create(:order,
+    FactoryBot.create(:payment,
+      order: FactoryBot.create(:order,
         user: user
       ),
-      source: FactoryGirl.create(:credit_card,
+      source: FactoryBot.create(:credit_card,
         name: "Card Holder",
         user: user,
       ),
@@ -62,14 +62,14 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
 
     context 'payment has associated device_data' do
       let(:payment) do
-        FactoryGirl.build(
+        FactoryBot.build(
           :payment,
-          order: FactoryGirl.create(
+          order: FactoryBot.create(
             :order,
             user: user,
             braintree_device_data: device_data
           ),
-          source: FactoryGirl.create(
+          source: FactoryBot.create(
             :credit_card,
             name: "Card Holder",
             user: user,
@@ -121,7 +121,7 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
     if Spree.respond_to?(:solidus_version) && Spree.solidus_version > "1.1"
       context 'order gets updated with device_data' do
         it 'order passes device_data to create_profile' do
-          order = FactoryGirl.create(:order_with_line_items, user: user)
+          order = FactoryBot.create(:order_with_line_items, user: user)
 
           bill_address = order.bill_address
           expected_address = payment_method.send(:map_address, bill_address.try(:active_merchant_hash))
@@ -404,9 +404,9 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
   context "braintree attributes" do
     let(:nonce) { Braintree::Test::Nonce::Transactable }
     let(:creditcard) do
-      FactoryGirl.create(:credit_card, gateway_payment_profile_id: 'abc123')
+      FactoryBot.create(:credit_card, gateway_payment_profile_id: 'abc123')
     end
-    let(:address) { FactoryGirl.create(:address, last_name: "Doe") }
+    let(:address) { FactoryBot.create(:address, last_name: "Doe") }
 
     context "with a credit card" do
       let(:options) { {

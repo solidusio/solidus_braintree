@@ -65,7 +65,7 @@ end
 
 Braintree::Configuration.logger = Rails.logger
 
-FactoryGirl.find_definitions
+FactoryBot.find_definitions
 
 VCR.configure do |c|
   c.cassette_library_dir = "spec/cassettes"
@@ -81,7 +81,7 @@ RSpec.configure do |config|
   #config.filter_run focus: true
   #config.filter_run_excluding slow: true
 
-  config.include FactoryGirl::Syntax::Methods
+  config.include FactoryBot::Syntax::Methods
   config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::UrlHelpers, type: :controller

@@ -10,7 +10,7 @@ describe Spree::CreditCard, type: :model do
     end
     it "validate presence of name on create" do
       expect do
-        FactoryGirl.create(:credit_card,
+        FactoryBot.create(:credit_card,
           payment_method: payment_method,
           name: nil
         )
