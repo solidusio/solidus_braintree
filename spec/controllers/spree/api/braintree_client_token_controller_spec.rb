@@ -49,5 +49,16 @@ describe Spree::Api::BraintreeClientTokenController, :vcr, type: :controller do
         expect(body["payment_method_id"]).to be_present
       end
     end
+
+    context "with an invalid authentication token" do
+      before do
+        gateway = create_braintree_payment_method
+        post :create, params: { payment_method_id: gateway.id, token: 'invalid_token' }
+      end
+
+      it "returns an http 401 unauthorized" do
+        expect(response).to have_http_status(:unauthorized)
+      end
+    end
   end
 end

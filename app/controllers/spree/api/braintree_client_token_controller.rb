@@ -1,6 +1,4 @@
 class Spree::Api::BraintreeClientTokenController < Spree::Api::BaseController
-  skip_before_action :authenticate_user
-
   def create
     if params[:payment_method_id]
       gateway = Solidus::Gateway::BraintreeGateway.find_by!(id: params[:payment_method_id])
