@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency 'factory_bot', '~> 4.4'
   spec.add_development_dependency 'rspec-rails'
-  spec.add_development_dependency 'capybara'
+  spec.add_development_dependency 'capybara', '~> 2.18'
   spec.add_development_dependency 'capybara-screenshot'
   spec.add_development_dependency 'poltergeist', '~> 1.9'
   spec.add_development_dependency 'ffaker'
