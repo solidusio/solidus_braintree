@@ -7,7 +7,7 @@
     </div>
     <div id="#braintree_paypal_container"></div>
   </div>
-  
+
   <div class="braintree-cc-input">
     <div class="braintree-cc-header">
       <%= t('solidus_braintree.creditcard_header_html') %>
@@ -16,31 +16,31 @@
     <% param_prefix = "payment_source[#{payment_method.id}]" %>
 
     <p class="field">
-      <%= label_tag "name_on_card_#{payment_method.id}", Spree.t(:name_on_card) %><span class="required">*</span><br />
+      <%= label_tag "name_on_card_#{payment_method.id}", I18n.t('spree.name_on_card') %><span class="required">*</span><br />
       <%= text_field_tag "#{param_prefix}[name]", "#{@order.billing_firstname} #{@order.billing_lastname}", { id: "name_on_card_#{payment_method.id}", :autocomplete => "cc-name" } %>
     </p>
 
     <p class="field" data-hook="card_number">
-      <%= label_tag "braintree_card_number", Spree.t(:card_number) %><span class="required">*</span><br />
+      <%= label_tag "braintree_card_number", I18n.t('spree.card_number') %><span class="required">*</span><br />
       <label for="braintree_card_number" id="braintree_card_number" class="braintree-hosted-field"></label>
       &nbsp;
       <span id="card_type" style="display:none;">
-        ( <span id="looks_like" ><%= Spree.t(:card_type_is) %> <span id="type"></span></span>
-        <span id="unrecognized"><%= Spree.t(:unrecognized_card_type) %></span>
+        ( <span id="looks_like" ><%= I18n.t('spree.card_type_is') %> <span id="type"></span></span>
+        <span id="unrecognized"><%= I18n.t('spree.unrecognized_card_type') %></span>
         )
       </span>
     </p>
 
     <p class="field" data-hook="card_expiration">
-      <%= label_tag "braintree_card_expiry", Spree.t(:expiration) %><span class="required">*</span><br />
+      <%= label_tag "braintree_card_expiry", I18n.t('spree.expiration') %><span class="required">*</span><br />
       <label for="braintree_card_expiry" id="braintree_card_expiry" class="braintree-hosted-field"></label>
     </p>
 
     <p class="field" data-hook="card_code">
-      <%= label_tag "braintree_card_code", Spree.t(:card_code) %><span class="required">*</span><br />
+      <%= label_tag "braintree_card_code", I18n.t('spree.card_code') %><span class="required">*</span><br />
 
       <label for="braintree_card_code" id="braintree_card_code" class="braintree-hosted-field card-code"></label>
-      <%= link_to "(#{Spree.t(:what_is_this)})", spree.cvv_path, :target => '_blank', "data-hook" => "cvv_link", :id => "cvv_link" %>
+      <%= link_to "(#{I18n.t('spree.what_is_this')})", spree.cvv_path, :target => '_blank', "data-hook" => "cvv_link", :id => "cvv_link" %>
     </p>
   </div>
 
