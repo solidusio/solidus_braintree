@@ -17,4 +17,28 @@ module BraintreeViewHelpers
       payment_id
     end
   end
+
+  ##
+  # Generate a client token for a user
+  # @return [String, NilClass]
+  #
+  def braintree_client_token_for(user = nil)
+    options = {}
+    options[:customer_id] = user.braintree_customer_id if user.present?
+
+    braintree_gateway.generate_client_token(options)
+  rescue => error
+    Rails.logger.error(error)
+    nil
+  end
+
+  private
+
+  def braintree_gateway
+    @gateway ||= if params[:payment_method_id]
+      Solidus::Gateway::BraintreeGateway.find_by!(id: params[:payment_method_id])
+    else
+      Solidus::Gateway::BraintreeGateway.find_by!(active: true)
+    end
+  end
 end
