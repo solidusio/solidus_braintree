@@ -70,6 +70,8 @@ module Solidus
       email = user ? user.email : payment.order.email
       address = (payment.source.address || payment.order.bill_address).try(:active_merchant_hash)
 
+      return add_payment_method(payment) if user&.braintree_customer_id
+
       params = {
         first_name: source.first_name,
         last_name: source.last_name,
@@ -107,7 +109,11 @@ module Solidus
           solidus_cc.gateway_customer_profile_id = result.customer.id
           solidus_cc.gateway_payment_profile_id = card.token
         end
-        source.save!
+
+        source.transaction do
+          user&.update(braintree_customer_id: result.customer.id)
+          source.save!
+        end
       else
         raise ::Spree::Core::GatewayError, result.message
       end
@@ -190,6 +196,49 @@ module Solidus
     end
 
     private
+
+    def add_payment_method(payment)
+      source = payment.source
+
+      user = payment.order.user
+      email = user ? user.email : payment.order.email
+      address = (payment.source.address || payment.order.bill_address).try(:active_merchant_hash)
+
+      result = braintree_gateway.payment_method.create(
+        payment_method_nonce: payment.payment_method_nonce,
+        customer_id: user.braintree_customer_id,
+        cardholder_name: source.name,
+        billing_address: map_address(address),
+        options: {
+          verify_card: true
+        }
+      )
+
+      raise ::Spree::Core::GatewayError, result.message unless result.success?
+
+      card = result.payment_method
+      source.tap do |solidus_cc|
+        if card.is_a?(::Braintree::PayPalAccount)
+          solidus_cc.cc_type = 'paypal'
+          data = {
+            email: card.email
+          }
+          solidus_cc.data = data.to_json
+        else
+          solidus_cc.name = card.cardholder_name
+          solidus_cc.cc_type = CARD_TYPE_MAPPING[card.card_type]
+          solidus_cc.month = card.expiration_month
+          solidus_cc.year = card.expiration_year
+          solidus_cc.last_digits = card.last_4
+        end
+        solidus_cc.payment_method = self
+        solidus_cc.gateway_customer_profile_id = card.customer_id
+        solidus_cc.gateway_payment_profile_id = card.token
+      end
+
+      source.save!
+    end
+
     def message_from_result(result)
       if result.success?
         "OK"

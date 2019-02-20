@@ -174,6 +174,8 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
 
           expect(card.gateway_payment_profile_id).to be_present
           expect(card.gateway_customer_profile_id).to be_present
+
+          expect(card.user.braintree_customer_id).to eq card.gateway_customer_profile_id
         end
       end
 
@@ -364,6 +366,8 @@ describe Solidus::Gateway::BraintreeGateway, :vcr do
       let(:nonce){ Braintree::Test::Nonce::PayPalFuturePayment }
 
       before do
+        allow(user).to receive(:braintree_customer_id).and_return(nil)
+
         payment.source.gateway_customer_profile_id = nil
         payment.source.save!
         payment.authorize!
