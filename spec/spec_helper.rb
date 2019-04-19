@@ -20,10 +20,8 @@ require 'vcr'
 require 'webmock'
 require 'pry'
 require 'byebug'
+
 require 'solidus_support/extension/feature_helper'
-
-Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
-
 require 'spree/testing_support/order_walkthrough'
 require 'spree/testing_support/controller_requests'
 
@@ -47,7 +45,6 @@ module SolidusGateway
 end
 
 Braintree::Configuration.logger = Rails.logger
-
 FactoryBot.find_definitions
 
 VCR.configure do |c|
