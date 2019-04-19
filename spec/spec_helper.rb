@@ -1,4 +1,5 @@
 require 'simplecov'
+
 SimpleCov.start do
   add_filter 'spec/dummy'
   add_group 'Controllers', 'app/controllers'
@@ -15,34 +16,16 @@ ENV["RAILS_ENV"] = "test"
 require 'solidus_braintree'
 
 require_relative "dummy/config/environment"
-require 'rspec/rails'
-require 'database_cleaner'
-require 'ffaker'
 require 'vcr'
 require 'webmock'
 require 'pry'
 require 'byebug'
+require 'solidus_support/extension/feature_helper'
 
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
-require 'spree/testing_support/authorization_helpers'
-require 'spree/testing_support/factories'
 require 'spree/testing_support/order_walkthrough'
-require 'spree/testing_support/preferences'
 require 'spree/testing_support/controller_requests'
-require 'spree/testing_support/url_helpers'
-
-require 'capybara/rspec'
-require 'capybara-screenshot/rspec'
-require 'capybara/poltergeist'
-Capybara.register_driver(:poltergeist) do |app|
-  Capybara::Poltergeist::Driver.new app, {
-    phantomjs_options: %w[--ssl-protocol=any --ignore-ssl-errors=true --load-images=false],
-    timeout: 90
-  }
-end
-Capybara.javascript_driver = :poltergeist
-Capybara.default_max_wait_time = 10
 
 module SolidusGateway
   module Helpers
@@ -75,27 +58,17 @@ VCR.configure do |c|
 end
 
 RSpec.configure do |config|
-  config.mock_with :rspec
   config.use_transactional_fixtures = false
-
-  #config.filter_run focus: true
-  #config.filter_run_excluding slow: true
-
-  config.include FactoryBot::Syntax::Methods
-  config.include Spree::TestingSupport::Preferences
   config.include Spree::TestingSupport::ControllerRequests, type: :controller
   config.include Spree::TestingSupport::UrlHelpers, type: :controller
   config.include SolidusGateway::Helpers::BraintreeGateway
 
   config.before :suite do
     DatabaseCleaner.strategy = :transaction
-    DatabaseCleaner.clean_with :truncation
   end
 
   config.before do |example|
-    DatabaseCleaner.strategy = example.metadata[:js] ? :truncation : :transaction
     DatabaseCleaner.start
-    reset_spree_preferences
   end
 
   config.after do

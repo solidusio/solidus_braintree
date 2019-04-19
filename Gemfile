@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
 gem "solidus", github: "solidusio/solidus", branch: branch
+gem "solidus_support", github: "solidusio/solidus_support"
 
 if branch == 'master' || branch >= "v2.3"
   gem "rails", "~> 5.1.0"
