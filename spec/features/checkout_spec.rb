@@ -228,7 +228,7 @@ describe "Braintree checkout", :vcr, :js, type: :feature do
       fill_in "Street Address", with: "YT-1300"
       fill_in "City", with: "Mos Eisley"
       select country.name, from: "Country"
-      select country.states.first, from: "order_bill_address_attributes_state_id"
+      select country.states.first.name, from: "order_bill_address_attributes_state_id"
       fill_in "Zip", with: "12010"
       fill_in "Phone", with: "(555) 555-5555"
     end
