@@ -5,7 +5,7 @@ gem "solidus", github: "solidusio/solidus", branch: branch
 gem "solidus_support", github: "solidusio/solidus_support"
 
 gem "rails", "~> 5.1.0"
-gem "rails-controller-testing", group: :test
+gem 'rails-controller-testing', '~> 1.0', '>= 1.0.4', group: :test
 
 case ENV['DB']
 when 'mysql'
@@ -21,7 +21,7 @@ group :development, :test do
     gem 'factory_bot', '> 4.10.0'
   end
 
-  gem "pry-rails"
+  gem 'pry-rails', '~> 0.3.9'
 end
 
 gemspec
