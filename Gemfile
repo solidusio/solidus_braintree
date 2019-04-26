@@ -4,16 +4,8 @@ branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
 gem "solidus", github: "solidusio/solidus", branch: branch
 gem "solidus_support", github: "solidusio/solidus_support"
 
-if branch == 'master' || branch >= "v2.3"
-  gem "rails", "~> 5.1.0"
-  gem "rails-controller-testing", group: :test
-elsif branch >= "v2.0"
-  gem "rails", "~> 5.0.0"
-  gem "rails-controller-testing", group: :test
-else
-  gem "rails", "~> 4.2.0"
-  gem "rails_test_params_backport", group: :test
-end
+gem "rails", "~> 5.1.0"
+gem "rails-controller-testing", group: :test
 
 case ENV['DB']
 when 'mysql'
