@@ -2,33 +2,26 @@ source "https://rubygems.org"
 
 branch = ENV.fetch('SOLIDUS_BRANCH', 'master')
 gem "solidus", github: "solidusio/solidus", branch: branch
-gem "solidus_support", github: "solidusio/solidus_support"
 
-if branch == 'master' || branch >= "v2.3"
-  gem "rails", "~> 5.1.0"
-  gem "rails-controller-testing", group: :test
-elsif branch >= "v2.0"
-  gem "rails", "~> 5.0.0"
-  gem "rails-controller-testing", group: :test
+# Needed to help Bundler figure out how to resolve dependencies,
+# otherwise it takes forever to resolve them
+if branch == 'master' || Gem::Version.new(branch[1..-1]) >= Gem::Version.new('2.10.0')
+  gem 'rails', '~> 6.0'
 else
-  gem "rails", "~> 4.2.0"
-  gem "rails_test_params_backport", group: :test
+  gem 'rails', '~> 5.0'
 end
 
 case ENV['DB']
 when 'mysql'
   gem 'mysql2'
 when 'postgres'
-  gem 'pg', '< 1.0'
+  gem 'pg'
 end
 
-group :development, :test do
-  if branch < "v2.5"
-    gem 'factory_bot', '4.10.0'
-  else
-    gem 'factory_bot', '> 4.10.0'
-  end
+gem "rails-controller-testing", group: :test
 
+group :development, :test do
+  gem 'factory_bot', '> 4.10.0'
   gem "pry-rails"
 end
 
