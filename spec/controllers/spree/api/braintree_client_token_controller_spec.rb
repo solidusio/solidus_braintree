@@ -19,7 +19,7 @@ describe Spree::Api::BraintreeClientTokenController, :vcr, type: :controller do
       end
 
       it "returns a content type of application/json" do
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to include("application/json")
       end
 
       it "returns a client_token" do
@@ -40,7 +40,7 @@ describe Spree::Api::BraintreeClientTokenController, :vcr, type: :controller do
       end
 
       it "returns a content type of application/json" do
-        expect(response.content_type).to eq("application/json")
+        expect(response.content_type).to include("application/json")
       end
 
       it "returns a client_token" do
