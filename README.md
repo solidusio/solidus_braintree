@@ -32,7 +32,7 @@ Control Panel.
 
 This gem extends your solidus application by adding a `POST /api/payment_client_token` endpoint to you application to generate Braintree payment client token. This endpoint requires an authentication token in your request header.
 
-It creates a new `PaymentMethod` class called `Solidus::Gateway::BraintreeGateway`. You can configure this payment method in the admin and add your Braintree public/private keys and merchant id. The admin will render a Braintree dropin container when prompting you to create an order payment.
+It creates a new `PaymentMethod` class called `Solidus::Gateway::BraintreeGateway`. You can configure this payment method in the admin and add your Braintree public/private keys, merchant id, and the proper environment. Please ensure that the environment value is included among the values listed [here](https://github.com/braintree/braintree_ruby/blob/7660ae6f6d228acee8eaedd1830afafbaf91820f/lib/braintree/configuration.rb#L235), otherwise you will encounter unexpected errors. The admin will render a Braintree dropin container when prompting you to create an order payment.
 
 It adds a json or text `data` field on `Spree::CreditCard` for storing additional information received from Braintree for addtional payment methods.
 
