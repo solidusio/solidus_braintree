@@ -8,6 +8,10 @@ It provides support for credit card and Paypal payment methods via the `Spree::C
 
 It will add the braintree-drop-in form for payment methods in the payment form of spree/backend. Spree front-end is currently unsupported.
 
+## DEPRECATION NOTICE :warning: :construction:
+
+This extension is deprecated in favor of [Solidus Paypal Braintree](https://github.com/solidusio/solidus_paypal_braintree).
+
 ## Installation
 
 Add this line to your solidus application's Gemfile:
