@@ -12,7 +12,7 @@
 Add solidus_braintree to your Gemfile:
 
 ```ruby
-gem 'solidus_braintree', github: 'solidusio/solidus_braintree', branch: :master
+gem 'solidus_braintree'
 ```
 
 Bundle your dependencies and run the installation generator:
