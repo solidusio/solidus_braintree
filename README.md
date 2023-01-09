@@ -22,6 +22,30 @@ bundle
 bundle exec rails g solidus_braintree:install
 ```
 
+## Naming is hard: from SolidusBraintree to SolidusPaypalBraintree and then back to SolidusBraintree
+
+This gem is the result of merging two gems: the original SolidusBraintree gem, which was deprecated in 2020, and the SolidusPaypalBraintree gem, which was written from scratch to replace it. The updated codebase is based solely on the SolidusPaypalBraintree code. However, we've renamed the gem back to SolidusBraintree to make it clear that it's backed by Braintree. The name also differentiates it from the official Solidus PayPal extension, SolidusPaypalCommercePlatform.
+
+Take note that for now we are keeping the `solidus_paypal_braintree` prefix for SolidusBraintree database tables. Renaming tables can be a potentially risky operation, and we wanted to reduce the friction in updating to v2.0.0. For details, please see https://github.com/solidusio/solidus_braintree/issues/101.
+
+## Upgrading from SolidusPaypalBraintree 1.2.0 to SolidusBraintree 2.0.0
+
+With the gem renamed to SolidusBraintree, you'll need to:
+
+1. Change the gem in your Gemfile from `gem 'solidus_paypal_braintree'` to `gem 'solidus_braintree', '~> 2.0.0'`. If you have your own references to `SolidusPaypalBraintree` in your app, you may need to require the `solidus_paypal_braintree` alias in your Gemfile, i.e.
+
+    ```ruby
+    gem 'solidus_braintree', '~> 2.0.0'`, require: 'solidus_paypal_braintree'
+    ```
+
+2. Run `bin/rails g solidus_braintree:install`. This will update some references to SolidusPaypalBraintree in your app. It will also add a data migration to update your database.
+
+Additionally, you can rename any other references to SolidusPaypalBraintree in your app to SolidusBraintree. This will fix any deprecation warnings that come with SolidusBraintree 2.0.0.
+
+## Here be dragons: upgrading from SolidusBraintree 1.2.0
+
+Considering that SolidusBraintree 2.0.0 is based on the SolidusPaypalBraintree codebase, please be warned that migrating directly from SolidusBraintree 1.2.0 to 2.0.0 would lead to breaking changes. Since SolidusBraintree 1.x was already [deprecated](https://github.com/solidusio/solidus_braintree/tree/v1.x#deprecation-notice-warning-construction), we don't provide at the moment a ready-made solution for migrating from SolidusBraintree 1.2.0 to 2.0.0.
+
 ## Basic Setup
 
 ### Retrieve Braintree account details
