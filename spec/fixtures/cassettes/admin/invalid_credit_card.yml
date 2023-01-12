@@ -1,0 +1,63 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/7rdg92j7bm7fk5h3/client_token
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <client-token>
+          <version type="integer">2</version>
+        </client-token>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.98.0
+      X-Apiversion:
+      - '5'
+      Content-Type:
+      - application/xml
+      Authorization:
+      - Basic bXdqa2t4d2NwMzJja2huZjphOTI5OGY0M2IzMGM2OTlkYjMwNzJjYzRhMDBmN2Y0OQ==
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Server:
+      - nginx
+      Date:
+      - Fri, 13 Sep 2019 14:27:11 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Authentication:
+      - server_to_server
+      Braintree-Service-Origin:
+      - clientauth
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"c95fd3caa086065297edd0aeeb8e6d55"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 51cbbac6-bce1-4f90-ab14-6d61a064e77b
+      X-Runtime:
+      - '0.200715'
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Fri, 13 Sep 2019 14:27:11 GMT
+recorded_with: VCR 5.0.0

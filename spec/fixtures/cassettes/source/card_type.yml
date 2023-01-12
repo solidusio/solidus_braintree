@@ -1,0 +1,267 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/7rdg92j7bm7fk5h3/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.98.0
+      X-Apiversion:
+      - '5'
+      Content-Type:
+      - application/xml
+      Authorization:
+      - Basic bXdqa2t4d2NwMzJja2huZjphOTI5OGY0M2IzMGM2OTlkYjMwNzJjYzRhMDBmN2Y0OQ==
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Fri, 13 Sep 2019 14:26:31 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 3v249hqtptsg744y
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"a8e61a976412f48ed3e7b4d6aae9bf48"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.132308'
+      X-Request-Id:
+      - 02-1568384790.635-92.223.152.178-13010244
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      X-Broxyid:
+      - 02-1568384790.635-92.223.152.178-13010244
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIABene10AA5RRz0+DMBS+768gvVcG1QELsIvRxGTxMo3u9kYfUG0LaYtu/PXCtjgT9ODx+9X3vtd0tVfS+0BjRaMzElzNiYe6aLjQVUaeNnc0Jqt8lhaddY1Ck888LxU8j+OIxQvGWOoPaCQHsahBOzrgyPAqCd+inYrK95t6MP1UR3cpjHVUg0JPC5kRZzok/lGS8JdSNKoFfZjwqEDICdvWjZ6+UcJ+wn3izgr3yzyD4JBTcJ47tJgRPkAnFJI8nAcJnSc0YJvgehkulizYpv4lcMx3Lf9f/hI4zT8enZYCJbenlSrZ7ECOV3xlzz2/T9z25aF8vK3Yuq/Cdb/uU//iOZfgwtECDLfnNcAYOJw7AucGrcWJNrT5/vMvAAAA//8DAGGcIVomAgAA
+    http_version: 
+  recorded_at: Fri, 13 Sep 2019 14:26:31 GMT
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/7rdg92j7bm7fk5h3/payment_methods
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <payment-method>
+          <payment-method-nonce>fake-valid-country-of-issuance-usa-nonce</payment-method-nonce>
+          <customer-id>887386333</customer-id>
+        </payment-method>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.98.0
+      X-Apiversion:
+      - '5'
+      Content-Type:
+      - application/xml
+      Authorization:
+      - Basic bXdqa2t4d2NwMzJja2huZjphOTI5OGY0M2IzMGM2OTlkYjMwNzJjYzRhMDBmN2Y0OQ==
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Fri, 13 Sep 2019 14:26:32 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 3v249hqtptsg744y
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"542e7d55e2ec7398658887008e4c4a7e"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.241721'
+      X-Request-Id:
+      - 02-1568384791.617-92.223.152.178-13010465
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      X-Broxyid:
+      - 02-1568384791.617-92.223.152.178-13010465
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIABine10AA6xVwXLaMBC98xWM78Y2dgnOGGd6SW49tEk7zSWzthasIkuuJJPw910ZgwmBtJ32ht6+Xe0+vxXZzUstxhvUhiu58KJJ6I1RlopxuVp4D/e3/ty7yUdZqZFx65egWT4aj7OCC0EUHxjTaIzDCOUsb+ZZwFl/LltjVY3aJ2Q+v4rnsziOs+AY3hGXXBvrS6hxLLlYeFa36AV9UMDlWKnqBuT2TMRYjWj3DZ4h4ItFyZC9QxGqBMHtufIaV6TYmUCjjAXhk4SYp0kUXmXBMbRvu5VWbzvIB9FUMD073Ckr/h1LtqQrL9+hXRJSI1gnhh3bbYMLj9HR8hq9fBpGqR+mfhTfR8n1dHYdTx/pIx4S+gptw/6uwpDQWSo44ynymcyTMJqGoYvLDnMm9N0V+VdugDo5nPfRSglG9jo3qnMMSVRyEPmDXEv1LKnCgI2OpFJLnxvTgiwxf/jy0fHeBkb/Lt4f7slAc760ZD/q6oh1QB2XYcHtMOHuuAssoRX7RgulBIL0cqeQo3XBHbHVpLhPRm+Fa/ao2Glk1K1Tw3V3v18raas8mmbBG/CEuUXQJNE0fEXt0AMT2WmvSxAG+4z+9pVQBa0YCVXe3X4ovn1t2V0k2F21ebxNf3yPUs3k5+fHO5MFA9UlVgjCVmQaHOY7whyF17BCv9Uir6xtzHUQgDFozaTQwKV7ZlakwjNsJ+SjoIFtjdI+1WgrxZ6EWqlgQz6dNHJ1g3LDtZKOsDAgWaFe6Lk81O9uI2O5LShAroeWXqGj/aOY5OHMadcfHE7XayWOvL0HuqDGBmjwT4rw/vcOV6wtrdNkyBswRzFtYUrNG/eBTP9BQGvY9mtl1Rplvt7Yhq2zYHdyeCv5z7Z7l4rOyDQ5X3LUeVhEkDA2S3EWz1iaxgnE0RUDiJMIkySh9+FS6ug/vDYblLXyDVtfMNch3rM1Xb1brzfTd+s8/Dv+AgAA//8DADBA2i1TBwAA
+    http_version: 
+  recorded_at: Fri, 13 Sep 2019 14:26:32 GMT
+- request:
+    method: get
+    uri: https://api.sandbox.braintreegateway.com/merchants/7rdg92j7bm7fk5h3/payment_methods/any/kvtpdk
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.98.0
+      X-Apiversion:
+      - '5'
+      Content-Type:
+      - application/xml
+      Authorization:
+      - Basic bXdqa2t4d2NwMzJja2huZjphOTI5OGY0M2IzMGM2OTlkYjMwNzJjYzRhMDBmN2Y0OQ==
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Sep 2019 14:26:33 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 3v249hqtptsg744y
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"1d1dc0ec90596e65e546f301db422d7f"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.099681'
+      X-Request-Id:
+      - 02-1568384792.728-92.223.152.178-13010638
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      X-Broxyid:
+      - 02-1568384792.728-92.223.152.178-13010638
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIABmne10AA6xVwXLaMBC98xWM78Y2dgnOGGd6SW49tEk7zSWzthasIkuuJJPw910ZgwmBtJ32ht6+Xe0+vxXZzUstxhvUhiu58KJJ6I1RlopxuVp4D/e3/ty7yUdZqZFx65egWT4aj7OCC0EUHxjTaIzDCOUsb+ZZwFl/LltjVY3aJ2Q+v4rnsziOs+AY3hGXXBvrS6hxLLlYeFa36AV9UMDlWKnqBuT2TMRYjWj3DZ4h4ItFyZC9QxGqBMHtufIaV6TYmUCjjAXhk4SYp0kUXmXBMbRvu5VWbzvIB9FUMD073Ckr/h1LtqQrL9+hXRJSI1gnhh3bbYMLj9HR8hq9fBpGqR+mfhTfR8n1dHYdTx/pIx4S+gptw/6uwpDQWSo44ynymcyTMJqGoYvLDnMm9N0V+VdugDo5nPfRSglG9jo3qnMMSVRyEPmDXEv1LKnCgI2OpFJLnxvTgiwxf/jy0fHeBkb/Lt4f7slAc760ZD/q6oh1QB2XYcHtMOHuuAssoRX7RgulBIL0cqeQo3XBHbHVpLhPRm+Fa/ao2Glk1K1Tw3V3v18raas8mmbBG/CEuUXQJNE0fEXt0AMT2WmvSxAG+4z+9pVQBa0YCVXe3X4ovn1t2V0k2F21ebxNf3yPUs3k5+fHO5MFA9UlVgjCVmQaHOY7whyF17BCv9Uir6xtzHUQgDFozaTQwKV7ZlakwjNsJ+SjoIFtjdI+1WgrxZ6EWqlgQz6dNHJ1g3LDtZKOsDAgWaFe6Lk81O9uI2O5LShAroeWXqGj/aOY5OHMadcfHE7XayWOvL0HuqDGBmjwT4rw/vcOV6wtrdNkyBswRzFtYUrNG/eBTP9BQGvY9mtl1Rplvt7Yhq2zYHdyeCv5z7Z7l4rOyDQ5X3LUeVhEkDA2S3EWz1iaxgnE0RUDiJMIkySh9+FS6ug/vDYblLXyDVtfMNch3rM1Xb1brzfTd+s8/Dv+AgAA//8DADBA2i1TBwAA
+    http_version: 
+  recorded_at: Fri, 13 Sep 2019 14:26:33 GMT
+- request:
+    method: get
+    uri: https://api.sandbox.braintreegateway.com/merchants/7rdg92j7bm7fk5h3/payment_methods/any/kvtpdk
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.98.0
+      X-Apiversion:
+      - '5'
+      Content-Type:
+      - application/xml
+      Authorization:
+      - Basic bXdqa2t4d2NwMzJja2huZjphOTI5OGY0M2IzMGM2OTlkYjMwNzJjYzRhMDBmN2Y0OQ==
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Fri, 13 Sep 2019 14:26:34 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 3v249hqtptsg744y
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"0d1d13944d385fc31fa7c4fcf23f72ef"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.097855'
+      X-Request-Id:
+      - 02-1568384793.685-92.223.152.178-13010819
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      X-Broxyid:
+      - 02-1568384793.685-92.223.152.178-13010819
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIABqne10AA6xVwXLaMBC98xWM78Y2dgnOGGd6SW49tEk7zSWzthasIkuuJJPw910ZgwmBtJ32ht6+Xe0+vxXZzUstxhvUhiu58KJJ6I1RlopxuVp4D/e3/ty7yUdZqZFx65egWT4aj7OCC0EUHxjTaIzDCOUsb+ZZwFl/LltjVY3aJ2Q+v4rnsziOs+AY3hGXXBvrS6hxLLlYeFa36AV9UMDlWKnqBuT2TMRYjWj3DZ4h4ItFyZC9QxGqBMHtufIaV6TYmUCjjAXhk4SYp0kUXmXBMbRvu5VWbzvIB9FUMD073Ckr/h1LtqQrL9+hXRJSI1gnhh3bbYMLj9HR8hq9fBpGqR+mfhTfR8n1dHYdTx/pIx4S+gptw/6uwpDQWSo44ynymcyTMJqGoYvLDnMm9N0V+VdugDo5nPfRSglG9jo3qnMMSVRyEPmDXEv1LKnCgI2OpFJLnxvTgiwxf/jy0fHeBkb/Lt4f7slAc760ZD/q6oh1QB2XYcHtMOHuuAssoRX7RgulBIL0cqeQo3XBHbHVpLhPRm+Fa/ao2Glk1K1Tw3V3v18raas8mmbBG/CEuUXQJNE0fEXt0AMT2WmvSxAG+4z+9pVQBa0YCVXe3X4ovn1t2V0k2F21ebxNf3yPUs3k5+fHO5MFA9UlVgjCVmQaHOY7whyF17BCv9Uir6xtzHUQgDFozaTQwKV7ZlakwjNsJ+SjoIFtjdI+1WgrxZ6EWqlgQz6dNHJ1g3LDtZKOsDAgWaFe6Lk81O9uI2O5LShAroeWXqGj/aOY5OHMadcfHE7XayWOvL0HuqDGBmjwT4rw/vcOV6wtrdNkyBswRzFtYUrNG/eBTP9BQGvY9mtl1Rplvt7Yhq2zYHdyeCv5z7Z7l4rOyDQ5X3LUeVhEkDA2S3EWz1iaxgnE0RUDiJMIkySh9+FS6ug/vDYblLXyDVtfMNch3rM1Xb1brzfTd+s8/Dv+AgAA//8DADBA2i1TBwAA
+    http_version: 
+  recorded_at: Fri, 13 Sep 2019 14:26:34 GMT
+recorded_with: VCR 5.0.0

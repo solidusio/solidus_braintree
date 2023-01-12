@@ -1,0 +1,90 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/7rdg92j7bm7fk5h3/transactions
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <transaction>
+          <amount>10.00</amount>
+          <channel>Solidus</channel>
+          <options>
+            <store-in-vault-on-success type="boolean">true</store-in-vault-on-success>
+            <paypal>
+              <payee-email>paypal+europe@example.com</payee-email>
+            </paypal>
+          </options>
+          <merchant-account-id>stembolt_EUR</merchant-account-id>
+          <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
+          <shipping>
+            <first-name>Bruce</first-name>
+            <last-name>Wayne</last-name>
+            <street-address>42 Spruce Lane Apt 312</street-address>
+            <locality>Gotham</locality>
+            <postal-code>90210</postal-code>
+            <region>CA</region>
+            <country-code-alpha2>US</country-code-alpha2>
+          </shipping>
+          <type>sale</type>
+        </transaction>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.98.0
+      X-Apiversion:
+      - '5'
+      Content-Type:
+      - application/xml
+      Authorization:
+      - Basic bXdqa2t4d2NwMzJja2huZjphOTI5OGY0M2IzMGM2OTlkYjMwNzJjYzRhMDBmN2Y0OQ==
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Fri, 13 Sep 2019 14:27:23 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 3v249hqtptsg744y
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"77e1e2d6d635e062ee34868bb7aca21a"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.511733'
+      X-Request-Id:
+      - 01-1568384842.114-92.223.152.178-12966962
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      X-Broxyid:
+      - 01-1568384842.114-92.223.152.178-12966962
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Fri, 13 Sep 2019 14:27:23 GMT
+recorded_with: VCR 5.0.0

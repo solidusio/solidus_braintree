@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/7rdg92j7bm7fk5h3/transactions
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <transaction>
+          <amount>10.00</amount>
+          <channel>Solidus</channel>
+          <options>
+            <store-in-vault-on-success type="boolean">true</store-in-vault-on-success>
+            <submit-for-settlement type="boolean">true</submit-for-settlement>
+          </options>
+          <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
+          <shipping>
+            <first-name>Bruce</first-name>
+            <last-name>Wayne</last-name>
+            <street-address>42 Spruce Lane Apt 312</street-address>
+            <locality>Gotham</locality>
+            <postal-code>90210</postal-code>
+            <region>CA</region>
+            <country-code-alpha2>US</country-code-alpha2>
+          </shipping>
+          <type>sale</type>
+        </transaction>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 2.98.0
+      X-Apiversion:
+      - '5'
+      Content-Type:
+      - application/xml
+      Authorization:
+      - Basic bXdqa2t4d2NwMzJja2huZjphOTI5OGY0M2IzMGM2OTlkYjMwNzJjYzRhMDBmN2Y0OQ==
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Date:
+      - Fri, 13 Sep 2019 14:27:49 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 3v249hqtptsg744y
+      Vary:
+      - Accept-Encoding
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"3fcabe79853d46ebc3e84b6bafd1a249"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.678478'
+      X-Request-Id:
+      - 02-1568384868.912-92.223.152.178-13024911
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      X-Broxyid:
+      - 02-1568384868.912-92.223.152.178-13024911
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        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
+    http_version: 
+  recorded_at: Fri, 13 Sep 2019 14:27:50 GMT
+recorded_with: VCR 5.0.0

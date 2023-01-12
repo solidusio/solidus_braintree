@@ -1,9 +1,0 @@
-<!-- insert_before "erb[loud]:contains('place_order')" -->
-
-<%
-# Currently we assume we only have one braintree
-# payment method. In practice this should be true and it simplifies the code.
-braintree_payment = @order.unprocessed_payments.find {|p| p.payment_method.class == Solidus::Gateway::BraintreeGateway }
-if braintree_payment %>
-  <%= render 'spree/checkout/payment/braintree_initialization', payment_method: braintree_payment.payment_method %>
-<% end %>

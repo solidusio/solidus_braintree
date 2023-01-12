@@ -1,0 +1,171 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/652zwb86tqk9v5wz/customers
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <customer>
+          <email>solidus@example.com</email>
+          <payment-method-nonce>fake-valid-nonce</payment-method-nonce>
+        </customer>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 3.4.0
+      X-Apiversion:
+      - '6'
+      Content-Type:
+      - application/xml
+      Authorization:
+      - Basic bnk4c2MzYjY0OHE3eDVoNjpmM2VjZWNlNTI5MTIwMjAzMGU1MDQwMWY1MGMwZWNhNw==
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      Date:
+      - Fri, 28 Oct 2022 11:48:35 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 4b9yb8scv4785hg6
+      Vary:
+      - Accept-Encoding, Origin
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"fc78821a32ceefb0bb66822d19642e82"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.359927'
+      X-Request-Id:
+      - 2bde7385-30c6-4e06-b694-ea49ffdab2ff
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      X-Broxyid:
+      - 2bde7385-30c6-4e06-b694-ea49ffdab2ff
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Paypal-Debug-Id:
+      - 83f2d6168bcf4
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAJPBW2MAA6xWy3KjOhDd5ytc7AkG7AlOYXIXU0nVVCWbO8ncyWZKoMbWWEiMJGyTr78S5uUHjlOZHTp9Wmpap1sd3m0zOlqDkISzueVej60RsIRjwhZz6/n7vR1Yd9FVmBRS8QxEdDUahQRHX4Kb8exm4o9DR68MqI3JEjFlG+vUe9vEwRf1ZzVbTzdvodO3GnZKhFQ2QxmMGKFzS4kCLKcyUTRkSXiWI1Ye4ZAhQiPJKcGF/Ae2KMspXGt26OxMhpQvOTveMkXbI2wDsSTqxPECkAJsIzVSZQ5zC+ulIhlYkTf2PNsd217w3XVvJ8GtP30Nnc6h8i9y/DH/zmF3fnUHdkqAYrkLaUF5jKhJ6k//5Q0/zNTrf9/Sp98L//Hryn/6+rgJnY5T/wQmyk6QwLIOAwmBSstY9+07RGMxoVTrwUYYC5CywXdKKFkjgRprpGLvy6QPd+RhHdSEQTU0p53WRG2VSgCoJvABEmwVMGzyfJZGeYIoUUNHCVjoEhow5lwqfQe6riCaTdzxTej0of7vFEyJsoJtRPMl8gZ//JDpX8Jkhb4DkrxDPZPwqo7MNjGIoV0+Vyj1Lp8sl2oPZ0C6WtIsmoxdLwgMh7W40b1tjoteiEQ6snbdZyw5xVrJQ1kyojQNjyAaPbMV4xtdIz2so+2yzVObSFkglkCff2xsHT+f4A+UaUe9pN2cIB/tY0pJ6WqJnv/tObRow8cQE9VlZLfsjCkqaJOAmHMKiFmRuQlDrYwduRD6lm1dowU1iehtemhpXGCbE1HFY2ecqWXkevo5OQRPsEtAwlyDv0ev0D024MPYU0Ql1F69SLpEJg/30/jHS4EfXIofluvX+9nvn+6sfPRkGf/4xl4P233lvwRE1VLrtqeuHtbQSIYWYBeCRkulcnnrOEhKUPI6Fogw00gXOkEbVJqX1clRmQFTvzJQS45/Ub7gzlqXzHXOFnfA1kRwZghziRiO+VY/Eu3+7Yla16Y4Y8RWXWh7aEOtnoFJ5AaBGzr1orHpUASnvVJrgJYgIEc6IU9c2+rvzsZxkVRzSeffYQ1NFrFMBMnNXe6/m13VK74CFgl/5WXxYhE6u3VjLRj5UzSNU2+tc0P0U66lgv3pdIpT8HEwvYGJG7hp4qVwo6FkPJnpxjbk2u79F1rlGljGbYlXA6ps7T0PocPY1exQToi0GagNFyu7Sgd5G5T9KWo9lDgHU8keUDX1sG7wcHKoOez+R2PLR7rh+ZHl/MBybly5YFi5aFQ5O6icGVMuHFIuHVEuHVAuHk/eHU7eHU3+yrv56VoLnZ4c2wXoZae36Op/AAAA//8DAOjCcKiZDQAA
+  recorded_at: Fri, 28 Oct 2022 11:48:35 GMT
+- request:
+    method: post
+    uri: https://api.sandbox.braintreegateway.com/merchants/652zwb86tqk9v5wz/transactions
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <transaction>
+          <amount>20.00</amount>
+          <order-id>R9999999-123ABC</order-id>
+          <channel>Solidus</channel>
+          <options>
+            <store-in-vault-on-success type="boolean">true</store-in-vault-on-success>
+          </options>
+          <payment-method-token>r3k2mbgg</payment-method-token>
+          <billing>
+            <first-name>John</first-name>
+            <last-name>Doe</last-name>
+            <street-address>10 Lovely Street Northwest</street-address>
+            <locality>Herndon</locality>
+            <postal-code>21088-0255</postal-code>
+            <region>AL</region>
+            <country-code-alpha2>US</country-code-alpha2>
+          </billing>
+          <customer-id>687097430</customer-id>
+          <type>sale</type>
+        </transaction>
+    headers:
+      Accept-Encoding:
+      - gzip
+      Accept:
+      - application/xml
+      User-Agent:
+      - Braintree Ruby Gem 3.4.0
+      X-Apiversion:
+      - '6'
+      Content-Type:
+      - application/xml
+      Authorization:
+      - Basic bnk4c2MzYjY0OHE3eDVoNjpmM2VjZWNlNTI5MTIwMjAzMGU1MDQwMWY1MGMwZWNhNw==
+  response:
+    status:
+      code: 201
+      message: ''
+    headers:
+      Date:
+      - Fri, 28 Oct 2022 11:48:36 GMT
+      Content-Type:
+      - application/xml; charset=utf-8
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Download-Options:
+      - noopen
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Referrer-Policy:
+      - strict-origin-when-cross-origin
+      X-Authentication:
+      - basic_auth
+      X-User:
+      - 4b9yb8scv4785hg6
+      Vary:
+      - Accept-Encoding, Origin
+      Content-Encoding:
+      - gzip
+      Etag:
+      - W/"b235108105829caa5ec570cef992b0d5"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Runtime:
+      - '0.458590'
+      X-Request-Id:
+      - 75cd5459-a138-42d3-a41b-85fcd3baf633
+      Content-Security-Policy:
+      - frame-ancestors 'self'
+      X-Broxyid:
+      - 75cd5459-a138-42d3-a41b-85fcd3baf633
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Paypal-Debug-Id:
+      - 6370d1ef7ffe4
+      Transfer-Encoding:
+      - chunked
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        H4sIAJTBW2MAA6xZ23LbNhB9z1do9E5T1CWmMzRTt27SZmrPNGmSJi8ZkIRExCTAAqBs5eu7IMCbCFJKGz+ZuwcguNjL2VXw8inPZnvMBWH0eu5dLOYzTGOWELq7nr//65Xjz1+GzwLJERUoloAKn81mAUnCTbGiib/wAxcelExIJEsRolKmjJNvOAlcI1JaeShwKFCGA7f6V8niknN428EhgjnwUhz++v5t4A7FCoxyVlIZLhcXi0XgmqdW4XD8T4mFxEkf0pErcI55nCIQoziu1HD4TyxjgWvTVJ9VRo5FN6Mku55LXuK5q3dG8BJ+FpTxBJCw/9sr/ed4y9XNz78EbqOpzMMxgnM7SM6Uya7nCTxKkuM5fOJy6XgLZ+n/5Xkv1v6L1fPPYLhmQbW+LJLvW98uMNcjJIPvUQ/6zp/7l4ury/VqUV86iLeEC+lQlOPj7wRlhsZ1McsLRA8WDc4RyULBMpKU4if8hPIiwxeAD1yt0rBHHAkibVsXKaM2+RY9WaS7jEUoqzxh9eFb8vpKfv77zfb+6251d/uwur+9ewzcFqMs43ZNE0QkyyBeWjMdqNU+4RuWgqYjODJSeMsgPNrHU3YSkmMMnpYkHAsReovZH2yPs8PsXaWY3TMu00dwfhWJPaix85PENFEXrsW2C2Qxyog8hL9hThMGx28kGsDxTiWFmz8C1/xrroBB8Gc6fJfewvedxXKzCdyuvP4+CBN+0J/8nsKNJvAB4IhixrazG7AyiRGYvAvrr1SbOSgrUrQM379roV352IoVrLixLVnZltCyOk7orxdHa2pN5R4djwADbUua2NJAoxEmPhHn6NBTwt10Uq9tkwJxScCgAkuZ4RxDxumvsG3e5uhT23e2jZCMUysmJUXRDQBb5P34LNF3aVsaOd+9LSrtzbbk0nqw9bytm06oO655Fmp1CmX8b3A5bvd2TEp3tgRniTC+YOqUcjeAdR3CeE7EWIYRnYdblAlIUBMr9I574WDOGYfaKwpGBbYaq8J1jNlHh3fwoklAvUXfD+y7TGIqw+z3R9LfIcAHQgXdQWp6RAfQfMU6bqDsiqGrBAVnMbwN7FDHG6rg1U7+7cd3b59DPpwC9XfpH8VbKJIzph1ZKSEmwpsCNHvFz8YQlWmThKiTgPGHsMG37hmJ1QVt4eJhBXhjhPnQIqUiR/AWzXNGUBI9OZq8WVX4CeeFHPHNFqBTU4zMo74nQwXHrgpyxSORqUOxfGT8wZHsAY9FwdSSmr6BBZ0Y8ZoKaB1fPSzzaLeDw9bYikTQcL3wlr6vygftZsZ16Pm+Z4jBug5+2NapmPQHIlR5bJ7r5FcQrl0pZ1SmobcE9nQsHGAPGHHFDlc9cCU17zXMx1Gpswr5quIOpO0pU5ZVl21PiCRHO+yUPAtTKQvxwnURGFWKi4gjQlXYmnhT/M8t0EHVoi85hlhJvmRsx9w9fP9FQXcvMd0TzqgCXAtEk4g9AQ9r9jfZm+MCATm7Z+oK9f9ak2KUyRROrFjIA2WPQHY6Mg1KcERkq9ePRlVyuDhwsl2ZKRrdQR1rmtKmugWo3i20IzPnRQfOsg6iFhjzCVGqHBwh+tBietJ+sWBbR2kRjXH3rUNlbS6WlHHVDLUnaGXHBDp+/WoTffxQJq+9LHmd7j+/uvr6ybs63C3FIfr4hn4+ptKdAqSc1+IgJSUQtSZXwCq4XQL1C7w0WW02m2SLV4m/ucRrz/e28XKLL0EUL9ZX0M+MLdU77zHNmSOSh5EIb/RHB4XTKwsNS+1RxJuO2EkJBAc/9HhYw2EqBIZXGTdSaQJaNFDkxZltW4NvdphsxfW3jHTT2uQCbJTiLGM/URyBz0YXBHqIStwcssMbBYO8jkNUEDjMUK4/1T3+1kZi7KMTMZjWyjHLSMScFKM8taNvMmpFwp0CeBFLHKCCjrKkxcWOkHAsLq1YOPLRe1SZdKAiWkh2QkTlL1Yd1ruw2hdHsuNYIwv5bHi2/qZAYNUgBb5rxL0bva5WKaIUZ+E73XWDMxuB7gL4XtX3LcZjlVm9mz06+koHWrBFVHKhG4kES2ji6ya0r7JfUKcLsb++jxkMkM6E4yf10VAu+MljRIrFnL1QMWXwcyDdtl3LOLZ0J3CfI0ZTJitK1R9bOjto0TiWJacNV5tqAHV5R8lXqN/qNTasqbkOocCiS91hKp6hs90Xle0CdwzU56EdA/bpapeKjoJO71WR11N7NQy3pmzTXcoApdYPe3kiHpT3onYKdDwgrcI+JqIal2gKrmLWSIyjcFRCAjLhpjBQtXhYib/Ao9QdR+COAOvXVFJ1HChGBXgDUF57ErBBjw5r2huLayiCShBkT+igHegzt0O7uD3DBDIFQueog0PsYPCWLbOOE4Sz5dCnTrTazdRhLCHV6XdM3xD23gAkXKga6y2Wvuet/RU0aCO4sQZLOT2abLDqsOjHYMW2sRgf1nrOYt2t+mPLTe5XdG5ssiQ5OT35MdOphq3ZU8Pk8GlyrXXA1awYDgvsI6vxBS3NTH57k0b0Pv20eltEy832/u+bb1H+5/rudnc82NV2O3HuofnGT6HRe1BWvTFUi5qPQkO2Wm+eX6pCPIpRW6iUirJMlyqrK3cQk5Y+iTMuivN9FbLDS4j/KcHN+OCgw19D6p9Batat28LRlh/znNDKhOfAm91ttKnzG09v2n1yXvjjh4FW+tb9qak9YAC5zNkDAYUGZSxZdyGGRkL7WY8exoYaKkfmtgxa12wggpgUdRtrr1z/JZom24zv+vHv/4zB/u8g7EcN8k657ajjnuG6k8474b6nHHiiA7E68XcH/neH/sz6S/J/C5/TIdKhCUenG5v+n5jKVc+9oV5XcuaYYRC3va47fPYvAAAA//8DAJzUeSzVHwAA
+  recorded_at: Fri, 28 Oct 2022 11:48:36 GMT
+recorded_with: VCR 6.1.0
