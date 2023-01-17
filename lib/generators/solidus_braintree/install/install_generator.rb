@@ -21,19 +21,17 @@ module SolidusBraintree
       end
 
       def add_migrations
-        run 'bin/rails railties:install:migrations FROM=solidus_braintree'
+        rake 'railties:install:migrations FROM=solidus_braintree'
       end
 
       def mount_engine
-        insert_into_file File.join('config', 'routes.rb'), after: "Rails.application.routes.draw do\n" do
-          "mount SolidusBraintree::Engine, at: '/solidus_braintree'\n"
-        end
+        route "mount SolidusBraintree::Engine, at: '/solidus_braintree'"
       end
 
       def run_migrations
         run_migrations = options[:auto_run_migrations] || ['', 'y', 'Y'].include?(ask('Would you like to run the migrations now? [Y/n]')) # rubocop:disable Layout/LineLength
         if run_migrations
-          run 'bin/rails db:migrate'
+          rake 'db:migrate'
         else
           puts 'Skipping bin/rails db:migrate, don\'t forget to run it!' # rubocop:disable Rails/Output
         end
