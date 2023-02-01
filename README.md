@@ -1,26 +1,50 @@
-# SolidusPaypalBraintree
+# SolidusBraintree
 
-[![CircleCI](https://circleci.com/gh/solidusio/solidus_paypal_braintree.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_paypal_braintree)
-[![codecov](https://codecov.io/gh/solidusio/solidus_paypal_braintree/branch/master/graph/badge.svg)](https://codecov.io/gh/solidusio/solidus_paypal_braintree)
+[![CircleCI](https://circleci.com/gh/solidusio/solidus_braintree.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_braintree)
+[![codecov](https://codecov.io/gh/solidusio/solidus_braintree/branch/master/graph/badge.svg)](https://codecov.io/gh/solidusio/solidus_braintree)
 
-`solidus_paypal_braintree` is an extension that adds support for using [Braintree](https://www.braintreepayments.com) as a payment source in your [Solidus](https://solidus.io/) store. It supports Apple Pay, PayPal, and credit card transactions.
+`solidus_braintree` is an extension that adds support for using [Braintree](https://www.braintreepayments.com) as a payment source in your [Solidus](https://solidus.io/) store. It supports Apple Pay, PayPal, and credit card transactions.
 
 🚧 This extension is currently only compatible with the legacy `solidus_frontend` 🚧
 
 ## Installation
 
-Add solidus_paypal_braintree to your Gemfile:
+Add solidus_braintree to your Gemfile:
 
 ```ruby
-gem 'solidus_paypal_braintree', github: 'solidusio/solidus_paypal_braintree', branch: :master
+gem 'solidus_braintree'
 ```
 
 Bundle your dependencies and run the installation generator:
 
 ```shell
 bundle
-bundle exec rails g solidus_paypal_braintree:install
+bundle exec rails g solidus_braintree:install
 ```
+
+## Naming is hard: from SolidusBraintree to SolidusPaypalBraintree and then back to SolidusBraintree
+
+This gem is the result of merging two gems: the original SolidusBraintree gem, which was deprecated in 2020, and the SolidusPaypalBraintree gem, which was written from scratch to replace it. The updated codebase is based solely on the SolidusPaypalBraintree code. However, we've renamed the gem back to SolidusBraintree to make it clear that it's backed by Braintree. The name also differentiates it from the official Solidus PayPal extension, SolidusPaypalCommercePlatform.
+
+Take note that for now we are keeping the `solidus_paypal_braintree` prefix for SolidusBraintree database tables. Renaming tables can be a potentially risky operation, and we wanted to reduce the friction in updating to v2.0.0. For details, please see https://github.com/solidusio/solidus_braintree/issues/101.
+
+## Upgrading from SolidusPaypalBraintree 1.2.0 to SolidusBraintree 2.0.0
+
+With the gem renamed to SolidusBraintree, you'll need to:
+
+1. Change the gem in your Gemfile from `gem 'solidus_paypal_braintree'` to `gem 'solidus_braintree', '~> 2.0.0'`. If you have your own references to `SolidusPaypalBraintree` in your app, you may need to require the `solidus_paypal_braintree` alias in your Gemfile, i.e.
+
+    ```ruby
+    gem 'solidus_braintree', '~> 2.0.0'`, require: 'solidus_paypal_braintree'
+    ```
+
+2. Run `bin/rails g solidus_braintree:install`. This will update some references to SolidusPaypalBraintree in your app. It will also add a data migration to update your database.
+
+Additionally, you can rename any other references to SolidusPaypalBraintree in your app to SolidusBraintree. This will fix any deprecation warnings that come with SolidusBraintree 2.0.0.
+
+## Here be dragons: upgrading from SolidusBraintree 1.2.0
+
+Considering that SolidusBraintree 2.0.0 is based on the SolidusPaypalBraintree codebase, please be warned that migrating directly from SolidusBraintree 1.2.0 to 2.0.0 would lead to breaking changes. Since SolidusBraintree 1.x was already [deprecated](https://github.com/solidusio/solidus_braintree/tree/v1.x#deprecation-notice-warning-construction), we don't provide at the moment a ready-made solution for migrating from SolidusBraintree 1.2.0 to 2.0.0.
 
 ## Basic Setup
 
@@ -42,7 +66,7 @@ Payment methods can accept preferences either directly entered in admin, or from
   # config/initializers/spree.rb
   Rails.application.config.to_prepare do
     Spree::Config.static_model_preferences.add(
-      SolidusPaypalBraintree::Gateway,
+      SolidusBraintree::Gateway,
       'braintree_credentials', {
         environment: Rails.env.production? ? 'production' : 'sandbox',
         merchant_id: ENV['BRAINTREE_MERCHANT_ID'],
@@ -58,7 +82,7 @@ Payment methods can accept preferences either directly entered in admin, or from
 
 2. Visit `/admin/payment_methods/new`
 
-3. Set `provider` to SolidusPaypalBraintree::Gateway
+3. Set `provider` to SolidusBraintree::Gateway
 
 4. Click "Save"
 
@@ -68,7 +92,7 @@ Payment methods can accept preferences either directly entered in admin, or from
 
 Alternatively, create a payment method from the Rails console with:
 ```ruby
-SolidusPaypalBraintree::Gateway.new(
+SolidusBraintree::Gateway.new(
   name: "Braintree",
   preference_source: "braintree_credentials"
 ).save
@@ -77,7 +101,7 @@ SolidusPaypalBraintree::Gateway.new(
 ### Configure payment types
 Your payment method can accept payments in three ways: through Paypal, through ApplePay, or with credit card details entered directly by the customer. By default all are disabled for all your site's stores. Before proceeding to checkout, ensure you've created a Braintree configuration for your store:
 
-1. Visit /solidus_paypal_braintree/configurations/list
+1. Visit /solidus_braintree/configurations/list
 
 2. Check the payment types you'd like to accept. If your site has multiple stores, there'll be a set of checkboxes for each.
 
@@ -97,7 +121,7 @@ Your payment method can accept payments in three ways: through Paypal, through A
 
 4. If your site uses an unmodified `solidus_frontend`, it should now be ready to take payments. See below for more information on configuring Paypal and ApplePay.
 
-5. Typical Solidus sites will have customized frontend code, and may require some additional work. Use `lib/views/frontend/spree/checkout/payment/_paypal_braintree.html.erb` and `app/assets/javascripts/solidus_paypal_braintree/checkout.js` as models.
+5. Typical Solidus sites will have customized frontend code, and may require some additional work. Use `lib/views/frontend/spree/checkout/payment/_braintree.html.erb` and `app/assets/javascripts/solidus_braintree/checkout.js` as models.
 
 ## Apple Pay
 ### Developing with Apple Pay
@@ -137,7 +161,7 @@ The following is a relatively bare-bones implementation to enable Apple Pay on t
         countryCode: '<%= address.country.iso %>'
       }
     };
-    var button = new SolidusPaypalBraintree.createApplePayButton(applePayButtonElement, applePayOptions);
+    var button = new SolidusBraintree.createApplePayButton(applePayButtonElement, applePayOptions);
     button.initialize();
   </script>
 <% end %>
@@ -170,7 +194,7 @@ To add Venmo for PayPal, [see here](#paypal-venmo)
 4. Set your Braintree payment method's preference of `preferred_venmo_new_tab_support` to `false` if your store cannot handle Venmo returning a user to a new tab after payment. This may be because your website is a single-page applicaiton (SPA). On mobile, the user may be returned to the same store tab if their browser supports it, otherwise a new tab will be created (unless you have this preference as `false`).
 
 By default your default Venmo business account will be used. If you want to use a non-default profile, override
-the `SolidusPaypalBraintree::Gateway` `#venmo_business_profile_id` method with its id.
+the `SolidusBraintree::Gateway` `#venmo_business_profile_id` method with its id.
 
 #### Testing
 Test the following scenarios:
@@ -202,12 +226,12 @@ Ensure that you follow [Venmo's guidelines](https://developer.paypal.com/braintr
 ## PayPal
 
 A default checkout view is provided that will display PayPal as a payment option.
-It will only be displayed if the `SolidusPaypalBraintree::Gateway` payment
+It will only be displayed if the `SolidusBraintree::Gateway` payment
 method is configured to display on the frontend and PayPal is enabled in the
 store's configuration.
 
 You can find button configuration options in
-`/solidus_paypal_braintree/configurations/list` if you want to change the color,
+`/solidus_braintree/configurations/list` if you want to change the color,
 shape, layout, and a few other options. For more information check out
 [PayPal's documentation](https://developer.paypal.com/docs/platforms/checkout/reference/style-guide/#layout).
 
@@ -217,7 +241,7 @@ Keep in mind that:
   Other available financing options after the limit will not be rendered in the PayPal's iframe DOM.
 
 The checkout view
-[initializes the PayPal button](/lib/views/frontend/spree/checkout/payment/_paypal_braintree.html.erb)
+[initializes the PayPal button](/lib/views/frontend/spree/checkout/payment/_braintree.html.erb)
 using the
 [Vault flow](https://developers.braintreepayments.com/guides/paypal/overview/javascript/v3),
 which allows the source to be reused. Please note that PayPal messaging is disabled with vault flow. If you want, you can use [Checkout with PayPal](https://developers.braintreepayments.com/guides/paypal/checkout-with-paypal/javascript/v3)
@@ -233,7 +257,7 @@ var paypalOptions = {
   // your configuration options here
 }
 
-var button = new SolidusPaypalBraintree.createPaypalButton(document.querySelector("#your-button-id"), paypalOptions);
+var button = new SolidusBraintree.createPaypalButton(document.querySelector("#your-button-id"), paypalOptions);
 
 button.initialize();
 ```
@@ -255,7 +279,7 @@ Venmo is currently available to US merchants and buyers. There are also other [p
 
 By default, the extension and Braintree will try to render a Venmo button to buyers when prequisites are met and you have enabled it in your Braintree account).
 
-Set the SolidusPaypalBraintree `PaymentMethod` `enable_venmo_funding` preference to:
+Set the SolidusBraintree `PaymentMethod` `enable_venmo_funding` preference to:
 - `enabled`, available as a PayPal funding option (if other prequisites are met); or
 - `disabled` (default).
 
@@ -305,12 +329,12 @@ This preference allows users to provide different Merchant Account Ids for
 different currencies. If you only plan to accept payment in one currency, the
 defaut Merchant Account Id will be used and you can omit this option.
 An example of setting this preference can be found
-[here](https://github.com/solidusio/solidus_paypal_braintree/blob/bf5fe0e154d38f7c498f1c54450bb4de7608ff04/spec/support/gateway_helpers.rb#L11-L13).
+[here](https://github.com/solidusio/solidus_braintree/blob/bf5fe0e154d38f7c498f1c54450bb4de7608ff04/spec/support/gateway_helpers.rb#L11-L13).
 
 In addition to this, you can also specify different PayPal accounts for each
 currency by using the `paypal_payee_email_map` preference. If you only want
 to use one PayPal account for all currencies, then you can ignore this option.
-You can find an example of setting this preference [here](https://github.com/solidusio/solidus_paypal_braintree/blob/bf5fe0e154d38f7c498f1c54450bb4de7608ff04/spec/support/gateway_helpers.rb#L14-L16).
+You can find an example of setting this preference [here](https://github.com/solidusio/solidus_braintree/blob/bf5fe0e154d38f7c498f1c54450bb4de7608ff04/spec/support/gateway_helpers.rb#L14-L16).
 
 ### Default store configuration
 The migrations for this gem will add a default configuration to all stores that
@@ -356,7 +380,7 @@ When testing your applications integration with this extension you may use it's 
 Simply add this require statement to your spec_helper:
 
 ```ruby
-require 'solidus_paypal_braintree/factories'
+require 'solidus_braintree/factories'
 ```
 
 ## Development
