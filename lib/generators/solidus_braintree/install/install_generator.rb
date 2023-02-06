@@ -25,7 +25,7 @@ module SolidusBraintree
         gsub_file 'vendor/assets/javascripts/spree/frontend/all.js',
           "//= require spree/frontend/solidus_paypal_braintree\n", ''
 
-        append_file 'vendor/assets/javascripts/spree/frontend/all.js',
+        append_file 'app/assets/javascripts/solidus_starter_frontend.js',
           "//= require spree/frontend/solidus_braintree\n"
 
         gsub_file 'vendor/assets/javascripts/spree/backend/all.js',
@@ -39,7 +39,7 @@ module SolidusBraintree
         gsub_file 'vendor/assets/stylesheets/spree/frontend/all.css',
           " *= require spree/frontend/solidus_paypal_braintree\n", ''
 
-        inject_into_file 'vendor/assets/stylesheets/spree/frontend/all.css',
+        inject_into_file 'app/assets/stylesheets/solidus_starter_frontend.css',
           " *= require spree/frontend/solidus_braintree\n", before: %r{\*/}, verbose: true
 
         gsub_file 'vendor/assets/stylesheets/spree/backend/all.css',
