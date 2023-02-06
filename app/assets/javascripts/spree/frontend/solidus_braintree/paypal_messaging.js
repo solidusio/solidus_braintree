@@ -1,4 +1,4 @@
-//= require solidus_braintree/constants
+//= require spree/frontend/solidus_braintree/constants
 
 SolidusBraintree.PaypalMessaging = function(paypalOptions) {
   this._paypalOptions = paypalOptions || {};

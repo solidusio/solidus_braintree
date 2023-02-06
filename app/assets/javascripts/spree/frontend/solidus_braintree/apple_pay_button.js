@@ -1,4 +1,4 @@
-//= require solidus_braintree/constants
+//= require spree/frontend/solidus_braintree/constants
 /**
  * Constructor for Apple Pay button object
  * @constructor

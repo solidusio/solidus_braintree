@@ -1,4 +1,4 @@
-//= require solidus_braintree/frontend
+//= require spree/frontend/solidus_braintree/frontend
 
 $(function() {
   /* This provides a default error handler for Braintree. Since we prevent

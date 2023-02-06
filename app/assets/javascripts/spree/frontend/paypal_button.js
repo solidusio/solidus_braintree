@@ -1,4 +1,4 @@
-//= require solidus_braintree/paypal_button
+//= require spree/frontend/solidus_braintree/paypal_button
 
 // This is the PayPal button on the cart page
 $(document).ready(function() {
