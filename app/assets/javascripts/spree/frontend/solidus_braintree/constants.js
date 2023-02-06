@@ -3,8 +3,8 @@ SolidusBraintree = {
 
   config: {
     paths: {
-      clientTokens: Spree.pathFor('solidus_braintree/client_token'),
-      transactions: Spree.pathFor('solidus_braintree/transactions')
+      clientTokens: Solidus.pathFor('solidus_braintree/client_token'),
+      transactions: Solidus.pathFor('solidus_braintree/transactions')
     },
 
     // Override to provide your own error messages.
