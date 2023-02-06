@@ -3,7 +3,7 @@
 module SolidusBraintree
   module Generators
     class InstallGenerator < Rails::Generators::Base
-      class_option :auto_run_migrations, type: :boolean, default: false
+      class_option :migrate, type: :boolean, default: false
       source_root File.expand_path('templates', __dir__)
 
       def setup_initializer
@@ -59,7 +59,7 @@ module SolidusBraintree
       end
 
       def run_migrations
-        run_migrations = options[:auto_run_migrations] ||
+        run_migrations = options[:migrate] ||
           ['', 'y', 'Y'].include?(ask('Would you like to run the migrations now? [Y/n]'))
 
         if run_migrations
