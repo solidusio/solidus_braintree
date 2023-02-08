@@ -84,7 +84,7 @@ $(function() {
 
   var $paymentForm = $("#checkout_form_payment");
   var $hostedFields = $("[data-braintree-hosted-fields]");
-  var $submitButton = $("input[type='submit']", $paymentForm);
+  var $submitButton = $("[type='submit']", $paymentForm);
 
   // If we're not using hosted fields, the form doesn't need to wait.
   if ($hostedFields.length > 0) {
