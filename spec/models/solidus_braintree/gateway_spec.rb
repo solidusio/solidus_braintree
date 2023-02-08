@@ -1,6 +1,6 @@
 require 'solidus_braintree_helper'
 require 'webmock'
-require 'support/order_ready_for_payment'
+require 'support/solidus_braintree/order_ready_for_payment'
 
 RSpec.describe SolidusBraintree::Gateway do
   let(:gateway) do
