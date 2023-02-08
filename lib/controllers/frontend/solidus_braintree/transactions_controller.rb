@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusBraintree
-  class TransactionsController < ::Spree::StoreController
+  class TransactionsController < StoreController
     class InvalidImportError < StandardError; end
 
     PERMITTED_BRAINTREE_TRANSACTION_PARAMS = [
