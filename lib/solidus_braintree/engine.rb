@@ -24,7 +24,7 @@ module SolidusBraintree
 
     if SolidusSupport.frontend_available?
       config.assets.precompile += [
-        'solidus_braintree/checkout.js',
+        'spree/frontend/solidus_braintree/checkout.js',
         'solidus_braintree/frontend.js',
         'spree/frontend/apple_pay_button.js',
         'solidus_braintree_manifest.js'
