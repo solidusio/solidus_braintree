@@ -149,7 +149,7 @@ RSpec.describe "Checkout", type: :feature, js: true do
   end
 
   def add_mug_to_cart
-    visit spree.root_path
+    visit root_path
     click_link mug.name
     click_button "add-to-cart-button"
   end

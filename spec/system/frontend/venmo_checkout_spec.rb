@@ -148,7 +148,7 @@ RSpec.describe "Checkout", type: :feature, js: true do
 
     allow_any_instance_of(Spree::Payment).to receive(:gateway_order_id).and_return(order_number)
 
-    visit spree.checkout_state_path(order.state)
+    visit checkout_state_path(order.state)
     next_checkout_step
   end
 

@@ -48,9 +48,9 @@ module SolidusBraintree
 
     def redirect_url(import)
       if import.order.complete?
-        spree.order_url(import.order)
+        main_app.order_url(import.order)
       else
-        spree.checkout_state_url(import.order.state)
+        main_app.checkout_state_url(import.order.state)
       end
     end
 

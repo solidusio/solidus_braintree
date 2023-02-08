@@ -41,7 +41,7 @@ RSpec.shared_context "with frontend checkout setup" do
     allow_any_instance_of(Spree::Payment).to receive(:number).and_return("123ABC")
     allow_any_instance_of(SolidusBraintree::Source).to receive(:nonce).and_return("fake-valid-nonce")
 
-    visit spree.checkout_state_path(:delivery)
+    visit checkout_state_path(:delivery)
     click_button "Save and Continue"
     choose("Braintree")
   end

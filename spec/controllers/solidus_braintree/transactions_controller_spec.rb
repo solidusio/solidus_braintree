@@ -130,7 +130,7 @@ RSpec.describe SolidusBraintree::TransactionsController, type: :controller do
       context "when format is HTML" do
         context "when import! leaves the order in confirm" do
           it "redirects the user to the confirm page" do
-            expect(post_create).to redirect_to spree.checkout_state_path("confirm")
+            expect(post_create).to redirect_to checkout_state_path("confirm")
           end
         end
 
@@ -138,7 +138,7 @@ RSpec.describe SolidusBraintree::TransactionsController, type: :controller do
           before { allow(order).to receive(:complete?).and_return(true) }
 
           it "displays the order to the user" do
-            expect(post_create).to redirect_to spree.order_path(order)
+            expect(post_create).to redirect_to order_path(order)
           end
         end
       end
