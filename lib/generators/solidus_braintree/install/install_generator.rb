@@ -1,14 +1,28 @@
 # frozen_string_literal: true
 
+require 'rails/generators/app_base'
+
 module SolidusBraintree
   module Generators
-    class InstallGenerator < Rails::Generators::Base
+    class InstallGenerator < Rails::Generators::AppBase
+      argument :app_path, type: :string, default: Rails.root
+
       class_option :migrate, type: :boolean, default: false
       source_root File.expand_path('templates', __dir__)
 
       # This is only used to run all-specs during development and CI,  regular installation limits
       # installed specs to frontend, which are the ones related to code copied to the target application.
       class_option :specs, type: :string, enum: %w[all frontend], default: 'frontend', hide: true
+
+      def add_test_gems
+        gem_group :test do
+          ['vcr', 'webmock'].each do |gem_name|
+            gem gem_name unless Bundler.locked_gems.dependencies[gem_name]
+          end
+        end
+
+        bundle_command 'install'
+      end
 
       def setup_initializer
         legacy_initializer_pathname =
@@ -105,6 +119,13 @@ module SolidusBraintree
 
       def engine
         SolidusBraintree::Engine
+      end
+
+      def bundle_command(command, env = {})
+        # Make `bundle install` less verbose by skipping the "Using ..." messages
+        super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
+      ensure
+        Bundler.reset_paths!
       end
     end
   end
