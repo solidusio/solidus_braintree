@@ -5,6 +5,7 @@
 // the compiled file.
 //
 //= require spree/frontend/solidus_braintree/constants
+//= require spree/frontend/solidus_braintree/ajax
 //= require spree/frontend/solidus_braintree/promise
 //= require spree/frontend/solidus_braintree/client
 //= require spree/frontend/solidus_braintree/hosted_form

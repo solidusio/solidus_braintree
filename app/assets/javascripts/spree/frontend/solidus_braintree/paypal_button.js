@@ -99,7 +99,7 @@ SolidusBraintree.PaypalButton.prototype._tokenizeCallback = function(tokenizeErr
 
   var params = this._transactionParams(payload);
 
-  return Spree.ajax({
+  return SolidusBraintree.ajax({
     url: SolidusBraintree.config.paths.transactions,
     type: 'POST',
     dataType: 'json',

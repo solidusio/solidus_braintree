@@ -94,7 +94,7 @@ SolidusBraintree.ApplepayButton.prototype.tokenize = function (session, payment)
 };
 
 SolidusBraintree.ApplepayButton.prototype._createTransaction = function (session, payment, payload) {
-  Spree.ajax({
+  SolidusBraintree.ajax({
     data: this._transactionParams(payload, payment.shippingContact),
     dataType: 'json',
     type: 'POST',

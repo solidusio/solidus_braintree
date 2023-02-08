@@ -157,7 +157,7 @@ SolidusBraintree.Client.prototype._fetchToken = function() {
     };
   }
 
-  return Spree.ajax(payload);
+  return SolidusBraintree.ajax(payload);
 };
 
 SolidusBraintree.Client.prototype._createBraintreeInstance = function(tokenResponse) {
