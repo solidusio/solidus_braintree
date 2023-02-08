@@ -22,6 +22,11 @@ module SolidusBraintree
       end
 
       def setup_javascripts
+        inject_into_file 'vendor/assets/javascripts/spree/frontend/all.js',
+          "//= require jquery3\n",
+          before: '//= require rails-ujs',
+          verbose: true
+
         gsub_file 'vendor/assets/javascripts/spree/frontend/all.js',
           "//= require spree/frontend/solidus_paypal_braintree\n", ''
 
