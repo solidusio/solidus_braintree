@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'solidus_braintree_helper'
 
 RSpec.describe Spree::Api::OrdersController, type: :request do
   stub_authorization!

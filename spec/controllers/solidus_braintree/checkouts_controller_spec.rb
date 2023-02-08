@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'solidus_braintree_helper'
 require 'support/order_ready_for_payment'
 
 RSpec.describe SolidusBraintree::CheckoutsController, type: :controller do

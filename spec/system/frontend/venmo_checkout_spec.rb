@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'solidus_braintree_helper'
 
 RSpec.describe "Checkout", type: :feature, js: true do
   let(:braintree_preferences) { { venmo: true }.merge(preferences) }

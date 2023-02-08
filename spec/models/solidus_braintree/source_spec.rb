@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'solidus_braintree_helper'
 
 RSpec.describe SolidusBraintree::Source, type: :model do
   include_context 'when order is ready for payment'

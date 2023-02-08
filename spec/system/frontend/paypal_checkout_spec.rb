@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'solidus_braintree_helper'
 
 RSpec.describe "Checkout", type: :feature, js: true do
   Capybara.default_max_wait_time = 60

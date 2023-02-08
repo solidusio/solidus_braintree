@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'solidus_braintree_helper'
 
 RSpec.describe SolidusBraintree::Address do
   describe "::split_name" do

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'solidus_braintree_helper'
 
 RSpec.describe Spree::Store do
   describe 'before_create :build_default_configuration' do

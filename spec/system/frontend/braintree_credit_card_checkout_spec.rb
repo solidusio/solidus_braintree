@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'solidus_braintree_helper'
 
 RSpec.shared_context "with frontend checkout setup" do
   let(:braintree) { new_gateway(active: true) }
