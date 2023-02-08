@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SolidusBraintree::ConfigurationsController, type: :controller do
+RSpec.describe SolidusBraintree::ConfigurationsController, type: :controller do
   routes { SolidusBraintree::Engine.routes }
 
   let!(:store_1) { create :store }

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SolidusBraintree::Transaction do
+RSpec.describe SolidusBraintree::Transaction do
   describe "#valid?" do
     subject { transaction.valid? }
 

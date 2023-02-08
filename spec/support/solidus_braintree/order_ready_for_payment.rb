@@ -1,4 +1,4 @@
-shared_context 'when order is ready for payment' do
+RSpec.shared_context 'when order is ready for payment' do
   let!(:country) { create :country }
 
   let(:user) { create :user }

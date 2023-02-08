@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SolidusBraintree::ClientTokensController do
+RSpec.describe SolidusBraintree::ClientTokensController do
   routes { SolidusBraintree::Engine.routes }
 
   cassette_options = { cassette_name: "braintree/token" }

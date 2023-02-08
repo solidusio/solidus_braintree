@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-describe "Checkout", type: :feature, js: true do
+RSpec.describe "Checkout", type: :feature, js: true do
   let(:braintree_preferences) { { venmo: true }.merge(preferences) }
   let(:preferences) { {} }
   let(:user) { create(:user) }

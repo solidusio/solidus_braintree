@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe SolidusBraintree::TransactionImport do
+RSpec.describe SolidusBraintree::TransactionImport do
   let(:order) { Spree::Order.new }
   let!(:country) { create :country, iso: "US" }
   let(:braintree_gateway) { SolidusBraintree::Gateway.new }

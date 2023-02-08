@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_context "with frontend checkout setup" do
+RSpec.shared_context "with frontend checkout setup" do
   let(:braintree) { new_gateway(active: true) }
   let!(:gateway) { create :payment_method }
   let(:three_d_secure_enabled) { false }
@@ -51,7 +51,7 @@ shared_context "with frontend checkout setup" do
   end
 end
 
-describe 'entering credit card details', type: :feature, js: true do
+RSpec.describe 'entering credit card details', type: :feature, js: true do
   context 'when page loads' do
     include_context "with frontend checkout setup"
 

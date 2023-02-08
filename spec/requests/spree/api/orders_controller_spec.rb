@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Api::OrdersController, type: :request do
+RSpec.describe Spree::Api::OrdersController, type: :request do
   stub_authorization!
 
   describe 'get show' do

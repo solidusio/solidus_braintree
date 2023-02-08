@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-shared_context "with backend checkout setup" do
+RSpec.shared_context "with backend checkout setup" do
   let(:braintree) { new_gateway(active: true) }
   let!(:gateway) { create :payment_method }
   let(:order) { create(:completed_order_with_totals, number: 'R9999999') }
@@ -25,7 +25,7 @@ shared_context "with backend checkout setup" do
   end
 end
 
-describe 'creating a new payment', type: :feature, js: true do
+RSpec.describe 'creating a new payment', type: :feature, js: true do
   stub_authorization!
 
   context "with valid credit card data", vcr: {

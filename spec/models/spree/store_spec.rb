@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Spree::Store do
+RSpec.describe Spree::Store do
   describe 'before_create :build_default_configuration' do
     context 'when a braintree_configuration record already exists' do
       it 'does not overwrite it' do
