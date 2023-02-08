@@ -6,6 +6,10 @@ module SolidusBraintree
       class_option :migrate, type: :boolean, default: false
       source_root File.expand_path('templates', __dir__)
 
+      # This is only used to run all-specs during development and CI,  regular installation limits
+      # installed specs to frontend, which are the ones related to code copied to the target application.
+      class_option :specs, type: :string, enum: %w[all frontend], default: 'frontend', hide: true
+
       def setup_initializer
         legacy_initializer_pathname =
           Pathname.new(destination_root).join('config/initializers/solidus_paypal_braintree.rb')
@@ -74,6 +78,33 @@ module SolidusBraintree
         else
           puts 'Skipping bin/rails db:migrate, don\'t forget to run it!' # rubocop:disable Rails/Output
         end
+      end
+
+      def install_specs
+        spec_paths =
+          case options[:specs]
+          when 'all' then %w[spec]
+          when 'frontend'
+            %w[
+              spec/solidus_braintree_helper.rb
+              spec/system/frontend
+              spec/support
+            ]
+          end
+
+        spec_paths.each do |path|
+          if engine.root.join(path).directory?
+            directory engine.root.join(path), path
+          else
+            template engine.root.join(path), path
+          end
+        end
+      end
+
+      private
+
+      def engine
+        SolidusBraintree::Engine
       end
     end
   end
