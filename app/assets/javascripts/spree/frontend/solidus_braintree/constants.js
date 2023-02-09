@@ -41,9 +41,9 @@ SolidusBraintree = {
   },
 
   showError: function(error) {
-    var $contentContainer = $("#content");
+    var $contentContainer = $("main");
     var $flash = $("<div class='flash error'>" + error + "</div>");
-    $contentContainer.prepend($flash);
+    $contentContainer.before($flash);
     $flash.show().delay(5000).fadeOut(500);
   },
 
