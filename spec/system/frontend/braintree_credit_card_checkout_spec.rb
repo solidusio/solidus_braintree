@@ -35,9 +35,9 @@ RSpec.shared_context "with frontend checkout setup" do
     order.number = "R9999999"
     order.recalculate
 
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(current_order: order)
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(try_spree_current_user: user)
-    allow_any_instance_of(Spree::CheckoutController).to receive_messages(spree_current_user: user)
+    allow_any_instance_of(CheckoutsController).to receive_messages(current_order: order)
+    allow_any_instance_of(CheckoutsController).to receive_messages(try_spree_current_user: user)
+    allow_any_instance_of(CheckoutsController).to receive_messages(spree_current_user: user)
     allow_any_instance_of(Spree::Payment).to receive(:number).and_return("123ABC")
     allow_any_instance_of(SolidusBraintree::Source).to receive(:nonce).and_return("fake-valid-nonce")
 
