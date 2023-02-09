@@ -6,6 +6,6 @@ module SolidusBraintree
       base.helper ::SolidusBraintree::BraintreeCheckoutHelper
     end
 
-    ::Spree::OrdersController.prepend(self)
+    OrdersController.prepend(self)
   end
 end
