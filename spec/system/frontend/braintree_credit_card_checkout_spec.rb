@@ -146,13 +146,13 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
 
     it "displays an alert with a meaningful error message" do
       expect(page).to have_text I18n.t("solidus_braintree.errors.empty_fields")
-      expect(page).to have_selector("input[type='submit']:enabled")
+      expect(page).to have_selector("[type='submit']:enabled")
     end
 
     # Same error should be produced when submitting an empty form again
     context "when user tries to resubmit an empty form", vcr: { cassette_name: "checkout/invalid_credit_card" } do
       it "displays an alert with a meaningful error message" do
-        expect(page).to have_selector("input[type='submit']:enabled")
+        expect(page).to have_selector("[type='submit']:enabled")
 
         click_button "Save and Continue"
         expect(page).to have_text I18n.t("solidus_braintree.errors.empty_fields")

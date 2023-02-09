@@ -187,7 +187,7 @@ RSpec.describe "Checkout", type: :feature, js: true do
 
   def disable_hosted_fields_form_listener
     # Once the submit button is enabled, the submit listener has been added
-    find("#checkout_form_payment input[type='submit']:not(:disabled)")
+    find("#checkout_form_payment [type='submit']:not(:disabled)")
     page.execute_script("$('#checkout_form_payment').off('submit');")
   end
 end
