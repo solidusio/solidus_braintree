@@ -6,6 +6,6 @@ module SolidusBraintree
       base.helper ::SolidusBraintree::BraintreeCheckoutHelper
     end
 
-    ::CheckoutsController.prepend(self) if SolidusSupport.frontend_available?
+    ::CheckoutsController.prepend(self)
   end
 end
