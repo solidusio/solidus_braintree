@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 module SolidusBraintree
-  module OrdersControllerDecorator
+  module CartsControllerDecorator
     def self.prepended(base)
       base.helper ::SolidusBraintree::BraintreeCheckoutHelper
     end
 
-    OrdersController.prepend(self)
+    CartsController.prepend(self)
   end
 end
