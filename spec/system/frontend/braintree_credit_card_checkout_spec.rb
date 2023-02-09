@@ -97,9 +97,12 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
     end
 
     it "checks out successfully" do
-      within("#order_details") do
+      within(".confirm-step") do
         expect(page).to have_content("CONFIRM")
       end
+
+      check('accept_terms_and_conditions')
+
       click_button("Place Order")
       expect(page).to have_content("Your order has been processed successfully")
     end
@@ -110,9 +113,11 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
       it 'checks out successfully' do
         authenticate_3ds
 
-        within("#order_details") do
+        within(".confirm-step") do
           expect(page).to have_content("CONFIRM")
         end
+
+        check('accept_terms_and_conditions')
 
         click_button("Place Order")
         expect(page).to have_content("Your order has been processed successfully")
@@ -170,9 +175,13 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
           fill_in("cvv", with: "123")
         end
         click_button("Save and Continue")
-        within("#order_details") do
+
+        within(".confirm-step") do
           expect(page).to have_content("CONFIRM")
         end
+
+        check('accept_terms_and_conditions')
+
         click_button("Place Order")
         expect(page).to have_content("Your order has been processed successfully")
       end
