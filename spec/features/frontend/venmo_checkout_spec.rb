@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require 'spree/testing_support/order_walkthrough'
 
 describe "Checkout", type: :feature, js: true do
   let(:braintree_preferences) { { venmo: true }.merge(preferences) }
@@ -134,7 +133,7 @@ describe "Checkout", type: :feature, js: true do
 
   def go_to_payment_checkout_page(order_number: 'R300000001' )
     order = if Spree.solidus_gem_version >= Gem::Version.new('2.6.0')
-              Spree::TestingSupport::OrderWalkthrough.up_to(:address)
+              SolidusBraintree::OrderWalkthrough.up_to(:address)
             else
               OrderWalkthrough.up_to(:address)
             end

@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'spree/testing_support/order_walkthrough'
 
 shared_context "with backend checkout setup" do
   let(:braintree) { new_gateway(active: true) }

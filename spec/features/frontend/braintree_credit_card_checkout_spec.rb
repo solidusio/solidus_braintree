@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'spree/testing_support/order_walkthrough'
 
 shared_context "with frontend checkout setup" do
   let(:braintree) { new_gateway(active: true) }
@@ -26,7 +25,7 @@ shared_context "with frontend checkout setup" do
     end
 
     order = if Spree.solidus_gem_version >= Gem::Version.new('2.6.0')
-              Spree::TestingSupport::OrderWalkthrough.up_to(:delivery)
+              SolidusBraintree::OrderWalkthrough.up_to(:delivery)
             else
               OrderWalkthrough.up_to(:delivery)
             end
