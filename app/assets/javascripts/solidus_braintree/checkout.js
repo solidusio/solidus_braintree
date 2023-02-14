@@ -42,7 +42,7 @@ $(function() {
 
       if ($field.is(":visible") && !$field.data("submitting")) {
         var $nonce = $("#payment_method_nonce", $field);
-
+        var $deviceData = $("#device_data", $field);
         if ($nonce.length > 0 && $nonce.val() === "") {
           var client = braintreeForm._merchantConfigurationOptions._solidusClient;
 
@@ -56,6 +56,8 @@ $(function() {
             }
 
             $nonce.val(payload.nonce);
+            
+            $deviceData.val(client._dataCollectorInstance.deviceData);
 
             if (!client.useThreeDSecure) {
               $paymentForm.submit();

@@ -16,7 +16,8 @@ RSpec.describe SolidusBraintree::Gateway do
       nonce: 'fake-valid-nonce',
       user: user,
       payment_type: payment_type,
-      payment_method: gateway
+      payment_method: gateway,
+      device_data: 'fake-device-data'
     )
   end
 
@@ -219,6 +220,37 @@ RSpec.describe SolidusBraintree::Gateway do
         it 'authorizes the transaction', aggregate_failures: true do
           expect(authorize.message).to eq 'authorized'
           expect(authorize.authorization).to be_present
+        end
+
+        context 'with available device data' do
+          it 'passes the device data as a parameter in the request' do
+            expect_any_instance_of(Braintree::TransactionGateway).
+              to receive(:sale).
+              with(hash_including({ device_data: "fake-device-data" })).and_call_original
+            authorize
+          end
+        end
+
+        context 'without device_data' do
+          let(:source) do
+            SolidusBraintree::Source.create!(
+              nonce: 'fake-valid-nonce',
+              user: user,
+              payment_type: payment_type,
+              payment_method: gateway
+            )
+          end
+
+          before do
+            allow_any_instance_of(Braintree::TransactionGateway).to receive(:sale).and_call_original
+          end
+
+          it 'does not pass any device data in the request' do
+            expect_any_instance_of(Braintree::TransactionGateway)
+              .not_to receive(:sale).with(hash_including({ device_data: "" }))
+
+            authorize
+          end
         end
       end
 
