@@ -18,7 +18,10 @@ module SolidusBraintree
       config.to_prepare do
         app.config.spree.payment_methods << SolidusBraintree::Gateway
         SolidusBraintree::Gateway.allowed_admin_form_preference_types.push(:preference_select).uniq!
-        ::Spree::PermittedAttributes.source_attributes.concat([:nonce, :payment_type, :paypal_funding_source]).uniq!
+
+        ::Spree::PermittedAttributes.source_attributes.concat(
+          [:nonce, :payment_type, :paypal_funding_source, :device_data]
+        ).uniq!
       end
     end
 
