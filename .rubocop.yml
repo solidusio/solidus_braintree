@@ -4,6 +4,11 @@ require:
 AllCops:
   NewCops: disable
   TargetRubyVersion: '2.7'
+  Exclude:
+    - sandbox/**/*
+    - dummy-app/**/*
+    - spec/dummy/**/*
+    - vendor/bundle/**/*
 
 Layout/FirstArgumentIndentation:
   EnforcedStyle: consistent
