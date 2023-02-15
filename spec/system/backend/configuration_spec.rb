@@ -1,6 +1,6 @@
 require 'solidus_braintree_helper'
 
-RSpec.describe "viewing the configuration interface" do
+RSpec.describe "viewing the configuration interface", type: :feature do
   stub_authorization!
 
   # Regression to ensure this page still renders on old versions of solidus
