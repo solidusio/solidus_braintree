@@ -28,26 +28,28 @@ FactoryBot.define do
       payment_type { SolidusBraintree::Source::APPLE_PAY }
     end
   end
-end
 
-FactoryBot.modify do
-  # The Solidus address factory randomizes the zipcode.
-  # The OrderWalkThrough we use in the credit card checkout spec uses this factory for the user addresses.
-  # For credit card payments we transmit the billing address to braintree, for paypal payments the shipping address.
-  # As we match the body in our VCR settings VCR can not match the request anymore and therefore cannot replay existing
-  # cassettes.
-  #
+  factory :solidus_braintree_address, parent: :address do
+    trait :with_fixed_zipcode do
+      # The Solidus address factory randomizes the zipcode.
+      # The OrderWalkThrough we use in the credit card checkout spec uses this factory for the user addresses.
+      # For credit card payments we transmit the billing address to braintree, for paypal payments the shipping address.
+      # As we match the body in our VCR settings VCR can not match the request anymore and therefore cannot replay existing
+      # cassettes.
+      #
 
-  factory :address do
-    zipcode { '21088-0255' }
+      zipcode { '21088-0255' }
+    end
 
     if SolidusSupport.combined_first_and_last_name_in_address?
-      transient do
-        firstname { "John" }
-        lastname { "Doe" }
-      end
+      trait :with_first_and_last_name do
+        transient do
+          firstname { "John" }
+          lastname { "Doe" }
+        end
 
-      name { "#{firstname} #{lastname}" }
+        name { "#{firstname} #{lastname}" }
+      end
     end
   end
 end

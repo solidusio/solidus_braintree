@@ -51,8 +51,12 @@ module SolidusBraintree
     end
 
     def address(order)
-      order.bill_address = ::FactoryBot.create(:address, country: @country, state: @state)
-      order.ship_address = ::FactoryBot.create(:address, country: @country, state: @state)
+      order.bill_address =
+        ::FactoryBot.create(:solidus_braintree_address, :with_fixed_zipcode, country: @country, state: @state)
+
+      order.ship_address =
+        ::FactoryBot.create(:solidus_braintree_address, :with_fixed_zipcode, country: @country, state: @state)
+
       order.next!
     end
 
