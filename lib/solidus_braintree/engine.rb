@@ -24,8 +24,6 @@ module SolidusBraintree
 
     config.assets.precompile += [
       'spree/frontend/solidus_braintree/checkout.js',
-      'solidus_braintree/frontend.js',
-      'spree/frontend/apple_pay_button.js',
       'solidus_braintree_manifest.js'
     ]
     paths["app/controllers"] << "lib/controllers/frontend"
