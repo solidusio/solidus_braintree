@@ -73,7 +73,8 @@ RSpec/MultipleMemoizedHelpers:
     - spec/models/solidus_braintree/response_spec.rb
     - spec/models/solidus_braintree/gateway_spec.rb
     - spec/controllers/solidus_braintree/client_tokens_controller_spec.rb
-    - spec/features/frontend/braintree_credit_card_checkout_spec.rb
+    - spec/system/frontend/braintree_credit_card_checkout_spec.rb
+    - spec/system/frontend/paypal_checkout_spec.rb
 
 Rails/ApplicationRecord:
   Exclude:
