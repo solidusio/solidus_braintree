@@ -72,6 +72,18 @@ module SolidusBraintree
           " *= require spree/backend/solidus_braintree\n", before: %r{\*/}, verbose: true
       end
 
+      def inject_checkout_helper_to_frontend_controllers
+        inject_into_class 'app/controllers/checkouts_controller.rb',
+          'CheckoutsController',
+          "  helper SolidusBraintree::BraintreeCheckoutHelper\n\n",
+          verbose: true
+
+        inject_into_class 'app/controllers/carts_controller.rb',
+          'CartsController',
+          "  helper SolidusBraintree::BraintreeCheckoutHelper\n\n",
+          verbose: true
+      end
+
       def add_migrations
         rake 'railties:install:migrations FROM=solidus_braintree'
       end
