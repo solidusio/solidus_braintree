@@ -56,7 +56,7 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
     include_context "with frontend checkout setup"
 
     it "selectors display correctly" do
-      expect(page).to have_selector("#payment_method_#{braintree.id}", visible: :visible)
+      expect(page).to have_selector("fieldset[name='payment-method-#{braintree.id}']", visible: :visible)
       expect(page).to have_selector("iframe#braintree-hosted-field-number")
       expect(page).to have_selector("iframe[type='number']")
     end
