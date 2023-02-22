@@ -1,7 +1,7 @@
-//= require solidus_braintree/constants
-//= require solidus_braintree/client
-//= require solidus_braintree/promise
-//= require solidus_braintree/hosted_form
+//= require spree/backend/solidus_braintree/constants
+//= require spree/backend/solidus_braintree/client
+//= require spree/backend/solidus_braintree/promise
+//= require spree/backend/solidus_braintree/hosted_form
 
 $(function() {
   var $paymentForm = $("#new_payment"),

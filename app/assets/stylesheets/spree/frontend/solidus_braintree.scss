@@ -49,3 +49,14 @@ the installer will append this file to the app vendored assets here: 'vendor/ass
 .venmo-button.visible {
   visibility: visible;
 }
+
+/*
+WORKAROUND: Do not allow buttons in disabled payment-step to be clickable. Note
+that it's still possible to trigger the PayPal button iframe by tabbing to it
+and hitting enter.
+*/
+fieldset.payment-step__details:disabled {
+  #apple-pay-button, #paypal-button iframe, #venmo-button {
+    pointer-events: none;
+  }
+}

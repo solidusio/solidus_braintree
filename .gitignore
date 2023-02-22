@@ -7,6 +7,7 @@
 .project
 .sass-cache
 coverage
+dummy-app
 Gemfile.lock
 tmp
 nbproject

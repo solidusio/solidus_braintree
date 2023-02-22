@@ -1,4 +1,4 @@
-<% address = current_order.ship_address %>
+<% address = SolidusBraintree::Address.new(current_order.ship_address) %>
 
 <button id="apple-pay-button" class="apple-pay-button"></button>
 

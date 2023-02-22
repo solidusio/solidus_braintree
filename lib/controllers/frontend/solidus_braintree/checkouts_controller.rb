@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusBraintree
-  class CheckoutsController < ::Spree::CheckoutController
+  class CheckoutsController < CheckoutsController
     PERMITTED_PAYMENT_PARAMS = [
       :payment_method_id,
       { source_attributes: [

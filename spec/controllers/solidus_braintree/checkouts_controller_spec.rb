@@ -1,5 +1,5 @@
-require 'spec_helper'
-require 'support/order_ready_for_payment'
+require 'solidus_braintree_helper'
+require 'support/solidus_braintree/order_ready_for_payment'
 
 RSpec.describe SolidusBraintree::CheckoutsController, type: :controller do
   routes { SolidusBraintree::Engine.routes }

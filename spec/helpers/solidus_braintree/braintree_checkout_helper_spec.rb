@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'solidus_braintree_helper'
 
 RSpec.describe SolidusBraintree::BraintreeCheckoutHelper do
   let!(:store) { create :store }

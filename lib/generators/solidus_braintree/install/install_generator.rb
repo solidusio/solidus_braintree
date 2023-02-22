@@ -1,10 +1,28 @@
 # frozen_string_literal: true
 
+require 'rails/generators/app_base'
+
 module SolidusBraintree
   module Generators
-    class InstallGenerator < Rails::Generators::Base
-      class_option :auto_run_migrations, type: :boolean, default: false
+    class InstallGenerator < Rails::Generators::AppBase
+      argument :app_path, type: :string, default: Rails.root
+
+      class_option :migrate, type: :boolean, default: false
       source_root File.expand_path('templates', __dir__)
+
+      # This is only used to run all-specs during development and CI,  regular installation limits
+      # installed specs to frontend, which are the ones related to code copied to the target application.
+      class_option :specs, type: :string, enum: %w[all frontend], default: 'frontend', hide: true
+
+      def add_test_gems
+        gem_group :test do
+          ['vcr', 'webmock'].each do |gem_name|
+            gem gem_name unless Bundler.locked_gems.dependencies[gem_name]
+          end
+        end
+
+        bundle_command 'install'
+      end
 
       def setup_initializer
         legacy_initializer_pathname =
@@ -22,22 +40,29 @@ module SolidusBraintree
       end
 
       def setup_javascripts
+        inject_into_file 'vendor/assets/javascripts/spree/frontend/all.js',
+          "//= require jquery3\n",
+          before: '//= require rails-ujs',
+          verbose: true
+
         gsub_file 'vendor/assets/javascripts/spree/frontend/all.js',
           "//= require spree/frontend/solidus_paypal_braintree\n", ''
 
-        append_file 'vendor/assets/javascripts/spree/frontend/all.js', "//= require spree/frontend/solidus_braintree\n"
+        append_file 'app/assets/javascripts/solidus_starter_frontend.js',
+          "//= require spree/frontend/solidus_braintree\n"
 
         gsub_file 'vendor/assets/javascripts/spree/backend/all.js',
           "//= require spree/backend/solidus_paypal_braintree\n", ''
 
-        append_file 'vendor/assets/javascripts/spree/backend/all.js', "//= require spree/backend/solidus_braintree\n"
+        append_file 'vendor/assets/javascripts/spree/backend/all.js',
+          "//= require spree/backend/solidus_braintree\n"
       end
 
       def setup_stylesheets
         gsub_file 'vendor/assets/stylesheets/spree/frontend/all.css',
           " *= require spree/frontend/solidus_paypal_braintree\n", ''
 
-        inject_into_file 'vendor/assets/stylesheets/spree/frontend/all.css',
+        inject_into_file 'app/assets/stylesheets/solidus_starter_frontend.css',
           " *= require spree/frontend/solidus_braintree\n", before: %r{\*/}, verbose: true
 
         gsub_file 'vendor/assets/stylesheets/spree/backend/all.css',
@@ -45,6 +70,18 @@ module SolidusBraintree
 
         inject_into_file 'vendor/assets/stylesheets/spree/backend/all.css',
           " *= require spree/backend/solidus_braintree\n", before: %r{\*/}, verbose: true
+      end
+
+      def inject_checkout_helper_to_frontend_controllers
+        inject_into_class 'app/controllers/checkouts_controller.rb',
+          'CheckoutsController',
+          "  helper SolidusBraintree::BraintreeCheckoutHelper\n\n",
+          verbose: true
+
+        inject_into_class 'app/controllers/carts_controller.rb',
+          'CartsController',
+          "  helper SolidusBraintree::BraintreeCheckoutHelper\n\n",
+          verbose: true
       end
 
       def add_migrations
@@ -59,7 +96,7 @@ module SolidusBraintree
       end
 
       def run_migrations
-        run_migrations = options[:auto_run_migrations] ||
+        run_migrations = options[:migrate] ||
           ['', 'y', 'Y'].include?(ask('Would you like to run the migrations now? [Y/n]'))
 
         if run_migrations
@@ -67,6 +104,40 @@ module SolidusBraintree
         else
           puts 'Skipping bin/rails db:migrate, don\'t forget to run it!' # rubocop:disable Rails/Output
         end
+      end
+
+      def install_specs
+        spec_paths =
+          case options[:specs]
+          when 'all' then %w[spec]
+          when 'frontend'
+            %w[
+              spec/solidus_braintree_helper.rb
+              spec/system/frontend
+              spec/support
+            ]
+          end
+
+        spec_paths.each do |path|
+          if engine.root.join(path).directory?
+            directory engine.root.join(path), path
+          else
+            template engine.root.join(path), path
+          end
+        end
+      end
+
+      private
+
+      def engine
+        SolidusBraintree::Engine
+      end
+
+      def bundle_command(command, env = {})
+        # Make `bundle install` less verbose by skipping the "Using ..." messages
+        super(command, env.reverse_merge('BUNDLE_SUPPRESS_INSTALL_USING_MESSAGES' => 'true'))
+      ensure
+        Bundler.reset_paths!
       end
     end
   end

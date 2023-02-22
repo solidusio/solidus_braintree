@@ -22,10 +22,6 @@
   <div class="field" data-hook="card_code">
     <%= label_tag "card_code#{payment_method.id}", Spree::CreditCard.human_attribute_name(:card_code), class: "required" %>
     <div class="input" id="card_code<%= payment_method.id %>"></div>
-
-    <a href="/content/cvv" class="info cvvLink" target="_blank">
-      (<%= I18n.t("spree.what_is_this") %>)
-    </a>
   </div>
 
   <div class="clear"></div>

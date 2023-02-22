@@ -5,7 +5,7 @@
 
 `solidus_braintree` is an extension that adds support for using [Braintree](https://www.braintreepayments.com) as a payment source in your [Solidus](https://solidus.io/) store. It supports Apple Pay, PayPal, and credit card transactions.
 
-🚧 This extension is currently only compatible with the legacy `solidus_frontend` 🚧
+🚧 This extension is currently only compatible with the `solidus_starter_frontend` 🚧
 
 ## Installation
 
@@ -119,7 +119,7 @@ Your payment method can accept payments in three ways: through Paypal, through A
   end
   ```
 
-4. If your site uses an unmodified `solidus_frontend`, it should now be ready to take payments. See below for more information on configuring Paypal and ApplePay.
+4. If your site uses an unmodified Solidus Starter Frontend, it should now be ready to take payments. See below for more information on configuring Paypal and ApplePay.
 
 5. Typical Solidus sites will have customized frontend code, and may require some additional work. Use `lib/views/frontend/spree/checkout/payment/_braintree.html.erb` and `app/assets/javascripts/solidus_braintree/checkout.js` as models.
 

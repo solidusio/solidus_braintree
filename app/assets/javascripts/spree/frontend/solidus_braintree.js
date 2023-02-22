@@ -1,1 +1,1 @@
-//= require solidus_braintree/frontend
+//= require spree/frontend/solidus_braintree/frontend

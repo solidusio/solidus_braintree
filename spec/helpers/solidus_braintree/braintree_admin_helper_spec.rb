@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'solidus_braintree_helper'
 
 RSpec.describe SolidusBraintree::BraintreeAdminHelper do
   describe '#braintree_transaction_link' do

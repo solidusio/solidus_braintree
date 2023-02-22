@@ -17,7 +17,7 @@ Gem::Specification.new do |spec|
   spec.metadata['source_code_uri'] = 'https://github.com/solidusio/solidus_braintree'
   spec.metadata['changelog_uri'] = 'https://github.com/solidusio/solidus_braintree/blob/master/CHANGELOG.md'
 
-  spec.required_ruby_version = Gem::Requirement.new('>= 2.5', '< 4')
+  spec.required_ruby_version = Gem::Requirement.new('>= 2.7', '< 4')
 
   # Specify which files should be added to the gem when it is released.
   # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
@@ -37,8 +37,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'rails-controller-testing'
   spec.add_development_dependency 'solidus_dev_support', '~> 2.5'
-  spec.add_development_dependency 'vcr'
-  spec.add_development_dependency 'webmock'
 
   spec.post_install_message = "If you're upgrading to v2.0.0, please see the README for upgrade instructions."
 end
