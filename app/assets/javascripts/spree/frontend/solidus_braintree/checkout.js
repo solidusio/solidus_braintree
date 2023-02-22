@@ -40,7 +40,7 @@ $(function() {
     $paymentForm.on("submit",function(event) {
       var $field = $(hostedField);
 
-      if ($field.is(":visible") && !$field.data("submitting")) {
+      if ($field.is(":visible") && $field.is(":enabled") && !$field.data("submitting")) {
         var $nonce = $("#payment_method_nonce", $field);
 
         if ($nonce.length > 0 && $nonce.val() === "") {
