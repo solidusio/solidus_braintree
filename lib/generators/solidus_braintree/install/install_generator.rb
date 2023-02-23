@@ -80,6 +80,8 @@ module SolidusBraintree
 
       def install_solidus_starter_frontend_support
         support_code_for(:starter_frontend) do
+          directory 'app', 'app'
+
           inject_into_file 'vendor/assets/javascripts/spree/frontend/all.js',
             "//= require jquery3\n",
             before: '//= require rails-ujs',
