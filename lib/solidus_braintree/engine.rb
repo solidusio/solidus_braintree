@@ -22,6 +22,12 @@ module SolidusBraintree
       end
     end
 
+    initializer 'add_solidus_braintree_response_to_log_entry_permitted_classes' do
+      Spree.config do |config|
+        config.log_entry_permitted_classes << 'SolidusBraintree::Response'
+      end
+    end
+
     config.assets.precompile += [
       'spree/frontend/solidus_braintree/checkout.js',
       'solidus_braintree_manifest.js'
