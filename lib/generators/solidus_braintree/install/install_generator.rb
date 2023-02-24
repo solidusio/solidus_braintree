@@ -109,6 +109,11 @@ module SolidusBraintree
             "  helper SolidusBraintree::BraintreeCheckoutHelper\n\n",
             verbose: true
 
+          inject_into_file 'app/views/orders/_payment_info.html.erb',
+            "        <li><%= render 'payments/braintree_payment_details', payment: payment %></li>\n",
+            after: "<li><%= payment.payment_method.name %></li>\n",
+            verbose: true
+
           spec_paths =
             case options[:specs]
             when 'all' then %w[spec]
