@@ -122,6 +122,7 @@ module SolidusBraintree
                 spec/solidus_braintree_helper.rb
                 spec/system/frontend
                 spec/support
+                spec/fixtures
               ]
             end
 
