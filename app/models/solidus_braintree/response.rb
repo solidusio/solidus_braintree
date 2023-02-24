@@ -29,7 +29,7 @@ module SolidusBraintree
           # For error responses we want to have the CVV code
           cvv_result: transaction&.cvv_response_code
         )
-        new(false, error_message(result), result.params, options)
+        new(false, error_message(result), result.params.deep_stringify_keys, options)
       end
 
       def response_options(transaction)
