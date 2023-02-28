@@ -9,7 +9,7 @@ module SolidusBraintree
     include ActiveModel::Model
 
     validate do
-      errors.add("Address", "is invalid") if address && address.invalid?
+      errors.add("Address", "is invalid") if address&.invalid?
 
       if transaction.invalid?
         transaction.errors.each do |error|
