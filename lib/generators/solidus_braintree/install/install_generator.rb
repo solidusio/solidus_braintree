@@ -7,7 +7,7 @@ module SolidusBraintree
     class InstallGenerator < Rails::Generators::AppBase
       argument :app_path, type: :string, default: Rails.root
 
-      class_option :migrate, type: :boolean, default: false
+      class_option :migrate, type: :boolean, default: true
       class_option :backend, type: :boolean, default: true
       class_option :frontend, type: :string, default: 'starter'
 
