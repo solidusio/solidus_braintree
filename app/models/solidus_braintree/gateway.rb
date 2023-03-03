@@ -364,6 +364,10 @@ module SolidusBraintree
         params[:payment_method_nonce] = source.nonce
       end
 
+      if source&.device_data
+        params[:device_data] = source.device_data
+      end
+
       if source.paypal?
         params[:shipping] = braintree_shipping_address(options)
       end
