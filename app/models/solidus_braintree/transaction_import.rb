@@ -32,6 +32,7 @@ module SolidusBraintree
         payment_type: transaction.payment_type,
         payment_method: transaction.payment_method,
         paypal_funding_source: transaction.paypal_funding_source,
+        device_data: transaction.device_data,
         user: user
       )
     end
