@@ -22,46 +22,9 @@ bundle
 bundle exec rails g solidus_braintree:install
 ```
 
-## Naming is hard: from SolidusBraintree to SolidusPaypalBraintree and then back to SolidusBraintree
+## Upgrading (including migration from SolidusPaypalBraintree)
 
-This gem is the result of merging two gems: the original SolidusBraintree gem, which was deprecated in 2020, and the SolidusPaypalBraintree gem, which was written from scratch to replace it. The updated codebase is based solely on the SolidusPaypalBraintree code. However, we've renamed the gem back to SolidusBraintree to make it clear that it's backed by Braintree. The name also differentiates it from the official Solidus PayPal extension, SolidusPaypalCommercePlatform.
-
-Take note that for now we are keeping the `solidus_paypal_braintree` prefix for SolidusBraintree database tables. Renaming tables can be a potentially risky operation, and we wanted to reduce the friction in updating to v2.0.0. For details, please see https://github.com/solidusio/solidus_braintree/issues/101.
-
-## Upgrading from SolidusPaypalBraintree 1.2.0 to SolidusBraintree 2.0.0
-
-The gem has undergone two major changes: 1) it's been renamed to SolidusBraintree, and 2) its frontend is now SolidusStarterFrontend. With those changes in mind, you'll need to:
-
-1. Change the gem in your Gemfile from `gem 'solidus_paypal_braintree'` to `gem 'solidus_braintree', '~> 2.0.0'`. You'll likely have references to `SolidusPaypalBraintree` in your app, so you may also need to require the `solidus_paypal_braintree` alias in your Gemfile, i.e.
-
-    ```ruby
-    gem 'solidus_braintree', '~> 2.0.0'`, require: 'solidus_paypal_braintree'
-    ```
-
-2. Break down the solidus gem, remove the `solidus_frontend` gem, and update the gems to 3.4.0. Thus, in your `Gemfile`, replace
-
-    ```ruby
-    gem 'solidus'
-    ```
-
-    with
-
-    ```ruby
-    gem 'solidus_core', '~> 3.4.0'
-    gem 'solidus_backend', '~> 3.4.0'
-    gem 'solidus_api', '~> 3.4.0'
-    gem 'solidus_sample', '~> 3.4.0'
-    ```
-
-3. Install SolidusStarterFrontend by running `bin/rails app:template LOCATION=https://github.com/solidusio/solidus_starter_frontend/raw/v3.4/template.rb`. If you have any overridden `solidus_frontend` views, you'll need to manually update them to fit the new frontend.
-
-4. Run `bin/rails g solidus_braintree:install`. This will update some references to SolidusPaypalBraintree in your app. It will also add a data migration to update your database.
-
-Additionally, you can rename any other references to SolidusPaypalBraintree in your app to SolidusBraintree. This will fix any deprecation warnings that come with SolidusBraintree 2.0.0.
-
-## Here be dragons: upgrading from SolidusBraintree 1.2.0
-
-Considering that SolidusBraintree 2.0.0 is based on the SolidusPaypalBraintree codebase, please be warned that migrating directly from SolidusBraintree 1.2.0 to 2.0.0 would lead to breaking changes. Since SolidusBraintree 1.x was already [deprecated](https://github.com/solidusio/solidus_braintree/tree/v1.x#deprecation-notice-warning-construction), we don't provide at the moment a ready-made solution for migrating from SolidusBraintree 1.2.0 to 2.0.0.
+See https://github.com/solidusio/solidus_braintree/wiki/Upgrading.
 
 ## Basic Setup
 
