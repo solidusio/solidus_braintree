@@ -301,27 +301,7 @@ information, which we've included by default. You're able to turn off the PayPal
 data collector on the payment method preferences if you desire. If you use
 static preferences, add `use_data_collector: false` to your initializer.
 
-## Optional configuration
-
-### Accepting multiple currencies
-The payment method also provides an optional preference `merchant_currency_map`.
-This preference allows users to provide different Merchant Account Ids for
-different currencies. If you only plan to accept payment in one currency, the
-defaut Merchant Account Id will be used and you can omit this option.
-An example of setting this preference can be found
-[here](https://github.com/solidusio/solidus_braintree/blob/bf5fe0e154d38f7c498f1c54450bb4de7608ff04/spec/support/gateway_helpers.rb#L11-L13).
-
-In addition to this, you can also specify different PayPal accounts for each
-currency by using the `paypal_payee_email_map` preference. If you only want
-to use one PayPal account for all currencies, then you can ignore this option.
-You can find an example of setting this preference [here](https://github.com/solidusio/solidus_braintree/blob/bf5fe0e154d38f7c498f1c54450bb4de7608ff04/spec/support/gateway_helpers.rb#L14-L16).
-
-### Default store configuration
-The migrations for this gem will add a default configuration to all stores that
-has each payment type disabled. It also adds a `before_create` callback to
-`Spree::Store` that builds a default configuration. You can customize the
-default configuration that gets created by overriding the private
-`build_default_configuration` method on `Spree::Store`.
+## Credit cards
 
 ### Hosted Fields Styling
 You can style the Braintree credit card fields by using the `credit_card_fields_style` preference on the payment method. The `credit_card_fields_style` will be passed to the `style` key when initializing the credit card fields. You can find more information about styling hosted fields can be found [here.](https://developers.braintreepayments.com/guides/hosted-fields/styling/javascript/v3)
@@ -343,6 +323,28 @@ tick _3D Secure_ checkbox.
 Once enabled, you can use the following card numbers to test 3DS 2 on your
 client side in sandbox:
 https://developers.braintreepayments.com/guides/3d-secure/migration/javascript/v3#client-side-sandbox-testing.
+
+## Optional configuration
+
+### Accepting multiple currencies
+The payment method also provides an optional preference `merchant_currency_map`.
+This preference allows users to provide different Merchant Account Ids for
+different currencies. If you only plan to accept payment in one currency, the
+defaut Merchant Account Id will be used and you can omit this option.
+An example of setting this preference can be found
+[here](https://github.com/solidusio/solidus_braintree/blob/bf5fe0e154d38f7c498f1c54450bb4de7608ff04/spec/support/gateway_helpers.rb#L11-L13).
+
+In addition to this, you can also specify different PayPal accounts for each
+currency by using the `paypal_payee_email_map` preference. If you only want
+to use one PayPal account for all currencies, then you can ignore this option.
+You can find an example of setting this preference [here](https://github.com/solidusio/solidus_braintree/blob/bf5fe0e154d38f7c498f1c54450bb4de7608ff04/spec/support/gateway_helpers.rb#L14-L16).
+
+### Default store configuration
+The migrations for this gem will add a default configuration to all stores that
+has each payment type disabled. It also adds a `before_create` callback to
+`Spree::Store` that builds a default configuration. You can customize the
+default configuration that gets created by overriding the private
+`build_default_configuration` method on `Spree::Store`.
 
 ## Testing
 
