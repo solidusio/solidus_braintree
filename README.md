@@ -3,7 +3,12 @@
 [![CircleCI](https://circleci.com/gh/solidusio/solidus_braintree.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_braintree)
 [![codecov](https://codecov.io/gh/solidusio/solidus_braintree/branch/master/graph/badge.svg)](https://codecov.io/gh/solidusio/solidus_braintree)
 
-`solidus_braintree` is an extension that adds support for using [Braintree](https://www.braintreepayments.com) as a payment source in your [Solidus](https://solidus.io/) store. It supports Apple Pay, PayPal, and credit card transactions.
+`solidus_braintree` is an extension that adds support for using [Braintree](https://www.braintreepayments.com) as a payment source in your [Solidus](https://solidus.io/) store. It uses Braintree's [JavaScript v3 SDK](https://braintree.github.io/braintree-web/current/) to support the following Braintree payment method types:
+
+* [Apple Pay](https://developer.paypal.com/braintree/docs/guides/apple-pay/overview)
+* [Venmo](https://developer.paypal.com/braintree/docs/guides/venmo/overview)
+* [PayPal Checkout](https://developer.paypal.com/braintree/docs/guides/paypal/overview/javascript/v3)
+* [Credit Cards](https://developer.paypal.com/braintree/docs/guides/credit-cards/overview) via [Hosted Forms](https://developer.paypal.com/braintree/docs/guides/hosted-fields/overview)
 
 🚧 This extension is currently only compatible with the `solidus_starter_frontend` 🚧
 
