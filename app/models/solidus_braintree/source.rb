@@ -25,6 +25,7 @@ module SolidusBraintree
 
     validates :payment_type, inclusion: [PAYPAL, APPLE_PAY, VENMO, CREDIT_CARD]
 
+    before_validation :clear_device_data_if_blank
     before_save :clear_paypal_funding_source, unless: :paypal?
 
     scope(:with_payment_profile, -> { joins(:customer) })
@@ -126,6 +127,10 @@ module SolidusBraintree
 
     def braintree_client
       @braintree_client ||= payment_method.try(:braintree)
+    end
+
+    def clear_device_data_if_blank
+      self.device_data = nil if device_data.blank?
     end
 
     def clear_paypal_funding_source

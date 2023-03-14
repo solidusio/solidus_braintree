@@ -1,5 +1,6 @@
-SolidusBraintree.HostedForm = function(paymentMethodId) {
+SolidusBraintree.HostedForm = function(paymentMethodId, useDataCollector) {
   this.paymentMethodId = paymentMethodId;
+  this.useDataCollector = useDataCollector;
   this.client = null;
 };
 
@@ -7,7 +8,7 @@ SolidusBraintree.HostedForm.prototype.initialize = function() {
   this.client = SolidusBraintree.createClient({
     paymentMethodId: this.paymentMethodId,
     useThreeDSecure: (typeof(window.threeDSecureOptions) !== 'undefined'),
-    useDataCollector: true,
+    useDataCollector: this.useDataCollector,
   });
 
   return this.client.initialize().
