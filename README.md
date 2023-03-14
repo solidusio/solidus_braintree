@@ -10,8 +10,6 @@
 * [PayPal Checkout](https://developer.paypal.com/braintree/docs/guides/paypal/overview/javascript/v3)
 * [Credit Cards](https://developer.paypal.com/braintree/docs/guides/credit-cards/overview) via [Hosted Forms](https://developer.paypal.com/braintree/docs/guides/hosted-fields/overview)
 
-🚧 This extension is currently only compatible with the legacy `solidus_frontend` 🚧
-
 ## Installation
 
 Add solidus_braintree to your Gemfile:
@@ -30,6 +28,20 @@ bundle exec rails g solidus_braintree:install
 ## Upgrading (including migration from SolidusPaypalBraintree)
 
 See https://github.com/solidusio/solidus_braintree/wiki/Upgrading.
+
+## Compatibility
+
+Here are the versions of SolidusBraintree and their compatible Solidus and frontend versions:
+
+| Version              | Maintenance Status          | Frontend               | Branch   |
+|----------------------|-----------------------------|------------------------|----------|
+| SolidusBraintree 3.0 | New features                | SolidusStarterFrontend | [master] |
+| SolidusBraintree 2.0 | Security patches, bug fixes | SolidusFrontend        | [v2.x]   |
+| SolidusBraintree 1.2 | Deprecated                  | SolidusFrontend        | [v1.x]   |
+
+[v1.x]: https://github.com/solidusio/solidus_braintree/tree/v1.x
+[v2.x]: https://github.com/solidusio/solidus_braintree/tree/v2.x
+[master]: https://github.com/solidusio/solidus_braintree/tree/master
 
 ## Basic Setup
 
