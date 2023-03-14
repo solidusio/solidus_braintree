@@ -537,4 +537,19 @@ RSpec.describe SolidusBraintree::Source, type: :model do
       it { is_expected.to be_falsy }
     end
   end
+
+  describe "#device_data" do
+    let(:payment_source) { build(:solidus_braintree_source) }
+
+    context "when blank on validation" do
+      before do
+        payment_source.device_data = ""
+        payment_source.valid?
+      end
+
+      it "is set to nil" do
+        expect(payment_source.device_data).to be_nil
+      end
+    end
+  end
 end
