@@ -17,7 +17,7 @@ module SolidusBraintree
       unless payment_method.is_a? SolidusBraintree::Gateway
         errors.add(:payment_method, 'Must be braintree')
       end
-      if address && !address.valid?
+      if address&.invalid?
         address.errors.each do |error|
           errors.add(:address, error.full_message)
         end
