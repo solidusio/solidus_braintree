@@ -13,7 +13,8 @@ module SolidusBraintree
       { address_attributes: [
         :country_code, :country_name, :name, :city, :zip, :state_code,
         :address_line_1, :address_line_2, :first_name, :last_name
-      ] }
+      ] },
+      :device_data
     ].freeze
 
     def create

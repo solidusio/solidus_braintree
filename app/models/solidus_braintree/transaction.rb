@@ -6,7 +6,7 @@ module SolidusBraintree
   class Transaction
     include ActiveModel::Model
 
-    attr_accessor :nonce, :payment_method, :payment_type, :paypal_funding_source, :address, :email, :phone
+    attr_accessor :nonce, :payment_method, :payment_type, :paypal_funding_source, :address, :email, :phone, :device_data
 
     validates :nonce, presence: true
     validates :payment_method, presence: true
