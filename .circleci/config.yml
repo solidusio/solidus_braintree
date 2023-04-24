@@ -20,7 +20,7 @@ commands:
             sudo apt-get update
             sudo apt-get install -yq libvips-dev
       - solidusio_extensions/test-branch:
-          branch: master
+          branch: main
           command: |
             export FRONTEND=starter
             sudo gem update --system
@@ -66,14 +66,14 @@ workflows:
       - run-specs-with-sqlite
       - lint-code
 
-  "Weekly run specs against master":
+  "Weekly run specs against main":
     triggers:
       - schedule:
           cron: "0 0 * * 4" # every Thursday
           filters:
             branches:
               only:
-                - master
+                - main
     jobs:
       - run-specs-with-postgres
       - run-specs-with-mysql
