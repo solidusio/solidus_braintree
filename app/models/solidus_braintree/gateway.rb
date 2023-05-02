@@ -10,7 +10,7 @@ module SolidusBraintree
     class TokenGenerationDisabledError < StandardError; end
 
     # Error message from Braintree that gets returned by a non voidable transaction
-    NON_VOIDABLE_STATUS_ERROR_REGEXP = /can only be voided if status is authorized/.freeze
+    NON_VOIDABLE_STATUS_ERROR_REGEXP = /can only be voided if status is authorized/
 
     TOKEN_GENERATION_DISABLED_MESSAGE = 'Token generation is disabled. ' \
                                         'To re-enable set the `token_generation_enabled` preference on the ' \
