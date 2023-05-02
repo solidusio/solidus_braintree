@@ -33,26 +33,28 @@ jobs:
   run-specs-with-postgres:
     executor:
       name: solidusio_extensions/postgres
-      ruby_version: '3.1'
+      ruby_version: '3.2'
     steps:
       - test-with-starter-frontend
 
   run-specs-with-mysql:
     executor:
       name: solidusio_extensions/mysql
-      ruby_version: '3.0'
+      ruby_version: '3.1'
     steps:
       - test-with-starter-frontend
 
   run-specs-with-sqlite:
     executor:
       name: solidusio_extensions/sqlite
-      ruby_version: '2.7'
+      ruby_version: '3.0'
     steps:
       - test-with-starter-frontend
 
   lint-code:
-    executor: solidusio_extensions/sqlite-memory
+    executor:
+      name: solidusio_extensions/sqlite-memory
+      ruby_version: '3.0'
     steps:
       - solidusio_extensions/lint-code
 
