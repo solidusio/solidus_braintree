@@ -37,6 +37,4 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'rails-controller-testing'
   spec.add_development_dependency 'solidus_dev_support', '~> 2.5'
-
-  spec.post_install_message = "If you're upgrading to v2.0.0, please see the README for upgrade instructions."
 end
