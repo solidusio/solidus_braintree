@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = 'https://github.com/solidusio/solidus_braintree'
-  spec.metadata['changelog_uri'] = 'https://github.com/solidusio/solidus_braintree/blob/master/CHANGELOG.md'
+  spec.metadata['changelog_uri'] = 'https://github.com/solidusio/solidus_braintree/releases'
 
   spec.required_ruby_version = Gem::Requirement.new('>= 3.0', '< 4')
 
