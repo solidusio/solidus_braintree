@@ -22,7 +22,7 @@ if [ ! -z $SOLIDUS_BRANCH ]
 then
   BRANCH=$SOLIDUS_BRANCH
 else
-  BRANCH="master"
+  BRANCH="main"
 fi
 
 extension_name="solidus_braintree"
@@ -47,7 +47,7 @@ if [ ! -d "sandbox" ]; then
 fi
 
 cd ./sandbox
-unbundled bundle add solidus --github solidusio/solidus --branch "${BRANCH:-master}" --version '> 0.a'
+unbundled bundle add solidus --github solidusio/solidus --branch "${BRANCH:-main}" --version '> 0.a'
 unbundled bundle exec rake db:drop db:create
 unbundled bundle exec rails generate solidus:install --payment-method=none --auto-accept "$@"
 unbundled bundle add ${extension_name} --path '../'
