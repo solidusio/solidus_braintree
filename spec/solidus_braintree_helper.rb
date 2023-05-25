@@ -1,4 +1,4 @@
-require 'solidus_starter_frontend_helper'
+require 'solidus_starter_frontend_spec_helper'
 
 require 'support/solidus_braintree/capybara'
 require 'support/solidus_braintree/factories'
