@@ -1,7 +1,7 @@
 # SolidusBraintree
 
 [![CircleCI](https://circleci.com/gh/solidusio/solidus_braintree.svg?style=shield)](https://circleci.com/gh/solidusio/solidus_braintree)
-[![codecov](https://codecov.io/gh/solidusio/solidus_braintree/branch/master/graph/badge.svg)](https://codecov.io/gh/solidusio/solidus_braintree)
+[![codecov](https://codecov.io/gh/solidusio/solidus_braintree/branch/main/graph/badge.svg)](https://codecov.io/gh/solidusio/solidus_braintree)
 
 `solidus_braintree` is an extension that adds support for using [Braintree](https://www.braintreepayments.com) as a payment source in your [Solidus](https://solidus.io/) store. It uses Braintree's [JavaScript v3 SDK](https://braintree.github.io/braintree-web/current/) to support the following Braintree payment method types:
 
@@ -35,13 +35,13 @@ Here are the versions of SolidusBraintree and their compatible Solidus and front
 
 | Version              | Maintenance Status          | Frontend               | Branch   |
 |----------------------|-----------------------------|------------------------|----------|
-| SolidusBraintree 3.0 | New features                | SolidusStarterFrontend | [master] |
+| SolidusBraintree 3.0 | New features                | SolidusStarterFrontend | [main]   |
 | SolidusBraintree 2.0 | Security patches, bug fixes | SolidusFrontend        | [v2.x]   |
 | SolidusBraintree 1.2 | Deprecated                  | SolidusFrontend        | [v1.x]   |
 
 [v1.x]: https://github.com/solidusio/solidus_braintree/tree/v1.x
 [v2.x]: https://github.com/solidusio/solidus_braintree/tree/v2.x
-[master]: https://github.com/solidusio/solidus_braintree/tree/master
+[main]: https://github.com/solidusio/solidus_braintree/tree/main
 
 ## Basic Setup
 
