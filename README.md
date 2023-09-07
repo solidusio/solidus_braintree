@@ -56,7 +56,7 @@ to `Account -> My User` and clicking `View Authorizations` in the **API Keys,
 Tokenization Keys, Encryption Keys** section.
 
 ### Create a new payment method
-Payment methods can accept preferences either directly entered in admin, or from a static source in code. For most projects we recommend using a static source, so that sensitive account credentials are not stored in the database.
+Payment methods can accept preferences either directly entered in admin or from a static source in code. For most projects, we recommend using a static source, so that sensitive account credentials are not stored in the database.
 
 1. Set static preferences in an initializer
   ```ruby
