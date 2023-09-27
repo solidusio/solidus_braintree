@@ -6,7 +6,7 @@ module SolidusBraintree
     config.assets.precompile += %w( spree/backend/braintree/solidus_braintree.js )
 
     initializer "spree.gateway.payment_methods", after: "spree.register.payment_methods" do |app|
-      app.config.spree.payment_methods << Solidus::Gateway::BraintreeGateway
+      app.config.spree.payment_methods << 'Solidus::Gateway::BraintreeGateway'
     end
 
     def self.activate

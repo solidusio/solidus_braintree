@@ -1,1 +1,3 @@
-ActionView::Base.send :include, BraintreeViewHelpers
+Rails.application.config.to_prepare do
+  ActionView::Base.include(BraintreeViewHelpers)
+end
