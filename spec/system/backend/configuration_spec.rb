@@ -1,4 +1,4 @@
-require 'solidus_braintree_helper'
+require 'solidus_braintree_spec_helper'
 
 RSpec.describe "viewing the configuration interface", type: :feature do
   stub_authorization!

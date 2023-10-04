@@ -1,4 +1,4 @@
-require 'solidus_braintree_helper'
+require 'solidus_braintree_spec_helper'
 
 RSpec.describe SolidusBraintree::ConfigurationsController, type: :controller do
   routes { SolidusBraintree::Engine.routes }

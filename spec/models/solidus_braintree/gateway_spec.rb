@@ -1,4 +1,4 @@
-require 'solidus_braintree_helper'
+require 'solidus_braintree_spec_helper'
 require 'webmock'
 require 'support/solidus_braintree/order_ready_for_payment'
 

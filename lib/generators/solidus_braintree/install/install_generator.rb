@@ -119,7 +119,7 @@ module SolidusBraintree
             when 'all' then %w[spec]
             when 'frontend'
               %w[
-                spec/solidus_braintree_helper.rb
+                spec/solidus_braintree_spec_helper.rb
                 spec/system/frontend
                 spec/support
                 spec/fixtures
