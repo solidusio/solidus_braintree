@@ -2,6 +2,7 @@
 
 set -e
 
+echo "Updating the dummy app..."
 bin/rails-dummy-app generate solidus_braintree:install --force --migrate --specs=all
 
 cd dummy-app/
