@@ -1,4 +1,4 @@
-require 'solidus_braintree_helper'
+require 'solidus_braintree_spec_helper'
 
 RSpec.describe SolidusBraintree::Response do
   let(:failed_transaction) { nil }

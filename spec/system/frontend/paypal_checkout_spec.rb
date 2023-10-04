@@ -1,4 +1,4 @@
-require 'solidus_braintree_helper'
+require 'solidus_braintree_spec_helper'
 require 'support/solidus_braintree/with_prepended_view_fixtures'
 
 RSpec.describe "Checkout", type: :feature, js: true do

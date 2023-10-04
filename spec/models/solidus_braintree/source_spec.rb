@@ -1,4 +1,4 @@
-require 'solidus_braintree_helper'
+require 'solidus_braintree_spec_helper'
 require 'support/solidus_braintree/order_ready_for_payment'
 
 RSpec.describe SolidusBraintree::Source, type: :model do
