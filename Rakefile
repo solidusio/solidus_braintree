@@ -10,3 +10,6 @@ task :default do
     sh 'bin/rspec'
   end
 end
+
+CLOBBER.include('dummy-app')
+CLOBBER.include('sandbox')
