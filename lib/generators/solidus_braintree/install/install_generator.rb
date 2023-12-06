@@ -59,7 +59,7 @@ module SolidusBraintree
         gsub_file 'config/routes.rb',
           "mount SolidusPaypalBraintree::Engine, at: '/solidus_paypal_braintree'\n", ''
 
-        route "mount SolidusBraintree::Engine, at: '/solidus_braintree'"
+        route "mount SolidusBraintree::Engine, at: '#{solidus_mount_point}solidus_braintree'"
       end
 
       def install_solidus_backend_support
@@ -148,6 +148,12 @@ module SolidusBraintree
       end
 
       private
+
+      def solidus_mount_point
+        mount_point = Spree::Core::Engine.routes.find_script_name({})
+        mount_point += "/" unless mount_point.end_with?("/")
+        mount_point
+      end
 
       def support_code_for(component_name, &block)
         if @components[component_name]
