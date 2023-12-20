@@ -11,7 +11,9 @@ module SolidusBraintree
       messaging: { availables: %w[true false], default: 'false' }
     }.freeze
 
-    include ::Spree::Preferences::Persistable
+    unless respond_to?(:preference)
+      include ::Spree::Preferences::Persistable
+    end
 
     belongs_to :store, class_name: 'Spree::Store', optional: false
 

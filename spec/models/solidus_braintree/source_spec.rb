@@ -309,30 +309,54 @@ RSpec.describe SolidusBraintree::Source, type: :model do
     let(:method) { new_gateway.tap(&:save!) }
     let(:payment_source) { described_class.create!(payment_type: "CreditCard", payment_method: method) }
     let(:braintree_client) { method.braintree }
+    
+    context 'when source is a credit card' do
+      context 'when token is known at braintree', vcr: {
+        cassette_name: "source/last4",
+        match_requests_on: [:braintree_uri]
+      } do
+        before do
+          customer = braintree_client.customer.create
 
-    context 'when token is known at braintree', vcr: {
-      cassette_name: "source/last4",
-      match_requests_on: [:braintree_uri]
-    } do
-      before do
-        customer = braintree_client.customer.create
+          method = braintree_client.payment_method.create({
+            payment_method_nonce: "fake-valid-country-of-issuance-usa-nonce",
+            customer_id: customer.customer.id
+          })
 
-        method = braintree_client.payment_method.create({
-          payment_method_nonce: "fake-valid-country-of-issuance-usa-nonce",
-          customer_id: customer.customer.id
-        })
+          payment_source.update!(token: method.payment_method.token)
+        end
 
-        payment_source.update!(token: method.payment_method.token)
+        it "delegates to the braintree payment method" do
+          method = braintree_client.payment_method.find(payment_source.token)
+          expect(subject).to eql(method.last_4)
+        end
+
+        context 'when last_4 is not persisted on the source object' do
+          it 'retrieves from braintree and saves it' do
+            method = braintree_client.payment_method.find(payment_source.token)
+
+            expect(payment_source[:last_4]).to eq(nil)
+            payment_source.last_4
+            expect(payment_source[:last_4]).to eq(method.last_4)
+          end
+        end
       end
 
-      it "delegates to the braintree payment method" do
-        method = braintree_client.payment_method.find(payment_source.token)
-        expect(subject).to eql(method.last_4)
+      context 'when the source token is not known at Braintree' do
+        include_context 'with unknown source token'
+
+        it { is_expected.to be(nil) }
+      end
+
+      context 'when the source token is nil' do
+        include_context 'with nil source token'
+
+        it { is_expected.to be(nil) }
       end
     end
 
-    context 'when the source token is not known at Braintree' do
-      include_context 'with unknown source token'
+    context 'when source is not a credit card' do
+      let(:payment_source) { described_class.new(payment_type: "PayPalAccount", payment_method: method) }
 
       it { is_expected.to be_nil }
     end

@@ -548,6 +548,8 @@ RSpec.describe SolidusBraintree::Gateway do
 
         it "sets a token on the payment source" do
           expect{ subject }.to change(source, :token)
+          expect{ subject }.to change(source, :last_4)
+          expect{ subject }.to change(source, :unique_number_identifier)
         end
       end
 
