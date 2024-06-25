@@ -152,8 +152,7 @@ RSpec.describe "Checkout", type: :feature, js: true do
   end
 
   def add_mug_to_cart
-    visit root_path
-    click_link mug.name
+    visit product_path(mug)
     click_button "add-to-cart-button"
   end
 
