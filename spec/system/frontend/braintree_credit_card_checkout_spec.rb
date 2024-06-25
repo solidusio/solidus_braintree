@@ -98,7 +98,7 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
 
     it "checks out successfully" do
       within(".confirm-step") do
-        expect(page).to have_content("CONFIRM")
+        expect(page).to have_content(/confirm/i)
       end
 
       check('accept_terms_and_conditions')
@@ -114,7 +114,7 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
         authenticate_3ds
 
         within(".confirm-step") do
-          expect(page).to have_content("CONFIRM")
+          expect(page).to have_content(/confirm/i)
         end
 
         check('accept_terms_and_conditions')
@@ -177,7 +177,7 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
         click_button("Save and Continue")
 
         within(".confirm-step") do
-          expect(page).to have_content("CONFIRM")
+          expect(page).to have_content(/confirm/i)
         end
 
         check('accept_terms_and_conditions')
