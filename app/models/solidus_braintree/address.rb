@@ -12,12 +12,8 @@ module SolidusBraintree
       to: :spree_address
 
     def self.split_name(name)
-      if defined?(Spree::Address::Name)
-        address_name = Spree::Address::Name.new(name)
-        [address_name.first_name, address_name.last_name]
-      else
-        name.strip.split(' ', 2)
-      end
+      address_name = Spree::Address::Name.new(name)
+      [address_name.first_name, address_name.last_name].compact
     end
 
     def initialize(spree_address)
