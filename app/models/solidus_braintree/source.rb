@@ -6,6 +6,8 @@ module SolidusBraintree
   class Source < ::Spree::PaymentSource
     include RequestProtection
 
+    self.table_name = "solidus_paypal_braintree_sources"
+
     PAYPAL = "PayPalAccount"
     APPLE_PAY = "ApplePayCard"
     VENMO = "VenmoAccount"
