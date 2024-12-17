@@ -10,7 +10,4 @@ require 'solidus_braintree/version'
 require 'solidus_braintree/engine'
 
 module SolidusBraintree
-  def self.table_name_prefix
-    'solidus_paypal_braintree_'
-  end
 end
