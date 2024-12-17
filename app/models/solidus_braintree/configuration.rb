@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusBraintree
-  class Configuration < ::Spree::Base
+  class Configuration < BaseRecord
     self.table_name = "solidus_paypal_braintree_configurations"
 
     PAYPAL_BUTTON_PREFERENCES = {
