@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusBraintree
-  module SpreeStoreDecorator
+  module SpreeStorePatch
     def self.prepended(base)
       base.has_one :braintree_configuration, class_name: "SolidusBraintree::Configuration", dependent: :destroy
       base.before_create :build_default_configuration
