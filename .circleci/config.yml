@@ -24,7 +24,7 @@ commands:
           command: |
             export FRONTEND=starter
             sudo gem update --system
-            gem install bundler rails
+            gem install bundler rails:'~>7.2'
             bin/dummy-app
             bin/rspec
       - solidusio_extensions/store-test-results
