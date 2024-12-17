@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SolidusBraintree
-  module AdminPaymentsControllerDecorator
+  module AdminPaymentsControllerPatch
     def self.prepended(base)
       base.helper ::SolidusBraintree::BraintreeAdminHelper
     end
