@@ -2,8 +2,6 @@
 
 module SolidusBraintree
   class Configuration < BaseRecord
-    self.table_name = "solidus_paypal_braintree_configurations"
-
     PAYPAL_BUTTON_PREFERENCES = {
       color: { availables: %w[gold blue silver white black], default: 'white' },
       shape: { availables: %w[pill rect], default: 'rect' },
