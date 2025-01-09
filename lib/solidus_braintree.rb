@@ -2,6 +2,7 @@
 
 require 'solidus_core'
 require 'solidus_support'
+require 'braintree'
 
 require 'solidus_braintree/country_mapper'
 require 'solidus_braintree/request_protection'
