@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'braintree'
 require 'solidus_braintree/request_protection'
 
 module SolidusBraintree
