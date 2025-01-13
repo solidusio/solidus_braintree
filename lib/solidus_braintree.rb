@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'flickwerk'
 require 'solidus_core'
 require 'solidus_support'
 require 'braintree'
