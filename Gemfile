@@ -25,6 +25,9 @@ end
 # resolve gems based on the required ruby version.
 gem 'async', '< 3' if Gem::Version.new(RUBY_VERSION) < Gem::Version.new('3')
 
+# Temporarily use the `solidus_support` gem with Flickwerk support
+gem "solidus_support", github: "mamhoff/solidus_support", branch: "re-enable-flickwerk"
+
 gemspec
 
 # Use a local Gemfile to include development dependencies that might not be

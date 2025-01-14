@@ -6,20 +6,6 @@ require 'solidus_support'
 module SolidusBraintree
   class Engine < Rails::Engine
     include SolidusSupport::EngineExtensions
-    include Flickwerk
-
-    include Flickwerk
-
-    Flickwerk.aliases["Spree.user_class"] = Spree.user_class_name
-
-    if SolidusSupport.backend_available?
-      config.autoload_paths += root.join("lib", "patches", "backend").glob("*")
-    end
-
-    initializer "solidus_braintree_backend_patches", before: "flickwerk.add_patch_paths" do
-      patch_path = root.join("lib", "patches", "backend")
-      Flickwerk.patch_paths += [patch_path]
-    end
 
     isolate_namespace SolidusBraintree
     engine_name 'solidus_braintree'
