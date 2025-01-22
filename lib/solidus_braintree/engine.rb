@@ -9,7 +9,6 @@ module SolidusBraintree
 
     isolate_namespace SolidusBraintree
     engine_name 'solidus_braintree'
-
     ActiveSupport::Inflector.inflections do |inflect|
       inflect.acronym 'AVS'
     end
