@@ -26,7 +26,7 @@ VCR.configure do |c|
       uri_match_pattern =
         %r{\Ahttps://api\.sandbox\.braintreegateway\.com/merchants/\w+(/.*)\z}
 
-      if match = uri.match(uri_match_pattern)
+      if (match = uri.match(uri_match_pattern))
         match.captures.first
       end
     end

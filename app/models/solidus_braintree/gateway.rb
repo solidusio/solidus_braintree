@@ -334,9 +334,7 @@ module SolidusBraintree
     end
 
     def transaction_options(source, options, submit_for_settlement: false)
-      params = options.select do |key, _|
-        ALLOWED_BRAINTREE_OPTIONS.include?(key)
-      end
+      params = options.slice(*ALLOWED_BRAINTREE_OPTIONS)
 
       params[:channel] = "Solidus"
       params[:options] = {store_in_vault_on_success: store_in_vault}
@@ -345,7 +343,7 @@ module SolidusBraintree
         params[:options][:submit_for_settlement] = true
       end
 
-      if paypal_email = paypal_payee_email_for(source, options)
+      if (paypal_email = paypal_payee_email_for(source, options))
         params[:options][:paypal] = {payee_email: paypal_email}
       end
 
@@ -353,7 +351,7 @@ module SolidusBraintree
         params[:options][:venmo] = {profile_id: venmo_business_profile_id}
       end
 
-      if merchant_account_id = merchant_account_for(source, options)
+      if (merchant_account_id = merchant_account_for(source, options))
         params[:merchant_account_id] = merchant_account_id
       end
 
