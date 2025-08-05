@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'solidus_braintree/request_protection'
+require "solidus_braintree/request_protection"
 
 module SolidusBraintree
   class Gateway < ::Spree::PaymentMethod
@@ -11,9 +11,9 @@ module SolidusBraintree
     # Error message from Braintree that gets returned by a non voidable transaction
     NON_VOIDABLE_STATUS_ERROR_REGEXP = /can only be voided if status is authorized/
 
-    TOKEN_GENERATION_DISABLED_MESSAGE = 'Token generation is disabled. ' \
-                                        'To re-enable set the `token_generation_enabled` preference on the ' \
-                                        'gateway to `true`.'
+    TOKEN_GENERATION_DISABLED_MESSAGE = "Token generation is disabled. " \
+                                        "To re-enable set the `token_generation_enabled` preference on the " \
+                                        "gateway to `true`."
 
     ALLOWED_BRAINTREE_OPTIONS = [
       :device_data,
@@ -35,9 +35,9 @@ module SolidusBraintree
     preference(:token_generation_enabled, :boolean, default: true)
 
     # Preferences for configuration of Braintree credentials
-    preference(:environment, :string, default: 'sandbox')
+    preference(:environment, :string, default: "sandbox")
     preference(:merchant_id, :string, default: nil)
-    preference(:public_key,  :string, default: nil)
+    preference(:public_key, :string, default: nil)
     preference(:private_key, :string, default: nil)
     preference(:http_open_timeout, :integer, default: 60)
     preference(:http_read_timeout, :integer, default: 60)
@@ -45,7 +45,7 @@ module SolidusBraintree
     preference(:paypal_payee_email_map, :hash, default: {})
 
     # Which checkout flow to use (vault/checkout)
-    preference(:paypal_flow, :string, default: 'vault')
+    preference(:paypal_flow, :string, default: "vault")
 
     # A hash that gets passed to the `style` key when initializing the credit card fields.
     # See https://developers.braintreepayments.com/guides/hosted-fields/styling/javascript/v3
@@ -301,7 +301,7 @@ module SolidusBraintree
     # Whether to store this payment method in the PayPal Vault. This only works when the checkout
     # flow is "vault", so make sure to call +super+ if you override it.
     def store_in_vault
-      preferred_paypal_flow == 'vault'
+      preferred_paypal_flow == "vault"
     end
 
     def logger
@@ -339,18 +339,18 @@ module SolidusBraintree
       end
 
       params[:channel] = "Solidus"
-      params[:options] = { store_in_vault_on_success: store_in_vault }
+      params[:options] = {store_in_vault_on_success: store_in_vault}
 
       if submit_for_settlement
         params[:options][:submit_for_settlement] = true
       end
 
       if paypal_email = paypal_payee_email_for(source, options)
-        params[:options][:paypal] = { payee_email: paypal_email }
+        params[:options][:paypal] = {payee_email: paypal_email}
       end
 
       if source.venmo? && venmo_business_profile_id
-        params[:options][:venmo] = { profile_id: venmo_business_profile_id }
+        params[:options][:venmo] = {profile_id: venmo_business_profile_id}
       end
 
       if merchant_account_id = merchant_account_for(source, options)

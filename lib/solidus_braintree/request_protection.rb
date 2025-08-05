@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_merchant/network_connection_retries'
+require "active_merchant/network_connection_retries"
 
 module SolidusBraintree
   module RequestProtection
@@ -11,7 +11,7 @@ module SolidusBraintree
 
       options = {
         connection_exceptions: {
-          Braintree::BraintreeError => 'Error while connecting to Braintree gateway'
+          Braintree::BraintreeError => "Error while connecting to Braintree gateway"
         },
         logger: Rails.logger
       }

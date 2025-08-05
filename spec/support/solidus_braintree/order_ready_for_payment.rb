@@ -1,4 +1,4 @@
-RSpec.shared_context 'when order is ready for payment' do
+RSpec.shared_context "when order is ready for payment" do
   let!(:country) { create :country }
 
   let(:user) { create :user }
@@ -22,7 +22,7 @@ RSpec.shared_context 'when order is ready for payment' do
   let(:order) do
     order = Spree::Order.create!(
       line_items: create_list(:line_item, 1, price: 50),
-      email: 'test@example.com',
+      email: "test@example.com",
       bill_address: address,
       ship_address: address,
       user: user

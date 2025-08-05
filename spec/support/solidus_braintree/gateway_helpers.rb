@@ -4,15 +4,15 @@ module SolidusBraintree
       SolidusBraintree::Gateway.new({
         name: "Braintree",
         preferences: {
-          environment: 'sandbox',
-          public_key: ENV.fetch('BRAINTREE_PUBLIC_KEY', 'dummy_public_key'),
-          private_key: ENV.fetch('BRAINTREE_PRIVATE_KEY', 'dummy_private_key'),
-          merchant_id: ENV.fetch('BRAINTREE_MERCHANT_ID', 'dummy_merchant_id'),
+          environment: "sandbox",
+          public_key: ENV.fetch("BRAINTREE_PUBLIC_KEY", "dummy_public_key"),
+          private_key: ENV.fetch("BRAINTREE_PRIVATE_KEY", "dummy_private_key"),
+          merchant_id: ENV.fetch("BRAINTREE_MERCHANT_ID", "dummy_merchant_id"),
           merchant_currency_map: {
-            'EUR' => 'stembolt_EUR'
+            "EUR" => "stembolt_EUR"
           },
           paypal_payee_email_map: {
-            'EUR' => ENV.fetch('BRAINTREE_PAYPAL_PAYEE_EMAIL', 'paypal+europe@example.com')
+            "EUR" => ENV.fetch("BRAINTREE_PAYPAL_PAYEE_EMAIL", "paypal+europe@example.com")
           }
         }
       }.merge(opts))
