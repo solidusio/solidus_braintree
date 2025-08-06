@@ -8,7 +8,7 @@ FactoryBot.define do
   # require 'solidus_braintree/factories'
 
   factory :solidus_braintree_payment_method, class: SolidusBraintree::Gateway do
-    name { 'Solidus Braintree Gateway' }
+    name { "Solidus Braintree Gateway" }
     active { true }
   end
 
@@ -38,7 +38,7 @@ FactoryBot.define do
       # body in our VCR settings VCR can not match the request anymore and
       # therefore cannot replay existing cassettes.
 
-      zipcode { '21088-0255' }
+      zipcode { "21088-0255" }
     end
 
     if SolidusSupport.combined_first_and_last_name_in_address?

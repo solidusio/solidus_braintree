@@ -1,9 +1,9 @@
-require 'solidus_braintree_spec_helper'
+require "solidus_braintree_spec_helper"
 
 RSpec.shared_context "with backend checkout setup" do
   let(:braintree) { new_gateway(active: true) }
   let!(:gateway) { create :payment_method }
-  let(:order) { create(:completed_order_with_totals, number: 'R9999999') }
+  let(:order) { create(:completed_order_with_totals, number: "R9999999") }
   let(:pending_case_insensitive) { /pending/i }
   let(:expiration) { "02/#{Date.current.year.next}" }
 
@@ -25,18 +25,18 @@ RSpec.shared_context "with backend checkout setup" do
   end
 end
 
-RSpec.describe 'creating a new payment', type: :feature, js: true do
+RSpec.describe "creating a new payment", type: :feature, js: true do
   stub_authorization!
 
   context "with valid credit card data", vcr: {
-    cassette_name: 'admin/valid_credit_card',
+    cassette_name: "admin/valid_credit_card",
     match_requests_on: [:braintree_uri]
   } do
     include_context "with backend checkout setup"
 
     it "checks out successfully" do
       visit "/admin/orders/#{order.number}/payments/new"
-      choose('Braintree')
+      choose("Braintree")
       expect(page).to have_selector("#payment_method_#{braintree.id}", visible: :visible)
       expect(page).to have_selector("iframe#braintree-hosted-field-number")
 
@@ -52,15 +52,15 @@ RSpec.describe 'creating a new payment', type: :feature, js: true do
 
       click_button("Update")
 
-      within('table#payments') do
-        expect(page).to have_content('Braintree')
+      within("table#payments") do
+        expect(page).to have_content("Braintree")
         expect(page).to have_content(pending_case_insensitive)
       end
 
       click_icon(:capture)
 
-      expect(page).not_to have_content('Cannot perform requested operation')
-      expect(page).to have_content('Payment Updated')
+      expect(page).not_to have_content("Cannot perform requested operation")
+      expect(page).to have_content("Payment Updated")
     end
   end
 
@@ -70,7 +70,7 @@ RSpec.describe 'creating a new payment', type: :feature, js: true do
     # Attempt to submit an invalid form once
     before do
       visit "/admin/orders/#{order.number}/payments/new"
-      choose('Braintree')
+      choose("Braintree")
 
       within_frame("braintree-hosted-field-number") do
         fill_in("credit-card-number", with: "1111111111111111")
@@ -121,15 +121,15 @@ RSpec.describe 'creating a new payment', type: :feature, js: true do
         end
         click_button("Update")
 
-        within('table#payments') do
-          expect(page).to have_content('Braintree')
+        within("table#payments") do
+          expect(page).to have_content("Braintree")
           expect(page).to have_content(pending_case_insensitive)
         end
 
         click_icon(:capture)
 
-        expect(page).not_to have_content('Cannot perform requested operation')
-        expect(page).to have_content('Payment Updated')
+        expect(page).not_to have_content("Cannot perform requested operation")
+        expect(page).to have_content("Payment Updated")
       end
     end
   end

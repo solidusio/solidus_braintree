@@ -1,50 +1,50 @@
 # frozen_string_literal: true
 
-require 'active_merchant/billing/avs_result'
+require "active_merchant/billing/avs_result"
 
 module SolidusBraintree
   class AVSResult < ActiveMerchant::Billing::AVSResult
     # Mapping took from ActiveMerchant::Billing::BraintreeBlueGateway
     AVS_MAPPING = {
-      'M' => {
-        'M' => 'M',
-        'N' => 'A',
-        'U' => 'B',
-        'I' => 'B',
-        'A' => 'B'
+      "M" => {
+        "M" => "M",
+        "N" => "A",
+        "U" => "B",
+        "I" => "B",
+        "A" => "B"
       },
-      'N' => {
-        'M' => 'Z',
-        'N' => 'C',
-        'U' => 'C',
-        'I' => 'C',
-        'A' => 'C'
+      "N" => {
+        "M" => "Z",
+        "N" => "C",
+        "U" => "C",
+        "I" => "C",
+        "A" => "C"
       },
-      'U' => {
-        'M' => 'P',
-        'N' => 'N',
-        'U' => 'I',
-        'I' => 'I',
-        'A' => 'I'
+      "U" => {
+        "M" => "P",
+        "N" => "N",
+        "U" => "I",
+        "I" => "I",
+        "A" => "I"
       },
-      'I' => {
-        'M' => 'P',
-        'N' => 'C',
-        'U' => 'I',
-        'I' => 'I',
-        'A' => 'I'
+      "I" => {
+        "M" => "P",
+        "N" => "C",
+        "U" => "I",
+        "I" => "I",
+        "A" => "I"
       },
-      'A' => {
-        'M' => 'P',
-        'N' => 'C',
-        'U' => 'I',
-        'I' => 'I',
-        'A' => 'I'
+      "A" => {
+        "M" => "P",
+        "N" => "C",
+        "U" => "I",
+        "I" => "I",
+        "A" => "I"
       },
-      'B' => {
-        'B' => 'B'
+      "B" => {
+        "B" => "B"
       },
-      nil => { nil => nil }
+      nil => {nil => nil}
     }.freeze
 
     class << self

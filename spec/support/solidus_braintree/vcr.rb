@@ -1,5 +1,5 @@
-require 'vcr'
-require 'webmock'
+require "vcr"
+require "webmock"
 
 VCR.configure do |c|
   c.cassette_library_dir = "spec/fixtures/cassettes"
@@ -10,7 +10,7 @@ VCR.configure do |c|
   }
   c.allow_http_connections_when_no_cassette = false
   c.ignore_localhost = true
-  c.ignore_hosts 'chromedriver.storage.googleapis.com'
+  c.ignore_hosts "chromedriver.storage.googleapis.com"
 
   # client token used for the fronted JS lib cannot be mocked:
   # it contains a cryptographically signed string containing the merchant id
@@ -26,7 +26,7 @@ VCR.configure do |c|
       uri_match_pattern =
         %r{\Ahttps://api\.sandbox\.braintreegateway\.com/merchants/\w+(/.*)\z}
 
-      if match = uri.match(uri_match_pattern)
+      if (match = uri.match(uri_match_pattern))
         match.captures.first
       end
     end

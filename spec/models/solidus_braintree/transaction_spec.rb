@@ -1,4 +1,4 @@
-require 'solidus_braintree_spec_helper'
+require "solidus_braintree_spec_helper"
 
 RSpec.describe SolidusBraintree::Transaction do
   describe "#valid?" do
@@ -6,9 +6,9 @@ RSpec.describe SolidusBraintree::Transaction do
 
     let(:valid_attributes) do
       {
-        nonce: 'abcde-fghjkl-lmnop',
+        nonce: "abcde-fghjkl-lmnop",
         payment_method: SolidusBraintree::Gateway.new,
-        payment_type: 'ApplePayCard',
+        payment_type: "ApplePayCard",
         email: "test@example.com"
       }
     end
@@ -33,31 +33,31 @@ RSpec.describe SolidusBraintree::Transaction do
 
     it { is_expected.to be true }
 
-    context 'without nonce' do
+    context "without nonce" do
       let(:valid_attributes) { super().except(:nonce) }
 
       it { is_expected.to be false }
     end
 
-    context 'without gateway' do
+    context "without gateway" do
       let(:valid_attributes) { super().except(:payment_method) }
 
       it { is_expected.to be false }
     end
 
-    context 'with bad gateway' do
+    context "with bad gateway" do
       let(:valid_attributes) { super().merge(payment_method: Spree::PaymentMethod.new) }
 
       it { is_expected.to be false }
     end
 
-    context 'without payment_type' do
+    context "without payment_type" do
       let(:valid_attributes) { super().except(:payment_type) }
 
       it { is_expected.to be false }
     end
 
-    context 'without email' do
+    context "without email" do
       let(:valid_attributes) { super().except(:email) }
 
       it { is_expected.to be false }
@@ -78,8 +78,8 @@ RSpec.describe SolidusBraintree::Transaction do
 
       it "sets useful error messages" do
         transaction.valid?
-        expect(transaction.errors.full_messages).
-          to eq ["Address Zip can't be blank"]
+        expect(transaction.errors.full_messages)
+          .to eq ["Address Zip can't be blank"]
       end
     end
   end
