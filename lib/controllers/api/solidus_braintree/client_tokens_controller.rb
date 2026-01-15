@@ -2,7 +2,7 @@
 
 module SolidusBraintree
   class ClientTokensController < ::Spree::Api::BaseController
-    skip_before_action :authenticate_user
+    skip_before_action :authenticate_user, raise: false # don't raise an exception for Solidus 4
 
     before_action :load_gateway
 
