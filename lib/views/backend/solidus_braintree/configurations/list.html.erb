@@ -34,6 +34,14 @@
           </div>
 
           <div class="field">
+            <%= c.check_box :google_pay %>
+            <%= c.label :google_pay do %>
+              <%= tag.i class: 'fa fa-google' %>
+              <%= c.object.class.human_attribute_name(:google_pay) %>
+            <% end %>
+          </div>
+
+          <div class="field">
             <%= c.check_box :credit_card %>
             <%= c.label :credit_card do %>
               <%= tag.i class: 'fa fa-credit-card' %>

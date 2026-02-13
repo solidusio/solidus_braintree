@@ -70,6 +70,10 @@ module SolidusBraintree
     # if they are single-page applications (SPA). Set this to false if this is the case
     preference(:venmo_new_tab_support, :boolean, default: true)
 
+    # Google Pay merchant ID from Google's Business Console.
+    # Required for production; leave blank for sandbox/TEST environment.
+    preference(:google_pay_merchant_id, :string, default: nil)
+
     def partial_name
       "braintree"
     end
@@ -371,7 +375,7 @@ module SolidusBraintree
         params[:shipping] = braintree_shipping_address(options)
       end
 
-      if source.credit_card?
+      if source.credit_card? || source.google_pay?
         params[:billing] = braintree_billing_address(options)
       end
 

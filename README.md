@@ -6,6 +6,7 @@
 `solidus_braintree` is an extension that adds support for using [Braintree](https://www.braintreepayments.com) as a payment source in your [Solidus](https://solidus.io/) store. It uses Braintree's [JavaScript v3 SDK](https://braintree.github.io/braintree-web/current/) to support the following Braintree payment method types:
 
 * [Apple Pay](https://developer.paypal.com/braintree/docs/guides/apple-pay/overview)
+* [Google Pay](https://developer.paypal.com/braintree/docs/guides/google-pay/overview)
 * [Venmo](https://developer.paypal.com/braintree/docs/guides/venmo/overview)
 * [PayPal Checkout](https://developer.paypal.com/braintree/docs/guides/paypal/overview/javascript/v3)
 * [Credit Cards](https://developer.paypal.com/braintree/docs/guides/credit-cards/overview) via [Hosted Forms](https://developer.paypal.com/braintree/docs/guides/hosted-fields/overview)
@@ -96,7 +97,7 @@ SolidusBraintree::Gateway.new(
 ```
 
 ### Configure payment types
-Your payment method can accept payments in three ways: through Paypal, through ApplePay, or with credit card details entered directly by the customer. By default all are disabled for all your site's stores. Before proceeding to checkout, ensure you've created a Braintree configuration for your store:
+Your payment method can accept payments in several ways: through PayPal, through ApplePay, through Google Pay, through Venmo, or with credit card details entered directly by the customer. By default all are disabled for all your site's stores. Before proceeding to checkout, ensure you've created a Braintree configuration for your store:
 
 1. Visit /solidus_braintree/configurations/list
 
@@ -111,12 +112,13 @@ Your payment method can accept payments in three ways: through Paypal, through A
       credit_card: true,
       paypal: true,
       apple_pay: true,
-      venmo: true
+      venmo: true,
+      google_pay: true
     )
   end
   ```
 
-4. If your site uses an unmodified Solidus Starter Frontend, it should now be ready to take payments. See below for more information on configuring Paypal and ApplePay.
+4. If your site uses an unmodified Solidus Starter Frontend, it should now be ready to take payments. See below for more information on configuring Paypal, ApplePay, and Google Pay.
 
 5. Typical Solidus sites will have customized frontend code, and may require some additional work. Use `lib/views/frontend/spree/checkout/payment/_braintree.html.erb` and `app/assets/javascripts/solidus_braintree/checkout.js` as models.
 

@@ -36,6 +36,7 @@ it:
       apple_pay_card: Apple Pay
       credit_card: Carta di credito
       pay_pal_account: PayPal
+      android_pay_card: Google Pay
     configurations:
       title: Configurazioni di Braintree
       tab: Braintree

@@ -58,6 +58,8 @@ SolidusBraintree.Client = function(config) {
   this.usePaypal = config.usePaypal;
   this.useApplepay = config.useApplepay;
   this.useVenmo = config.useVenmo;
+  this.useGooglePay = config.useGooglePay;
+  this.googlePayMerchantId = config.googlePayMerchantId;
   this.flow = config.flow;
   this.venmoNewTabSupported = config.newBrowserTabSupported
   this.useThreeDSecure = config.useThreeDSecure;
@@ -66,6 +68,7 @@ SolidusBraintree.Client = function(config) {
   this._dataCollectorInstance = null;
   this._paypalInstance = null;
   this._venmoInstance = null;
+  this._googlePayInstance = null;
   this._threeDSecureInstance = null;
 };
 
@@ -91,6 +94,10 @@ SolidusBraintree.Client.prototype.initialize = function() {
 
   if (this.useVenmo) {
     initializationPromise = initializationPromise.then(this._createVenmo.bind(this));
+  }
+
+  if (this.useGooglePay) {
+    initializationPromise = initializationPromise.then(this._createGooglePay.bind(this));
   }
 
   if (this.useThreeDSecure) {
@@ -130,6 +137,14 @@ SolidusBraintree.Client.prototype.getApplepayInstance = function() {
 **/
 SolidusBraintree.Client.prototype.getVenmoInstance = function() {
   return this._venmoInstance;
+};
+
+/**
+ * Returns the braintree Google Pay instance
+ * @returns {external:"braintree.GooglePayment"} The Braintree Google Pay that was initialized by this class
+**/
+SolidusBraintree.Client.prototype.getGooglePayInstance = function() {
+  return this._googlePayInstance;
 };
 
 /**
@@ -225,6 +240,26 @@ SolidusBraintree.Client.prototype._createVenmo = function() {
     this._venmoInstance = venmoInstance;
     return venmoInstance;
   }.bind(this));
+};
+
+SolidusBraintree.Client.prototype._createGooglePay = function() {
+  var googlePayConfig = {
+    client: this._braintreeInstance,
+    googlePayVersion: 2
+  };
+
+  if (this.googlePayMerchantId) {
+    googlePayConfig.googleMerchantId = this.googlePayMerchantId;
+  }
+
+  return SolidusBraintree.PromiseShim.convertBraintreePromise(braintree.googlePayment.create, [
+    googlePayConfig
+  ]).then(function (googlePayInstance) {
+    this._googlePayInstance = googlePayInstance;
+    return googlePayInstance;
+  }.bind(this), function(error) {
+    console.error('Error creating Google Pay:', error);
+  });
 };
 
 SolidusBraintree.Client.prototype._createThreeDSecure = function() {

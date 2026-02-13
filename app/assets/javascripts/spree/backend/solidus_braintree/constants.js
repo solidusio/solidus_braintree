@@ -36,6 +36,10 @@ SolidusBraintree = {
 
       venmoButton: function() {
         return SolidusBraintree.VenmoButton;
+      },
+
+      googlePayButton: function() {
+        return SolidusBraintree.GooglePayButton;
       }
     }
   },
@@ -69,6 +73,10 @@ SolidusBraintree = {
 
   createVenmoButton: function() {
     return SolidusBraintree._factory(SolidusBraintree.config.classes.venmoButton(), arguments);
+  },
+
+  createGooglePayButton: function() {
+    return SolidusBraintree._factory(SolidusBraintree.config.classes.googlePayButton(), arguments);
   },
 
   _factory: function(klass, args) {

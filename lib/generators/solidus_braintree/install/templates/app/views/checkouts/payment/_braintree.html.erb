@@ -20,4 +20,8 @@
   <%= render "spree/shared/venmo_button", payment_method: payment_method %>
 <% end %>
 
+<% if current_store.braintree_configuration.google_pay? %>
+  <%= render "spree/shared/google_pay_button", id: id %>
+<% end %>
+
 <%= render "spree/shared/braintree_errors" %>

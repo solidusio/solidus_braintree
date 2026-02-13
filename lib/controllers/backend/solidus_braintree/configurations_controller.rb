@@ -31,6 +31,7 @@ module SolidusBraintree
           :paypal,
           :apple_pay,
           :venmo,
+          :google_pay,
           :credit_card,
           :three_d_secure,
           :preferred_paypal_button_locale,

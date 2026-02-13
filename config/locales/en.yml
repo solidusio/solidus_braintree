@@ -9,6 +9,7 @@ en:
         credit_card: Credit Card
         three_d_secure: 3D Secure
         venmo: Venmo
+        google_pay: Google Pay
   spree:
     admin:
       tab:
@@ -50,6 +51,7 @@ en:
       credit_card: Credit Card
       pay_pal_account: PayPal
       venmo_account: Venmo
+      android_pay_card: Google Pay
     configurations:
       title: Braintree Configurations
       tab: Braintree
