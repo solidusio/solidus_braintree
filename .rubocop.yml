@@ -1,2 +1,7 @@
-require:
-  - solidus_dev_support/rubocop
+require: standard
+
+inherit_gem:
+  standard: config/base.yml
+
+AllCops:
+  TargetRubyVersion: 3.1
