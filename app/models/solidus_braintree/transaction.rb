@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_model'
+require "active_model"
 
 module SolidusBraintree
   class Transaction
@@ -15,7 +15,7 @@ module SolidusBraintree
 
     validate do
       unless payment_method.is_a? SolidusBraintree::Gateway
-        errors.add(:payment_method, 'Must be braintree')
+        errors.add(:payment_method, "Must be braintree")
       end
       if address&.invalid?
         address.errors.each do |error|

@@ -1,10 +1,10 @@
-require 'solidus_braintree_spec_helper'
+require "solidus_braintree_spec_helper"
 
 RSpec.describe SolidusBraintree::AVSResult do
-  describe 'AVS response message' do
-    subject { described_class.build(transaction).to_hash['message'] }
+  describe "AVS response message" do
+    subject { described_class.build(transaction).to_hash["message"] }
 
-    context 'with avs_error_response_code' do
+    context "with avs_error_response_code" do
       let(:transaction) do
         instance_double(Braintree::Transaction,
           avs_error_response_code: error_code,
@@ -12,20 +12,20 @@ RSpec.describe SolidusBraintree::AVSResult do
           avs_postal_code_response_code: nil)
       end
 
-      context 'when error code is S' do
-        let(:error_code) { 'S' }
+      context "when error code is S" do
+        let(:error_code) { "S" }
 
-        it { is_expected.to eq 'U.S.-issuing bank does not support AVS.' }
+        it { is_expected.to eq "U.S.-issuing bank does not support AVS." }
       end
 
-      context 'when error code is E' do
-        let(:error_code) { 'E' }
+      context "when error code is E" do
+        let(:error_code) { "E" }
 
-        it { is_expected.to eq 'AVS data is invalid or AVS is not allowed for this card type.' }
+        it { is_expected.to eq "AVS data is invalid or AVS is not allowed for this card type." }
       end
     end
 
-    context 'without avs_error_response_code' do
+    context "without avs_error_response_code" do
       let(:transaction) do
         instance_double(Braintree::Transaction,
           avs_error_response_code: nil,
@@ -33,283 +33,283 @@ RSpec.describe SolidusBraintree::AVSResult do
           avs_postal_code_response_code: codes.last)
       end
 
-      context 'when street address result is M and postal code result is N' do
-        let(:codes) { %w(M N) }
+      context "when street address result is M and postal code result is N" do
+        let(:codes) { %w[M N] }
 
-        it { is_expected.to eq 'Street address matches, but postal code does not match.' }
+        it { is_expected.to eq "Street address matches, but postal code does not match." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'M', 'postal_match' => 'N')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "M", "postal_match" => "N")
         }
       end
 
-      context 'when street address result is M and postal code result is U' do
-        let(:codes) { %w(M U) }
+      context "when street address result is M and postal code result is U" do
+        let(:codes) { %w[M U] }
 
-        it { is_expected.to eq 'Street address matches, but postal code not verified.' }
+        it { is_expected.to eq "Street address matches, but postal code not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'M', 'postal_match' => 'U')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "M", "postal_match" => "U")
         }
       end
 
-      context 'when street address result is M and postal code result is I' do
-        let(:codes) { %w(M I) }
+      context "when street address result is M and postal code result is I" do
+        let(:codes) { %w[M I] }
 
-        it { is_expected.to eq 'Street address matches, but postal code not verified.' }
+        it { is_expected.to eq "Street address matches, but postal code not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'M', 'postal_match' => 'I')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "M", "postal_match" => "I")
         }
       end
 
-      context 'when street address result is M and postal code result is A' do
-        let(:codes) { %w(M A) }
+      context "when street address result is M and postal code result is A" do
+        let(:codes) { %w[M A] }
 
-        it { is_expected.to eq 'Street address matches, but postal code not verified.' }
+        it { is_expected.to eq "Street address matches, but postal code not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'M', 'postal_match' => 'A')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "M", "postal_match" => "A")
         }
       end
 
-      context 'when street address result is N and postal code result is N' do
-        let(:codes) { %w(N N) }
+      context "when street address result is N and postal code result is N" do
+        let(:codes) { %w[N N] }
 
-        it { is_expected.to eq 'Street address and postal code do not match.' }
+        it { is_expected.to eq "Street address and postal code do not match." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'N', 'postal_match' => 'N')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "N", "postal_match" => "N")
         }
       end
 
-      context 'when street address result is N and postal code result is U' do
-        let(:codes) { %w(N U) }
+      context "when street address result is N and postal code result is U" do
+        let(:codes) { %w[N U] }
 
-        it { is_expected.to eq 'Street address and postal code do not match.' }
+        it { is_expected.to eq "Street address and postal code do not match." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'N', 'postal_match' => 'U')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "N", "postal_match" => "U")
         }
       end
 
-      context 'when street address result is N and postal code result is I' do
-        let(:codes) { %w(N I) }
+      context "when street address result is N and postal code result is I" do
+        let(:codes) { %w[N I] }
 
-        it { is_expected.to eq 'Street address and postal code do not match.' }
+        it { is_expected.to eq "Street address and postal code do not match." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'N', 'postal_match' => 'I')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "N", "postal_match" => "I")
         }
       end
 
-      context 'when street address result is N and postal code result is A' do
-        let(:codes) { %w(N A) }
+      context "when street address result is N and postal code result is A" do
+        let(:codes) { %w[N A] }
 
-        it { is_expected.to eq 'Street address and postal code do not match.' }
+        it { is_expected.to eq "Street address and postal code do not match." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'N', 'postal_match' => 'A')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "N", "postal_match" => "A")
         }
       end
 
-      context 'when street address result is I and postal code result is N' do
-        let(:codes) { %w(I N) }
+      context "when street address result is I and postal code result is N" do
+        let(:codes) { %w[I N] }
 
-        it { is_expected.to eq 'Street address and postal code do not match.' }
+        it { is_expected.to eq "Street address and postal code do not match." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'I', 'postal_match' => 'N')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "I", "postal_match" => "N")
         }
       end
 
-      context 'when street address result is A and postal code result is N' do
-        let(:codes) { %w(A N) }
+      context "when street address result is A and postal code result is N" do
+        let(:codes) { %w[A N] }
 
-        it { is_expected.to eq 'Street address and postal code do not match.' }
+        it { is_expected.to eq "Street address and postal code do not match." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'A', 'postal_match' => 'N')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "A", "postal_match" => "N")
         }
       end
 
-      context 'when street address result is U and postal code result is U' do
-        let(:codes) { %w(U U) }
+      context "when street address result is U and postal code result is U" do
+        let(:codes) { %w[U U] }
 
-        it { is_expected.to eq 'Address not verified.' }
+        it { is_expected.to eq "Address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'U', 'postal_match' => 'U')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "U", "postal_match" => "U")
         }
       end
 
-      context 'when street address result is U and postal code result is I' do
-        let(:codes) { %w(U I) }
+      context "when street address result is U and postal code result is I" do
+        let(:codes) { %w[U I] }
 
-        it { is_expected.to eq 'Address not verified.' }
+        it { is_expected.to eq "Address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'U', 'postal_match' => 'I')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "U", "postal_match" => "I")
         }
       end
 
-      context 'when street address result is U and postal code result is A' do
-        let(:codes) { %w(U A) }
+      context "when street address result is U and postal code result is A" do
+        let(:codes) { %w[U A] }
 
-        it { is_expected.to eq 'Address not verified.' }
+        it { is_expected.to eq "Address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'U', 'postal_match' => 'A')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "U", "postal_match" => "A")
         }
       end
 
-      context 'when street address result is I and postal code result is U' do
-        let(:codes) { %w(I U) }
+      context "when street address result is I and postal code result is U" do
+        let(:codes) { %w[I U] }
 
-        it { is_expected.to eq 'Address not verified.' }
+        it { is_expected.to eq "Address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'I', 'postal_match' => 'U')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "I", "postal_match" => "U")
         }
       end
 
-      context 'when street address result is I and postal code result is I' do
-        let(:codes) { %w(I I) }
+      context "when street address result is I and postal code result is I" do
+        let(:codes) { %w[I I] }
 
-        it { is_expected.to eq 'Address not verified.' }
+        it { is_expected.to eq "Address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'I', 'postal_match' => 'I')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "I", "postal_match" => "I")
         }
       end
 
-      context 'when street address result is I and postal code result is A' do
-        let(:codes) { %w(I A) }
+      context "when street address result is I and postal code result is A" do
+        let(:codes) { %w[I A] }
 
-        it { is_expected.to eq 'Address not verified.' }
+        it { is_expected.to eq "Address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'I', 'postal_match' => 'A')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "I", "postal_match" => "A")
         }
       end
 
-      context 'when street address result is A and postal code result is U' do
-        let(:codes) { %w(A U) }
+      context "when street address result is A and postal code result is U" do
+        let(:codes) { %w[A U] }
 
-        it { is_expected.to eq 'Address not verified.' }
+        it { is_expected.to eq "Address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'A', 'postal_match' => 'U')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "A", "postal_match" => "U")
         }
       end
 
-      context 'when street address result is A and postal code result is I' do
-        let(:codes) { %w(A I) }
+      context "when street address result is A and postal code result is I" do
+        let(:codes) { %w[A I] }
 
-        it { is_expected.to eq 'Address not verified.' }
+        it { is_expected.to eq "Address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'A', 'postal_match' => 'I')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "A", "postal_match" => "I")
         }
       end
 
-      context 'when street address result is A and postal code result is A' do
-        let(:codes) { %w(A A) }
+      context "when street address result is A and postal code result is A" do
+        let(:codes) { %w[A A] }
 
-        it { is_expected.to eq 'Address not verified.' }
+        it { is_expected.to eq "Address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'A', 'postal_match' => 'A')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "A", "postal_match" => "A")
         }
       end
 
-      context 'when street address result is M and postal code result is M' do
-        let(:codes) { %w(M M) }
+      context "when street address result is M and postal code result is M" do
+        let(:codes) { %w[M M] }
 
-        it { is_expected.to eq 'Street address and postal code match.' }
+        it { is_expected.to eq "Street address and postal code match." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'M', 'postal_match' => 'M')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "M", "postal_match" => "M")
         }
       end
 
-      context 'when street address result is U and postal code result is N' do
-        let(:codes) { %w(U N) }
+      context "when street address result is U and postal code result is N" do
+        let(:codes) { %w[U N] }
 
         it { is_expected.to eq "Street address and postal code do not match. For American Express: Card member's name, street address and postal code do not match." } # rubocop:disable Layout/LineLength
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'U', 'postal_match' => 'N')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "U", "postal_match" => "N")
         }
       end
 
-      context 'when street address result is U and postal code result is M' do
-        let(:codes) { %w(U M) }
+      context "when street address result is U and postal code result is M" do
+        let(:codes) { %w[U M] }
 
-        it { is_expected.to eq 'Postal code matches, but street address not verified.' }
+        it { is_expected.to eq "Postal code matches, but street address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'U', 'postal_match' => 'M')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "U", "postal_match" => "M")
         }
       end
 
-      context 'when street address result is I and postal code result is M' do
-        let(:codes) { %w(I M) }
+      context "when street address result is I and postal code result is M" do
+        let(:codes) { %w[I M] }
 
-        it { is_expected.to eq 'Postal code matches, but street address not verified.' }
+        it { is_expected.to eq "Postal code matches, but street address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'I', 'postal_match' => 'M')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "I", "postal_match" => "M")
         }
       end
 
-      context 'when street address result is A and postal code result is M' do
-        let(:codes) { %w(A M) }
+      context "when street address result is A and postal code result is M" do
+        let(:codes) { %w[A M] }
 
-        it { is_expected.to eq 'Postal code matches, but street address not verified.' }
+        it { is_expected.to eq "Postal code matches, but street address not verified." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'A', 'postal_match' => 'M')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "A", "postal_match" => "M")
         }
       end
 
-      context 'when street address result is N and postal code result is M' do
-        let(:codes) { %w(N M) }
+      context "when street address result is N and postal code result is M" do
+        let(:codes) { %w[N M] }
 
-        it { is_expected.to eq 'Street address does not match, but 5-digit postal code matches.' }
+        it { is_expected.to eq "Street address does not match, but 5-digit postal code matches." }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'N', 'postal_match' => 'M')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "N", "postal_match" => "M")
         }
       end
 
-      context 'when street address response code is nil' do
-        let(:codes) { [nil, 'M'] }
+      context "when street address response code is nil" do
+        let(:codes) { [nil, "M"] }
 
         it { is_expected.to be_nil }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => nil, 'postal_match' => 'M')
+          expect(described_class.build(transaction).to_hash).to include("street_match" => nil, "postal_match" => "M")
         }
       end
 
-      context 'when postal code response code is nil' do
-        let(:codes) { ['M', nil] }
+      context "when postal code response code is nil" do
+        let(:codes) { ["M", nil] }
 
         it { is_expected.to be_nil }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => 'M', 'postal_match' => nil)
+          expect(described_class.build(transaction).to_hash).to include("street_match" => "M", "postal_match" => nil)
         }
       end
 
-      context 'when postal code and street address response code is nil' do
+      context "when postal code and street address response code is nil" do
         let(:codes) { [nil, nil] }
 
         it { is_expected.to be_nil }
 
         it {
-          expect(described_class.build(transaction).to_hash).to include('street_match' => nil, 'postal_match' => nil)
+          expect(described_class.build(transaction).to_hash).to include("street_match" => nil, "postal_match" => nil)
         }
       end
     end

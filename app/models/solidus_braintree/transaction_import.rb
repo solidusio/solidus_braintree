@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'active_model'
+require "active_model"
 
 module SolidusBraintree
   class TransactionImport
@@ -61,7 +61,7 @@ module SolidusBraintree
         advance_order(payment, end_state)
       else
         raise InvalidImportError,
-          "Validation failed: #{errors.full_messages.join(', ')}"
+          "Validation failed: #{errors.full_messages.join(", ")}"
       end
     end
 

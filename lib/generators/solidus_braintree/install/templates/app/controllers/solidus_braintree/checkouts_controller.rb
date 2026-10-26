@@ -4,10 +4,10 @@ module SolidusBraintree
   class CheckoutsController < CheckoutsController
     PERMITTED_PAYMENT_PARAMS = [
       :payment_method_id,
-      { source_attributes: [
+      {source_attributes: [
         :nonce,
         :payment_type
-      ] }
+      ]}
     ].freeze
 
     def update
@@ -21,11 +21,11 @@ module SolidusBraintree
     end
 
     def payment_params
-      params.
-        require(:order).
-        require(:payments_attributes).
-        first.
-        permit(PERMITTED_PAYMENT_PARAMS)
+      params
+        .require(:order)
+        .require(:payments_attributes)
+        .first
+        .permit(PERMITTED_PAYMENT_PARAMS)
     end
   end
 end
