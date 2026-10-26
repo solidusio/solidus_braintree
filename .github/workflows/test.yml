@@ -27,8 +27,8 @@ jobs:
           - "8.0"
           - "8.1"
         ruby-version:
-          - "3.1"
           - "3.4"
+          - "4.0"
         solidus-branch:
           - "v4.6"
           - "v4.7"
