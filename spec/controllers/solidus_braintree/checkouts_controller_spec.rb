@@ -1,12 +1,12 @@
-require 'solidus_braintree_spec_helper'
-require 'support/solidus_braintree/order_ready_for_payment'
+require "solidus_braintree_spec_helper"
+require "support/solidus_braintree/order_ready_for_payment"
 
 RSpec.describe SolidusBraintree::CheckoutsController, type: :controller do
   routes { SolidusBraintree::Engine.routes }
 
-  include_context 'when order is ready for payment'
+  include_context "when order is ready for payment"
 
-  describe 'PATCH update' do
+  describe "PATCH update" do
     subject(:patch_update) { patch :update, params: params }
 
     let(:params) do
@@ -42,24 +42,24 @@ RSpec.describe SolidusBraintree::CheckoutsController, type: :controller do
     end
 
     context "when a payment is created successfully", vcr: {
-      cassette_name: 'checkout/update',
+      cassette_name: "checkout/update",
       match_requests_on: [:braintree_uri]
     } do
-      it 'creates a payment' do
-        expect { patch_update }.
-          to change { order.payments.count }.
-          from(0).
-          to(1)
+      it "creates a payment" do
+        expect { patch_update }
+          .to change { order.payments.count }
+          .from(0)
+          .to(1)
       end
 
-      it 'creates a payment source' do
-        expect { patch_update }.
-          to change(SolidusBraintree::Source, :count).
-          from(0).
-          to(1)
+      it "creates a payment source" do
+        expect { patch_update }
+          .to change(SolidusBraintree::Source, :count)
+          .from(0)
+          .to(1)
       end
 
-      it 'assigns @order' do
+      it "assigns @order" do
         patch_update
         expect(assigns(:order)).to eq order
       end
@@ -84,15 +84,15 @@ RSpec.describe SolidusBraintree::CheckoutsController, type: :controller do
       end
 
       it "renders 'not-ok'" do
-        expect(patch_update.body).to eq('not-ok')
+        expect(patch_update.body).to eq("not-ok")
       end
 
       it "does not change the number of payments in the system" do
-        expect{ patch_update }.not_to(change(::Spree::Payment, :count))
+        expect { patch_update }.not_to(change(::Spree::Payment, :count))
       end
 
       it "does not change the number of sources in the system" do
-        expect{ patch_update }.not_to(change(SolidusBraintree::Source, :count))
+        expect { patch_update }.not_to(change(SolidusBraintree::Source, :count))
       end
     end
   end

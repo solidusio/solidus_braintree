@@ -1,6 +1,6 @@
-require 'solidus_braintree_spec_helper'
-require 'webmock'
-require 'support/solidus_braintree/order_ready_for_payment'
+require "solidus_braintree_spec_helper"
+require "webmock"
+require "support/solidus_braintree/order_ready_for_payment"
 
 RSpec.describe SolidusBraintree::Gateway do
   let(:gateway) do
@@ -13,11 +13,11 @@ RSpec.describe SolidusBraintree::Gateway do
 
   let(:source) do
     SolidusBraintree::Source.create!(
-      nonce: 'fake-valid-nonce',
+      nonce: "fake-valid-nonce",
       user: user,
       payment_type: payment_type,
       payment_method: gateway,
-      device_data: 'fake-device-data'
+      device_data: "fake-device-data"
     )
   end
 
@@ -36,27 +36,27 @@ RSpec.describe SolidusBraintree::Gateway do
 
       it "successfully updates the preference" do
         subject
-        expect(gateway.preferred_merchant_currency_map).to eq({ "EUR" => "test_merchant_account_id" })
-        expect(gateway.preferred_paypal_payee_email_map).to eq({ "CAD" => "bruce+wayne@example.com" })
+        expect(gateway.preferred_merchant_currency_map).to eq({"EUR" => "test_merchant_account_id"})
+        expect(gateway.preferred_paypal_payee_email_map).to eq({"CAD" => "bruce+wayne@example.com"})
       end
     end
 
     context "with invalid user input" do
       let(:update_params) do
-        { preferred_merchant_currency_map: '{this_is_not_a_valid_hash}' }
+        {preferred_merchant_currency_map: "{this_is_not_a_valid_hash}"}
       end
 
       it "raise a JSON parser error" do
-        expect{ subject }.to raise_error(JSON::ParserError)
+        expect { subject }.to raise_error(JSON::ParserError)
       end
     end
   end
 
-  describe 'making a payment on an order', vcr: {
-    cassette_name: 'gateway/complete',
+  describe "making a payment on an order", vcr: {
+    cassette_name: "gateway/complete",
     match_requests_on: [:braintree_uri]
   } do
-    include_context 'when order is ready for payment'
+    include_context "when order is ready for payment"
 
     before do
       order.update(number: "ORDER0")
@@ -71,7 +71,7 @@ RSpec.describe SolidusBraintree::Gateway do
       )
     end
 
-    it 'can complete an order' do
+    it "can complete an order" do
       order.payments.reset
 
       expect(order.total).to eq 55
@@ -92,15 +92,15 @@ RSpec.describe SolidusBraintree::Gateway do
 
   describe "instance methods" do
     shared_examples "successful response" do
-      it 'returns a successful billing response', aggregate_failures: true do
+      it "returns a successful billing response", aggregate_failures: true do
         expect(subject).to be_a ActiveMerchant::Billing::Response
         expect(subject).to be_success
       end
     end
 
     shared_examples "protects against connection errors" do
-      context 'when a timeout error happens' do
-        it 'raises ActiveMerchant::ConnectionError' do
+      context "when a timeout error happens" do
+        it "raises ActiveMerchant::ConnectionError" do
           expect_any_instance_of(Braintree::TransactionGateway).to receive(gateway_action) do
             raise Braintree::BraintreeError
           end
@@ -131,7 +131,7 @@ RSpec.describe SolidusBraintree::Gateway do
       braintree.testing.settle(sale_id).transaction.id
     end
 
-    let(:currency) { 'USD' }
+    let(:currency) { "USD" }
 
     let(:gateway_options) do
       {
@@ -163,31 +163,31 @@ RSpec.describe SolidusBraintree::Gateway do
       it { is_expected.to eq "braintree" }
     end
 
-    describe '#gateway_options' do
+    describe "#gateway_options" do
       subject(:gateway_options) { gateway.gateway_options }
 
-      it 'includes http_open_timeout' do
+      it "includes http_open_timeout" do
         expect(subject).to have_key(:http_open_timeout)
         expect(gateway_options[:http_open_timeout]).to eq(60)
       end
 
-      it 'includes http_read_timeout' do
+      it "includes http_read_timeout" do
         expect(subject).to have_key(:http_read_timeout)
         expect(gateway_options[:http_read_timeout]).to eq(60)
       end
     end
 
-    describe '#purchase' do
+    describe "#purchase" do
       subject(:purchase) { gateway.purchase(1000, source, gateway_options) }
 
-      context 'with successful purchase', vcr: {
-        cassette_name: 'gateway/purchase',
+      context "with successful purchase", vcr: {
+        cassette_name: "gateway/purchase",
         match_requests_on: [:braintree_uri]
       } do
         include_examples "successful response"
 
-        it 'submits the transaction for settlement', aggregate_failures: true do
-          expect(purchase.message).to eq 'submitted_for_settlement'
+        it "submits the transaction for settlement", aggregate_failures: true do
+          expect(purchase.message).to eq "submitted_for_settlement"
           expect(purchase.authorization).to be_present
         end
       end
@@ -204,37 +204,37 @@ RSpec.describe SolidusBraintree::Gateway do
         let(:gateway_action) { :sale }
       end
 
-      context 'with successful authorization', vcr: {
-        cassette_name: 'gateway/authorize',
+      context "with successful authorization", vcr: {
+        cassette_name: "gateway/authorize",
         match_requests_on: [:braintree_uri]
       } do
         include_examples "successful response"
 
         it 'passes "Solidus" as the channel parameter in the request' do
-          expect_any_instance_of(Braintree::TransactionGateway).
-            to receive(:sale).
-            with(hash_including({ channel: "Solidus" })).and_call_original
+          expect_any_instance_of(Braintree::TransactionGateway)
+            .to receive(:sale)
+            .with(hash_including({channel: "Solidus"})).and_call_original
           authorize
         end
 
-        it 'authorizes the transaction', aggregate_failures: true do
-          expect(authorize.message).to eq 'authorized'
+        it "authorizes the transaction", aggregate_failures: true do
+          expect(authorize.message).to eq "authorized"
           expect(authorize.authorization).to be_present
         end
 
-        context 'with available device data' do
-          it 'passes the device data as a parameter in the request' do
-            expect_any_instance_of(Braintree::TransactionGateway).
-              to receive(:sale).
-              with(hash_including({ device_data: "fake-device-data" })).and_call_original
+        context "with available device data" do
+          it "passes the device data as a parameter in the request" do
+            expect_any_instance_of(Braintree::TransactionGateway)
+              .to receive(:sale)
+              .with(hash_including({device_data: "fake-device-data"})).and_call_original
             authorize
           end
         end
 
-        context 'without device_data' do
+        context "without device_data" do
           let(:source) do
             SolidusBraintree::Source.create!(
-              nonce: 'fake-valid-nonce',
+              nonce: "fake-valid-nonce",
               user: user,
               payment_type: payment_type,
               payment_method: gateway
@@ -245,41 +245,41 @@ RSpec.describe SolidusBraintree::Gateway do
             allow_any_instance_of(Braintree::TransactionGateway).to receive(:sale).and_call_original
           end
 
-          it 'does not pass any device data in the request' do
+          it "does not pass any device data in the request" do
             expect_any_instance_of(Braintree::TransactionGateway)
-              .not_to receive(:sale).with(hash_including({ device_data: "" }))
+              .not_to receive(:sale).with(hash_including({device_data: ""}))
 
             authorize
           end
         end
       end
 
-      context 'with different merchant account for currency', vcr: {
-        cassette_name: 'gateway/authorize/merchant_account/EUR',
+      context "with different merchant account for currency", vcr: {
+        cassette_name: "gateway/authorize/merchant_account/EUR",
         match_requests_on: [:braintree_uri]
       } do
-        let(:currency) { 'EUR' }
+        let(:currency) { "EUR" }
 
-        it 'settles with the correct currency' do
+        it "settles with the correct currency" do
           transaction = braintree.transaction.find(authorize.authorization)
-          expect(transaction.merchant_account_id).to eq 'stembolt_EUR'
+          expect(transaction.merchant_account_id).to eq "stembolt_EUR"
         end
       end
 
-      context 'with different paypal payee email for currency', vcr: {
-        cassette_name: 'gateway/authorize/paypal/EUR',
+      context "with different paypal payee email for currency", vcr: {
+        cassette_name: "gateway/authorize/paypal/EUR",
         match_requests_on: [:braintree_uri]
       } do
-        let(:currency) { 'EUR' }
+        let(:currency) { "EUR" }
 
-        it 'uses the correct payee email' do
-          expect_any_instance_of(Braintree::TransactionGateway).
-            to receive(:sale).
-            with(hash_including({
+        it "uses the correct payee email" do
+          expect_any_instance_of(Braintree::TransactionGateway)
+            .to receive(:sale)
+            .with(hash_including({
               options: {
                 store_in_vault_on_success: true,
                 paypal: {
-                  payee_email: ENV.fetch('BRAINTREE_PAYPAL_PAYEE_EMAIL')
+                  payee_email: ENV.fetch("BRAINTREE_PAYPAL_PAYEE_EMAIL")
                 }
               }
             })).and_call_original
@@ -287,13 +287,13 @@ RSpec.describe SolidusBraintree::Gateway do
         end
 
         context "with PayPal transaction", vcr: {
-          cassette_name: 'gateway/authorize/paypal/address',
+          cassette_name: "gateway/authorize/paypal/address",
           match_requests_on: [:braintree_uri]
         } do
-          it 'includes the shipping address in the request' do
-            expect_any_instance_of(Braintree::TransactionGateway).
-              to receive(:sale).
-              with(hash_including({
+          it "includes the shipping address in the request" do
+            expect_any_instance_of(Braintree::TransactionGateway)
+              .to receive(:sale)
+              .with(hash_including({
                 shipping: {
                   first_name: "Bruce",
                   last_name: "Wayne",
@@ -310,14 +310,14 @@ RSpec.describe SolidusBraintree::Gateway do
       end
 
       context "with CreditCard transaction", vcr: {
-        cassette_name: 'gateway/authorize/credit_card/address',
+        cassette_name: "gateway/authorize/credit_card/address",
         match_requests_on: [:braintree_uri]
       } do
         let(:payment_type) { SolidusBraintree::Source::CREDIT_CARD }
 
-        it 'includes the billing address in the request' do
-          expect_any_instance_of(Braintree::TransactionGateway).to receive(:sale).
-            with(hash_including({
+        it "includes the billing address in the request" do
+          expect_any_instance_of(Braintree::TransactionGateway).to receive(:sale)
+            .with(hash_including({
               billing: {
                 first_name: "Dick",
                 last_name: "Grayson",
@@ -336,19 +336,19 @@ RSpec.describe SolidusBraintree::Gateway do
     describe "#capture" do
       subject(:capture) { gateway.capture(1000, authorized_id, {}) }
 
-      context 'with successful capture', vcr: {
-        cassette_name: 'gateway/capture',
+      context "with successful capture", vcr: {
+        cassette_name: "gateway/capture",
         match_requests_on: [:braintree_uri]
       } do
         include_examples "successful response"
 
-        it 'submits the transaction for settlement' do
+        it "submits the transaction for settlement" do
           expect(capture.message).to eq "submitted_for_settlement"
         end
       end
 
-      context 'with authorized transaction', vcr: {
-        cassette_name: 'gateway/authorized_transaction',
+      context "with authorized transaction", vcr: {
+        cassette_name: "gateway/authorized_transaction",
         match_requests_on: [:braintree_uri]
       } do
         include_examples "protects against connection errors" do
@@ -360,19 +360,19 @@ RSpec.describe SolidusBraintree::Gateway do
     describe "#credit" do
       subject(:credit) { gateway.credit(2000, source, settled_id, {}) }
 
-      context 'with successful credit', vcr: {
-        cassette_name: 'gateway/credit',
+      context "with successful credit", vcr: {
+        cassette_name: "gateway/credit",
         match_requests_on: [:braintree_uri]
       } do
         include_examples "successful response"
 
-        it 'credits the transaction' do
-          expect(credit.message).to eq 'submitted_for_settlement'
+        it "credits the transaction" do
+          expect(credit.message).to eq "submitted_for_settlement"
         end
       end
 
-      context 'with settled transaction', vcr: {
-        cassette_name: 'gateway/settled_transaction',
+      context "with settled transaction", vcr: {
+        cassette_name: "gateway/settled_transaction",
         match_requests_on: [:braintree_uri]
       } do
         include_examples "protects against connection errors" do
@@ -384,19 +384,19 @@ RSpec.describe SolidusBraintree::Gateway do
     describe "#void" do
       subject(:void) { gateway.void(authorized_id, source, {}) }
 
-      context 'when successfully voided', vcr: {
-        cassette_name: 'gateway/void',
+      context "when successfully voided", vcr: {
+        cassette_name: "gateway/void",
         match_requests_on: [:braintree_uri]
       } do
         include_examples "successful response"
 
-        it 'voids the transaction' do
-          expect(void.message).to eq 'voided'
+        it "voids the transaction" do
+          expect(void.message).to eq "voided"
         end
       end
 
-      context 'with authorized transaction', vcr: {
-        cassette_name: 'gateway/authorized_transaction',
+      context "with authorized transaction", vcr: {
+        cassette_name: "gateway/authorized_transaction",
         match_requests_on: [:braintree_uri]
       } do
         include_examples "protects against connection errors" do
@@ -406,7 +406,7 @@ RSpec.describe SolidusBraintree::Gateway do
     end
 
     describe "#cancel", vcr: {
-      cassette_name: 'gateway/cancel',
+      cassette_name: "gateway/cancel",
       match_requests_on: [:braintree_uri]
     } do
       subject(:cancel) { gateway.cancel(transaction_id) }
@@ -415,43 +415,43 @@ RSpec.describe SolidusBraintree::Gateway do
 
       context "when the transaction is found" do
         context "when it is voidable", vcr: {
-          cassette_name: 'gateway/cancel/void',
+          cassette_name: "gateway/cancel/void",
           match_requests_on: [:braintree_uri]
         } do
           let(:transaction_id) { authorized_id }
 
           include_examples "successful response"
 
-          it 'voids the transaction' do
-            expect(cancel.message).to eq 'voided'
+          it "voids the transaction" do
+            expect(cancel.message).to eq "voided"
           end
         end
 
         context "when it is not voidable", vcr: {
-          cassette_name: 'gateway/cancel/refunds',
+          cassette_name: "gateway/cancel/refunds",
           match_requests_on: [:braintree_uri]
         } do
           let(:transaction_id) { settled_id }
 
           include_examples "successful response"
 
-          it 'refunds the transaction' do
-            expect(cancel.message).to eq 'submitted_for_settlement'
+          it "refunds the transaction" do
+            expect(cancel.message).to eq "submitted_for_settlement"
           end
         end
       end
 
       context "when the transaction is not found", vcr: {
-        cassette_name: 'gateway/cancel/missing',
+        cassette_name: "gateway/cancel/missing",
         match_requests_on: [:braintree_uri]
       } do
-        it 'raises an error' do
-          expect{ cancel }.to raise_error ActiveMerchant::ConnectionError
+        it "raises an error" do
+          expect { cancel }.to raise_error ActiveMerchant::ConnectionError
         end
       end
     end
 
-    describe '#try_void' do
+    describe "#try_void" do
       subject { gateway.try_void(instance_double(Spree::Payment, response_code: source.token)) }
 
       let(:transaction_request) do
@@ -465,22 +465,22 @@ RSpec.describe SolidusBraintree::Gateway do
         allow(gateway).to receive(:braintree) { client }
       end
 
-      context 'with voidable payment' do
+      context "with voidable payment" do
         let(:transaction_response) do
           instance_double(Braintree::Transaction,
             status: Braintree::Transaction::Status::Authorized)
         end
 
-        it 'voids the payment' do
+        it "voids the payment" do
           expect(gateway).to receive(:void)
           subject
         end
 
-        context 'with error response mentioning an unvoidable transaction' do
+        context "with error response mentioning an unvoidable transaction" do
           before do
             allow(gateway).to receive(:void) do
               raise ActiveMerchant::ConnectionError.new(
-                'Transaction can only be voided if status is authorized',
+                "Transaction can only be voided if status is authorized",
                 double
               )
             end
@@ -489,11 +489,11 @@ RSpec.describe SolidusBraintree::Gateway do
           it { is_expected.to be(false) }
         end
 
-        context 'with other error response' do
+        context "with other error response" do
           before do
             allow(gateway).to receive(:void) do
               raise ActiveMerchant::ConnectionError.new(
-                'Server unreachable',
+                "Server unreachable",
                 double
               )
             end
@@ -503,19 +503,19 @@ RSpec.describe SolidusBraintree::Gateway do
         end
       end
 
-      context 'with voidable paypal payment' do
+      context "with voidable paypal payment" do
         let(:transaction_response) do
           instance_double(Braintree::Transaction,
             status: Braintree::Transaction::Status::SettlementPending)
         end
 
-        it 'voids the payment' do
+        it "voids the payment" do
           expect(gateway).to receive(:void)
           subject
         end
       end
 
-      context 'with non-voidable payment' do
+      context "with non-voidable payment" do
         let(:transaction_response) do
           instance_double(Braintree::Transaction,
             status: Braintree::Transaction::Status::Settled)
@@ -540,14 +540,14 @@ RSpec.describe SolidusBraintree::Gateway do
         match_requests_on: [:braintree_uri]
       }
       context "with no existing customer profile", vcr: cassette_options do
-        it 'creates and returns a new customer profile', aggregate_failures: true do
+        it "creates and returns a new customer profile", aggregate_failures: true do
           expect(profile).to be_a SolidusBraintree::Customer
           expect(profile.sources).to eq [source]
           expect(profile.braintree_customer_id).to be_present
         end
 
         it "sets a token on the payment source" do
-          expect{ subject }.to change(source, :token)
+          expect { subject }.to change(source, :token)
         end
       end
 
@@ -576,7 +576,7 @@ RSpec.describe SolidusBraintree::Gateway do
       end
     end
 
-    describe '#customer_profile_params' do
+    describe "#customer_profile_params" do
       subject(:params) { gateway.send(:customer_profile_params, payment) }
 
       let(:payment) do
@@ -586,16 +586,16 @@ RSpec.describe SolidusBraintree::Gateway do
         })
       end
 
-      context 'when payment does not belong to an order' do
+      context "when payment does not belong to an order" do
         before { allow(payment).to receive(:order).and_return(nil) }
 
-        it 'has the email param as nil' do
+        it "has the email param as nil" do
           expect(subject[:email]).to be_nil
         end
       end
 
-      context 'when payment belongs to an order' do
-        it 'has no email param' do
+      context "when payment belongs to an order" do
+        it "has no email param" do
           expect(subject[:email]).to eq(payment.order.email)
         end
       end
@@ -614,13 +614,13 @@ RSpec.describe SolidusBraintree::Gateway do
       end
 
       cassette_options = {
-        cassette_name: 'gateway/customer',
+        cassette_name: "gateway/customer",
         match_requests_on: [:braintree_uri]
       }
 
       context "with customer", vcr: cassette_options do
-        it 'saves the customer email correctly' do
-          allow(payment.order).to receive(:email).and_return('braintree@customers.com')
+        it "saves the customer email correctly" do
+          allow(payment.order).to receive(:email).and_return("braintree@customers.com")
           expect(subject.email).to eq(payment.order.email)
         end
       end
@@ -747,23 +747,23 @@ RSpec.describe SolidusBraintree::Gateway do
     end
   end
 
-  describe '.generate_token' do
+  describe ".generate_token" do
     subject do
       # dont VCR ignore generate token request, use the existing cassette
       allow(VCR.request_ignorer.hooks).to receive(:[]).with(:ignore_request).and_return([])
       gateway.generate_token
     end
 
-    context 'with connection enabled', vcr: {
-      cassette_name: 'braintree/generate_token',
+    context "with connection enabled", vcr: {
+      cassette_name: "braintree/generate_token",
       match_requests_on: [:braintree_uri]
     } do
       it { is_expected.to be_a(String).and be_present }
     end
 
-    context 'when token generation is disabled' do
+    context "when token generation is disabled" do
       let(:gateway) do
-        gateway = described_class.create!(name: 'braintree')
+        gateway = described_class.create!(name: "braintree")
         gateway.preferred_token_generation_enabled = false
         gateway
       end

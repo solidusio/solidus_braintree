@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-RSpec.shared_context 'with prepended view fixtures' do
-  let(:view_fixtures_path) { 'spec/fixtures/views' }
+RSpec.shared_context "with prepended view fixtures" do
+  let(:view_fixtures_path) { "spec/fixtures/views" }
 
   before do
     ApplicationController.prepend_view_path view_fixtures_path
