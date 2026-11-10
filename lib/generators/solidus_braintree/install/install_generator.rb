@@ -26,6 +26,7 @@ module SolidusBraintree
       end
 
       def add_test_gems
+        create_file("Gemfile")
         gem_group :test do
           ["vcr", "webmock"].each do |gem_name|
             gem gem_name unless Bundler.locked_gems.dependencies[gem_name]

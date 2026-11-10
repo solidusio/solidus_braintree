@@ -30,11 +30,13 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activemerchant", "~> 1.48"
   spec.add_dependency "braintree", "~> 4.2"
-  spec.add_dependency "solidus_api", [">= 3.4.0.dev", "< 5"]
-  spec.add_dependency "solidus_backend", [">= 3.4.0.dev", "< 5"]
-  spec.add_dependency "solidus_core", [">= 3.4.0.dev", "< 5"]
-  spec.add_dependency "solidus_support", [">= 0.13.1", "< 1"]
+  spec.add_dependency "solidus_api", [">= 4.0", "< 5"]
+  spec.add_dependency "solidus_backend", [">= 4.0", "< 5"]
+  spec.add_dependency "solidus_core", [">= 4.0", "< 5"]
+  spec.add_dependency "solidus_support", [">= 0.14.1", "< 1"]
 
   spec.add_development_dependency "rails-controller-testing"
-  spec.add_development_dependency "solidus_dev_support", "~> 2.5"
+  spec.add_development_dependency "solidus_dev_support", [">= 2.11", "< 3"]
+  spec.add_development_dependency "vcr"
+  spec.add_development_dependency "webmock"
 end
