@@ -49,14 +49,5 @@ if [ -n "$SOLIDUS_BRANCH" ] && [ -z "$SOLIDUS_STOREFRONT_TEMPLATE" ]; then
   export SOLIDUS_STOREFRONT_TEMPLATE="https://github.com/solidusio/solidus/raw/$SOLIDUS_BRANCH/storefront/template.rb"
 fi
 unbundled bundle exec rails generate solidus:install --auto-accept --payment-method=none --no-seed --no-sample --admin-preview=false "$@"
-# The starter frontend template disables the CSS compressor after a line that
-# Rails 8.1 no longer generates; SassC can't parse the Tailwind output.
-grep -q "css_compressor = nil" config/environments/test.rb ||
-  ruby -i -pe '$_ += "  config.assets.css_compressor = nil\n" if $_.start_with?("Rails.application.configure do")' config/environments/test.rb
-# The starter frontend (Solidus < 4.8) runs system specs in Chrome; use Firefox like the storefront.
-starter_capybara=spec/support/solidus_starter_frontend/capybara.rb
-if [ -f "$starter_capybara" ]; then
-  ruby -i -0pe 'sub(/using: :headless_chrome(, screen_size: screen_size\)) do \|capabilities\|\n\s*capabilities\.add_argument\("--disable-search-engine-choice-screen"\)\n\s*end/, "using: :headless_firefox\\1")' "$starter_capybara"
-fi
 unbundled bundle add $extension_name --path ..
 unbundled bundle exec rails generate $extension_name:install --migrate --specs=all
