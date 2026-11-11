@@ -2,6 +2,12 @@
 
 set -e
 
+# The dummy app's database.yml (from `rails new`) ignores DB_HOST/DB_USERNAME
+# for PostgreSQL, but libpq picks up PGHOST/PGUSER.
+if [ "$DB" = "postgresql" ]; then
+  export PGHOST="${PGHOST:-$DB_HOST}" PGUSER="${PGUSER:-$DB_USERNAME}"
+fi
+
 echo "Updating the dummy app..."
 bin/rails-dummy-app generate solidus_braintree:install --force --migrate --specs=all
 
