@@ -6,7 +6,7 @@ extension_name="solidus_braintree"
 
 # Stay away from the bundler env of the containing extension.
 function unbundled {
-  ruby -rbundler -e'b = proc {system *ARGV}; Bundler.respond_to?(:with_unbundled_env) ? Bundler.with_unbundled_env(&b) : Bundler.with_clean_env(&b)' -- "$@"
+  ruby -rbundler -e'b = proc {system(*ARGV) or exit 1}; Bundler.respond_to?(:with_unbundled_env) ? Bundler.with_unbundled_env(&b) : Bundler.with_clean_env(&b)' -- "$@"
 }
 
 # "sqlite" is set by the ORB extension instead of "sqlite3",
@@ -38,6 +38,10 @@ cat <<MANIFESTJS > app/assets/config/manifest.js
 MANIFESTJS
 
 unbundled bundle add solidus --github solidusio/solidus --branch "${SOLIDUS_BRANCH:-${BRANCH:-main}}" --version '> 0.a'
+# ActiveSupport < 8.1 passes `quirks_mode` to JSON.generate, which json 3 rejects.
+if ruby -e "exit Gem::Version.new('$rails_version') < Gem::Version.new('8.1')"; then
+  unbundled bundle add json --version '< 3'
+fi
 unbundled bundle exec rake db:drop db:create
 # Solidus >= 4.8 fetches the storefront from main for prerelease (.dev) versions,
 # which on a stable branch installs a storefront incompatible with its core.
@@ -45,5 +49,9 @@ if [ -n "$SOLIDUS_BRANCH" ] && [ -z "$SOLIDUS_STOREFRONT_TEMPLATE" ]; then
   export SOLIDUS_STOREFRONT_TEMPLATE="https://github.com/solidusio/solidus/raw/$SOLIDUS_BRANCH/storefront/template.rb"
 fi
 unbundled bundle exec rails generate solidus:install --auto-accept --payment-method=none --no-seed --no-sample --admin-preview=false "$@"
+# The starter frontend template disables the CSS compressor after a line that
+# Rails 8.1 no longer generates; SassC can't parse the Tailwind output.
+grep -q "css_compressor = nil" config/environments/test.rb ||
+  ruby -i -pe '$_ += "  config.assets.css_compressor = nil\n" if $_.start_with?("Rails.application.configure do")' config/environments/test.rb
 unbundled bundle add $extension_name --path ..
 unbundled bundle exec rails generate $extension_name:install --migrate --specs=all
