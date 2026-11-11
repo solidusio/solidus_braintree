@@ -26,7 +26,6 @@ module SolidusBraintree
       end
 
       def add_test_gems
-        create_file("Gemfile")
         gem_group :test do
           ["vcr", "webmock"].each do |gem_name|
             gem gem_name unless Bundler.locked_gems.dependencies[gem_name]
@@ -91,13 +90,13 @@ module SolidusBraintree
           gsub_file "vendor/assets/javascripts/spree/frontend/all.js",
             "//= require spree/frontend/solidus_paypal_braintree\n", ""
 
-          append_file "app/assets/javascripts/solidus_starter_frontend.js",
+          append_file "app/assets/javascripts/#{frontend_manifest_name}.js",
             "//= require spree/frontend/solidus_braintree\n"
 
           gsub_file "vendor/assets/stylesheets/spree/frontend/all.css",
             " *= require spree/frontend/solidus_paypal_braintree\n", ""
 
-          inject_into_file "app/assets/stylesheets/solidus_starter_frontend.css",
+          inject_into_file "app/assets/stylesheets/#{frontend_manifest_name}.css",
             " *= require spree/frontend/solidus_braintree\n", before: %r{\*/}, verbose: true
 
           inject_into_class "app/controllers/checkouts_controller.rb",
@@ -149,6 +148,14 @@ module SolidusBraintree
       end
 
       private
+
+      def frontend_manifest_name
+        if File.exist?(File.join(destination_root, "app/assets/javascripts/solidus_storefront.js"))
+          "solidus_storefront"
+        else
+          "solidus_starter_frontend"
+        end
+      end
 
       def solidus_mount_point
         mount_point = Spree::Core::Engine.routes.find_script_name({})
