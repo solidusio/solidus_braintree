@@ -10,10 +10,10 @@ module SolidusBraintree
       :paypal_funding_source,
       :phone,
       :email,
-      { address_attributes: [
+      {address_attributes: [
         :country_code, :country_name, :name, :city, :zip, :state_code,
         :address_line_1, :address_line_2, :first_name, :last_name
-      ] },
+      ]},
       :device_data
     ].freeze
 
@@ -27,11 +27,11 @@ module SolidusBraintree
           import.import!(import_state, restart_checkout: restart_checkout)
 
           format.html { redirect_to redirect_url(import) }
-          format.json { render json: { redirectUrl: redirect_url(import) } }
+          format.json { render json: {redirectUrl: redirect_url(import)} }
         else
           status = 422
           format.html { import_error(import) }
-          format.json { render json: { errors: import.errors, status: status }, status: status }
+          format.json { render json: {errors: import.errors, status: status}, status: status }
         end
       end
     end
@@ -39,12 +39,12 @@ module SolidusBraintree
     private
 
     def import_state
-      params[:state] || 'confirm'
+      params[:state] || "confirm"
     end
 
     def import_error(import)
       raise InvalidImportError,
-        "Import invalid: #{import.errors.full_messages.join(', ')}"
+        "Import invalid: #{import.errors.full_messages.join(", ")}"
     end
 
     def redirect_url(import)
@@ -58,7 +58,7 @@ module SolidusBraintree
     def transaction_params
       params.require(:transaction)
         .permit(PERMITTED_BRAINTREE_TRANSACTION_PARAMS)
-        .merge({ payment_method: payment_method })
+        .merge({payment_method: payment_method})
     end
 
     def payment_method

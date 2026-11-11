@@ -14,7 +14,7 @@ module SolidusBraintree
       @configuration ||= ExtensionConfiguration.new
     end
 
-    alias config configuration
+    alias_method :config, :configuration
 
     def configure
       yield configuration

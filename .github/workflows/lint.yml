@@ -22,4 +22,4 @@ jobs:
           ruby-version: "3.2"
           bundler-cache: true
       - name: Lint Ruby files
-        run: bundle exec rubocop -ESP
+        run: bundle exec standardrb

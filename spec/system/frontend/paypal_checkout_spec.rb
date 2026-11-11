@@ -1,8 +1,8 @@
-require 'solidus_braintree_spec_helper'
-require 'support/solidus_braintree/with_prepended_view_fixtures'
+require "solidus_braintree_spec_helper"
+require "support/solidus_braintree/with_prepended_view_fixtures"
 
 RSpec.describe "Checkout", type: :feature, js: true do
-  include_context 'with prepended view fixtures'
+  include_context "with prepended view fixtures"
 
   Capybara.default_max_wait_time = 60
 
@@ -11,7 +11,7 @@ RSpec.describe "Checkout", type: :feature, js: true do
   #     s.braintree_configuration.update!(braintree_preferences)
   #   end
   # end
-  let(:braintree_preferences) { { paypal: true }.merge(paypal_options) }
+  let(:braintree_preferences) { {paypal: true}.merge(paypal_options) }
   let(:paypal_options) { {} }
 
   let!(:country) { create(:country, states_required: true) }
@@ -48,12 +48,12 @@ RSpec.describe "Checkout", type: :feature, js: true do
       end
     end
 
-    context 'when using custom paypal button style' do
-      let(:paypal_options) { { preferred_paypal_button_color: 'blue' } }
+    context "when using custom paypal button style" do
+      let(:paypal_options) { {preferred_paypal_button_color: "blue"} }
 
-      it 'displays required PayPal button style' do
-        within_frame find('#paypal-button iframe') do
-          expect(page).to have_selector('.paypal-button-color-blue')
+      it "displays required PayPal button style" do
+        within_frame find("#paypal-button iframe") do
+          expect(page).to have_selector(".paypal-button-color-blue")
         end
       end
     end
@@ -96,13 +96,13 @@ RSpec.describe "Checkout", type: :feature, js: true do
   # this greatly increases the test time, so it is left out since CI runs
   # these with poltergeist.
   def move_through_paypal_popup
-    expect(page).to have_css('#paypal-button .paypal-button')
+    expect(page).to have_css("#paypal-button .paypal-button")
 
     sleep 2 # the PayPal button is not immediately ready
 
     popup = page.window_opened_by do
-      within_frame find('#paypal-button iframe') do
-        find('div.paypal-button').click
+      within_frame find("#paypal-button iframe") do
+        find("div.paypal-button").click
       end
     end
     page.switch_to_window(popup)
@@ -110,15 +110,15 @@ RSpec.describe "Checkout", type: :feature, js: true do
     # We don't control this popup window.
     # So javascript errors are not our errors.
     begin
-      expect(page).not_to have_selector('body.loading')
+      expect(page).not_to have_selector("body.loading")
       fill_in("login_email", with: "stembolt_buyer@stembolttest.com")
       click_on "Next"
       fill_in("login_password", with: "test1234")
 
-      expect(page).not_to have_selector('body.loading')
+      expect(page).not_to have_selector("body.loading")
       click_button("btnLogin")
 
-      expect(page).not_to have_selector('body.loading')
+      expect(page).not_to have_selector("body.loading")
       click_button("Continue")
       click_button("Agree & Continue")
     rescue Selenium::WebDriver::Error::JavascriptError => e

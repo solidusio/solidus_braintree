@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'solidus_braintree/request_protection'
+require "solidus_braintree/request_protection"
 
 module SolidusBraintree
   class Source < ::Spree::PaymentSource
@@ -20,7 +20,7 @@ module SolidusBraintree
     }, suffix: :funding
 
     belongs_to :user, class_name: ::Spree::UserClassHandle.new, optional: true
-    belongs_to :payment_method, class_name: 'Spree::PaymentMethod'
+    belongs_to :payment_method, class_name: "Spree::PaymentMethod"
     has_many :payments, as: :source, class_name: "Spree::Payment", dependent: :destroy
 
     belongs_to :customer, class_name: "SolidusBraintree::Customer", optional: true
@@ -100,18 +100,18 @@ module SolidusBraintree
       elsif venmo?
         username
       else
-        "XXXX-XXXX-XXXX-#{last_digits.to_s.rjust(4, 'X')}"
+        "XXXX-XXXX-XXXX-#{last_digits.to_s.rjust(4, "X")}"
       end
     end
 
     def display_paypal_funding_source
       I18n.t(paypal_funding_source,
-        scope: 'solidus_braintree.paypal_funding_sources',
+        scope: "solidus_braintree.paypal_funding_sources",
         default: paypal_funding_source)
     end
 
     def display_payment_type
-      "#{I18n.t('solidus_braintree.payment_type.label')}: #{friendly_payment_type}"
+      "#{I18n.t("solidus_braintree.payment_type.label")}: #{friendly_payment_type}"
     end
 
     private

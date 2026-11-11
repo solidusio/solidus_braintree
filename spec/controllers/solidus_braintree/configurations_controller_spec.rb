@@ -1,4 +1,4 @@
-require 'solidus_braintree_spec_helper'
+require "solidus_braintree_spec_helper"
 
 RSpec.describe SolidusBraintree::ConfigurationsController, type: :controller do
   routes { SolidusBraintree::Engine.routes }
@@ -13,8 +13,8 @@ RSpec.describe SolidusBraintree::ConfigurationsController, type: :controller do
 
     it "assigns all store's configurations as @configurations" do
       subject
-      expect(assigns(:configurations)).
-        to eq [store_1.braintree_configuration, store_2.braintree_configuration]
+      expect(assigns(:configurations))
+        .to eq [store_1.braintree_configuration, store_2.braintree_configuration]
     end
 
     it "renders the correct view" do
@@ -25,12 +25,12 @@ RSpec.describe SolidusBraintree::ConfigurationsController, type: :controller do
   describe "POST #update" do
     subject { post :update, params: configurations_params }
 
-    let(:paypal_button_color) { 'blue' }
+    let(:paypal_button_color) { "blue" }
     let(:configurations_params) do
       {
         configurations: {
           configuration_fields: {
-            store_1.braintree_configuration.id.to_s => { paypal: true, apple_pay: true },
+            store_1.braintree_configuration.id.to_s => {paypal: true, apple_pay: true},
             store_2.braintree_configuration.id.to_s => {
               paypal: true,
               apple_pay: false,
@@ -43,8 +43,8 @@ RSpec.describe SolidusBraintree::ConfigurationsController, type: :controller do
 
     context "with valid parameters" do
       it "updates the configuration" do
-        expect { subject }.to change { store_1.braintree_configuration.reload.paypal }.
-          from(false).to(true)
+        expect { subject }.to change { store_1.braintree_configuration.reload.paypal }
+          .from(false).to(true)
       end
 
       it "displays a success message to the user" do
@@ -58,7 +58,7 @@ RSpec.describe SolidusBraintree::ConfigurationsController, type: :controller do
     end
 
     context "with invalid parameters" do
-      let(:paypal_button_color) { 'invalid-color' }
+      let(:paypal_button_color) { "invalid-color" }
 
       it "displays an error message to the user" do
         subject

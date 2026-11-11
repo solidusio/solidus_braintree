@@ -15,7 +15,7 @@ test "$DB" = "sqlite" && export DB="sqlite3"
 
 rm -rf ./dummy-app
 rails_version=`bundle exec ruby -e'require "rails"; puts Rails.version'`
-rails _${rails_version}_ new dummy-app \
+bundle exec rails _${rails_version}_ new dummy-app \
   --database=${DB:-sqlite3} \
   --skip-git \
   --skip-keeps \

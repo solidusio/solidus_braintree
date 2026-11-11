@@ -20,7 +20,7 @@ module SolidusBraintree
           locality: bill_address.city,
           region: bill_address.state&.abbr,
           postalCode: bill_address.zipcode,
-          countryCodeAlpha2: bill_address.country&.iso,
+          countryCodeAlpha2: bill_address.country&.iso
         },
         additionalInformation: {
           shippingGivenName: ship_address.firstname,
@@ -32,7 +32,7 @@ module SolidusBraintree
             locality: ship_address.city,
             region: ship_address.state&.abbr,
             postalCode: ship_address.zipcode,
-            countryCodeAlpha2: ship_address.country&.iso,
+            countryCodeAlpha2: ship_address.country&.iso
           }
         }
       }
@@ -47,12 +47,12 @@ module SolidusBraintree
       color = configuration.preferred_venmo_button_color
       width = configuration.preferred_venmo_button_width
 
-      { width: width, color: color }
+      {width: width, color: color}
     end
 
     def venmo_button_asset_url(style, active: false)
-      prefix = 'solidus_braintree/venmo/venmo_'
-      active_string = active ? 'active_' : ''
+      prefix = "solidus_braintree/venmo/venmo_"
+      active_string = active ? "active_" : ""
       path = "#{prefix}#{active_string}#{style[:color]}_button_#{style[:width]}x48.svg"
       asset_path(path)
     end

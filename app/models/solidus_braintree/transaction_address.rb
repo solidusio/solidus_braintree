@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'active_model'
-require 'solidus_braintree/country_mapper'
+require "active_model"
+require "solidus_braintree/country_mapper"
 
 module SolidusBraintree
   class TransactionAddress
@@ -13,7 +13,7 @@ module SolidusBraintree
       :address_line_1, :address_line_2, :first_name, :last_name
 
     validates :address_line_1, :city, :zip, :country_code, presence: true
-    validates :name, presence: true, unless: ->(address){ address.first_name.present? }
+    validates :name, presence: true, unless: ->(address) { address.first_name.present? }
 
     before_validation do
       self.country_code = country_code.presence || "us"
@@ -28,7 +28,7 @@ module SolidusBraintree
         attributes[:country_code] = iso_from_name(country_name)
       end
 
-      super(attributes)
+      super
     end
 
     def spree_country
@@ -36,7 +36,7 @@ module SolidusBraintree
     end
 
     def spree_state
-      spree_country && state_code && ( @state ||= spree_country.states.find_by(
+      spree_country && state_code && (@state ||= spree_country.states.find_by(
         ::Spree::State.arel_table[:name].matches(state_code).or(
           ::Spree::State.arel_table[:abbr].matches(state_code)
         )

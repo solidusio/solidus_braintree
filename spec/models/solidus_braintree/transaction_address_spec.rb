@@ -1,4 +1,4 @@
-require 'solidus_braintree_spec_helper'
+require "solidus_braintree_spec_helper"
 
 RSpec.describe SolidusBraintree::TransactionAddress do
   describe "#valid?" do
@@ -17,7 +17,7 @@ RSpec.describe SolidusBraintree::TransactionAddress do
       }
     end
 
-    let(:country) { create :country, iso: 'US', states_required: true }
+    let(:country) { create :country, iso: "US", states_required: true }
 
     before do
       create :state, abbr: "WA", country: country
@@ -25,8 +25,8 @@ RSpec.describe SolidusBraintree::TransactionAddress do
 
     it { is_expected.to be true }
 
-    context 'without country matches' do
-      let(:valid_attributes) { super().merge({ country_code: 'CA' }) }
+    context "without country matches" do
+      let(:valid_attributes) { super().merge({country_code: "CA"}) }
 
       it { is_expected.to be false }
     end
@@ -61,7 +61,7 @@ RSpec.describe SolidusBraintree::TransactionAddress do
       it { is_expected.to be false }
 
       context "when country does not requires states" do
-        let(:country) { create :country, iso: 'US', states_required: false }
+        let(:country) { create :country, iso: "US", states_required: false }
 
         it { is_expected.to be true }
       end
@@ -79,7 +79,7 @@ RSpec.describe SolidusBraintree::TransactionAddress do
     end
 
     context "with a one word name" do
-      let(:valid_attributes) { super().merge({ name: "Bruce" }) }
+      let(:valid_attributes) { super().merge({name: "Bruce"}) }
 
       it { is_expected.to be true }
     end
@@ -89,7 +89,7 @@ RSpec.describe SolidusBraintree::TransactionAddress do
     subject { described_class.new(attrs) }
 
     context "when an ISO code is provided" do
-      let(:attrs) { { country_code: "US" } }
+      let(:attrs) { {country_code: "US"} }
 
       it "uses the ISO code provided" do
         expect(subject.country_code).to eq "US"
@@ -102,7 +102,7 @@ RSpec.describe SolidusBraintree::TransactionAddress do
           create :country, name: "canada", iso: "CA"
         end
 
-        let(:attrs) { { country_name: "Canada" } }
+        let(:attrs) { {country_name: "Canada"} }
 
         it "looks up the ISO code by the country name" do
           expect(subject.country_code).to eq "CA"
@@ -110,7 +110,7 @@ RSpec.describe SolidusBraintree::TransactionAddress do
       end
 
       context "without valid country name" do
-        let(:attrs) { { country_name: "Neverland" } }
+        let(:attrs) { {country_name: "Neverland"} }
 
         it "leaves the country code blank" do
           expect(subject.country_code).to be_nil
@@ -119,113 +119,113 @@ RSpec.describe SolidusBraintree::TransactionAddress do
     end
   end
 
-  describe '#spree_country' do
+  describe "#spree_country" do
     subject { described_class.new(country_code: country_code).spree_country }
 
     before do
-      create :country, name: 'United States', iso: 'US'
+      create :country, name: "United States", iso: "US"
     end
 
-    ['us', 'US'].each do |code|
+    ["us", "US"].each do |code|
       let(:country_code) { code }
 
-      it 'looks up by iso' do
-        expect(subject.name).to eq 'United States'
+      it "looks up by iso" do
+        expect(subject.name).to eq "United States"
       end
     end
 
-    context 'when country does not exist' do
-      let(:country_code) { 'NA' }
+    context "when country does not exist" do
+      let(:country_code) { "NA" }
 
       it { is_expected.to be_nil }
     end
   end
 
-  describe '#spree_state' do
-    subject { described_class.new(country_code: 'US', state_code: state_code).spree_state }
+  describe "#spree_state" do
+    subject { described_class.new(country_code: "US", state_code: state_code).spree_state }
 
-    let(:state_code) { 'newy' }
+    let(:state_code) { "newy" }
 
     it { is_expected.to be_nil }
 
-    context 'when state exists' do
+    context "when state exists" do
       before do
-        us = create :country, iso: 'US'
-        create :state, abbr: 'NY', name: 'New York', country: us
+        us = create :country, iso: "US"
+        create :state, abbr: "NY", name: "New York", country: us
       end
 
-      ['ny', ' ny', 'ny ', 'New York', 'new york', 'NY'].each do |code|
+      ["ny", " ny", "ny ", "New York", "new york", "NY"].each do |code|
         let(:state_code) { code }
 
-        it 'looks up the right state' do
+        it "looks up the right state" do
           expect(subject.abbr).to eq "NY"
         end
       end
 
-      context 'with no matching state' do
-        let(:state_code) { 'AL' }
+      context "with no matching state" do
+        let(:state_code) { "AL" }
 
         it { is_expected.to be_nil }
       end
     end
   end
 
-  describe '#should_match_state_model' do
-    subject { described_class.new(country_code: 'US').should_match_state_model? }
+  describe "#should_match_state_model" do
+    subject { described_class.new(country_code: "US").should_match_state_model? }
 
     it { is_expected.to be_falsey }
 
-    context 'when country does not require states' do
-      before { create :country, iso: 'US', states_required: false }
+    context "when country does not require states" do
+      before { create :country, iso: "US", states_required: false }
 
       it { is_expected.to be false }
     end
 
-    context 'when country requires states' do
-      before { create :country, iso: 'US', states_required: true }
+    context "when country requires states" do
+      before { create :country, iso: "US", states_required: true }
 
       it { is_expected.to be true }
     end
   end
 
-  describe '#to_spree_address' do
+  describe "#to_spree_address" do
     subject { described_class.new(address_params).to_spree_address }
 
     let(:address_params) do
       {
-        country_code: 'US',
-        state_code: 'NY',
+        country_code: "US",
+        state_code: "NY",
         name: "Alfred"
       }
     end
-    let!(:us) { create :country, iso: 'US' }
+    let!(:us) { create :country, iso: "US" }
 
     it { is_expected.to be_a Spree::Address }
 
-    context 'when country exists with states' do
+    context "when country exists with states" do
       before do
-        create :state, country: us, abbr: 'NY', name: 'New York'
+        create :state, country: us, abbr: "NY", name: "New York"
       end
 
-      it 'uses state model' do
-        expect(subject.state.name).to eq 'New York'
+      it "uses state model" do
+        expect(subject.state.name).to eq "New York"
       end
     end
 
-    context 'when country exist with no states' do
-      it 'uses state_name' do
+    context "when country exist with no states" do
+      it "uses state_name" do
         expect(subject.state).to be_nil
-        expect(subject.state_text).to eq 'NY'
+        expect(subject.state_text).to eq "NY"
       end
     end
 
     unless SolidusSupport.combined_first_and_last_name_in_address?
-      context 'when using first_name and last_name' do
-        let(:address_params) { super().merge({ first_name: "Bruce", last_name: "Wayne" }) }
+      context "when using first_name and last_name" do
+        let(:address_params) { super().merge({first_name: "Bruce", last_name: "Wayne"}) }
 
-        it 'displays a deprecation warning' do
-          expect(Spree::Deprecation).to receive(:warn).
-            with("first_name and last_name are deprecated. Use name instead.", any_args)
+        it "displays a deprecation warning" do
+          expect(Spree::Deprecation).to receive(:warn)
+            .with("first_name and last_name are deprecated. Use name instead.", any_args)
 
           subject
         end

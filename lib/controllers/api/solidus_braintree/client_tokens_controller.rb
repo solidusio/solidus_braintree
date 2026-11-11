@@ -9,9 +9,9 @@ module SolidusBraintree
     def create
       token = @gateway.generate_token
       if token
-        render json: { client_token: token, payment_method_id: @gateway.id }
+        render json: {client_token: token, payment_method_id: @gateway.id}
       else
-        render json: { error: Gateway::TOKEN_GENERATION_DISABLED_MESSAGE }, status: :unprocessable_entity
+        render json: {error: Gateway::TOKEN_GENERATION_DISABLED_MESSAGE}, status: :unprocessable_entity
       end
     end
 

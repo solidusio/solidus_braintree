@@ -1,4 +1,4 @@
-require 'solidus_braintree_spec_helper'
+require "solidus_braintree_spec_helper"
 
 RSpec.describe "viewing the configuration interface", type: :feature do
   stub_authorization!
@@ -13,11 +13,11 @@ RSpec.describe "viewing the configuration interface", type: :feature do
   it "doesn't raise any errors due to unavailable preference field partial" do
     Rails.application.config.spree.payment_methods << SolidusBraintree::Gateway
     Spree::PaymentMethod.create!(
-      type: 'SolidusBraintree::Gateway',
-      name: 'Braintree Payments'
+      type: "SolidusBraintree::Gateway",
+      name: "Braintree Payments"
     )
-    visit '/admin/payment_methods'
+    visit "/admin/payment_methods"
     page.find('a[title="Edit"]').click
-    expect(page).to have_field 'Name', with: 'Braintree Payments'
+    expect(page).to have_field "Name", with: "Braintree Payments"
   end
 end

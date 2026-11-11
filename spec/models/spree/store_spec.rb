@@ -1,9 +1,9 @@
-require 'solidus_braintree_spec_helper'
+require "solidus_braintree_spec_helper"
 
 RSpec.describe Spree::Store do
-  describe 'before_create :build_default_configuration' do
-    context 'when a braintree_configuration record already exists' do
-      it 'does not overwrite it' do
+  describe "before_create :build_default_configuration" do
+    context "when a braintree_configuration record already exists" do
+      it "does not overwrite it" do
         store = build(:store)
         custom_braintree_configuration = store.build_braintree_configuration
         store.save!

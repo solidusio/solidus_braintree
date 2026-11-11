@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'active_merchant/billing/response'
-require_relative 'avs_result'
+require "active_merchant/billing/response"
+require_relative "avs_result"
 
 # Response object that all actions on the gateway should return
 module SolidusBraintree
@@ -57,21 +57,21 @@ module SolidusBraintree
       # Human readable error message for transaction responses
       def transaction_error_message(transaction)
         case transaction.status
-        when 'gateway_rejected'
+        when "gateway_rejected"
           I18n.t(transaction.gateway_rejection_reason,
-            scope: 'solidus_braintree.gateway_rejection_reasons',
+            scope: "solidus_braintree.gateway_rejection_reasons",
             default: "#{transaction.status.humanize} #{transaction.gateway_rejection_reason.humanize}")
-        when 'processor_declined'
+        when "processor_declined"
           I18n.t(transaction.processor_response_code,
-            scope: 'solidus_braintree.processor_response_codes',
+            scope: "solidus_braintree.processor_response_codes",
             default: "#{transaction.processor_response_text} (#{transaction.processor_response_code})")
-        when 'settlement_declined'
+        when "settlement_declined"
           I18n.t(transaction.processor_settlement_response_code,
-            scope: 'solidus_braintree.processor_settlement_response_codes',
+            scope: "solidus_braintree.processor_settlement_response_codes",
             default: "#{transaction.processor_settlement_response_text} (#{transaction.processor_settlement_response_code})") # rubocop:disable Layout/LineLength
         else
           I18n.t(transaction.status,
-            scope: 'solidus_braintree.transaction_statuses',
+            scope: "solidus_braintree.transaction_statuses",
             default: transaction.status.humanize)
         end
       end

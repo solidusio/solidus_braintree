@@ -1,4 +1,4 @@
-require 'solidus_braintree_spec_helper'
+require "solidus_braintree_spec_helper"
 
 RSpec.shared_context "with frontend checkout setup" do
   let(:braintree) { new_gateway(active: true) }
@@ -19,16 +19,16 @@ RSpec.shared_context "with frontend checkout setup" do
       )
 
       braintree.update(
-        preferred_credit_card_fields_style: { input: { 'font-size': '30px' } },
-        preferred_placeholder_text: { number: "Enter Your Card Number" }
+        preferred_credit_card_fields_style: {input: {"font-size": "30px"}},
+        preferred_placeholder_text: {number: "Enter Your Card Number"}
       )
     end
 
-    order = if Spree.solidus_gem_version >= Gem::Version.new('2.6.0')
-              SolidusBraintree::OrderWalkthrough.up_to(:delivery)
-            else
-              OrderWalkthrough.up_to(:delivery)
-            end
+    order = if Spree.solidus_gem_version >= Gem::Version.new("2.6.0")
+      SolidusBraintree::OrderWalkthrough.up_to(:delivery)
+    else
+      OrderWalkthrough.up_to(:delivery)
+    end
 
     user = create(:user)
     order.user = user
@@ -51,8 +51,8 @@ RSpec.shared_context "with frontend checkout setup" do
   end
 end
 
-RSpec.describe 'entering credit card details', type: :feature, js: true do
-  context 'when page loads' do
+RSpec.describe "entering credit card details", type: :feature, js: true do
+  context "when page loads" do
     include_context "with frontend checkout setup"
 
     it "selectors display correctly" do
@@ -63,19 +63,19 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
 
     it "credit card field style variable is set" do
       within_frame("braintree-hosted-field-number") do
-        expect(find("#credit-card-number").style("font-size")).to eq({ "font-size" => "30px" })
+        expect(find("#credit-card-number").style("font-size")).to eq({"font-size" => "30px"})
       end
     end
 
     it "sets the placeholder text correctly" do
       within_frame("braintree-hosted-field-number") do
-        expect(find("#credit-card-number")['placeholder']).to eq("Enter Your Card Number")
+        expect(find("#credit-card-number")["placeholder"]).to eq("Enter Your Card Number")
       end
     end
   end
 
   context "with valid credit card data", vcr: {
-    cassette_name: 'checkout/valid_credit_card',
+    cassette_name: "checkout/valid_credit_card",
     match_requests_on: [:braintree_uri]
   } do
     include_context "with frontend checkout setup"
@@ -101,32 +101,32 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
         expect(page).to have_content(/confirm/i)
       end
 
-      check('accept_terms_and_conditions')
+      check("accept_terms_and_conditions")
 
       click_button("Place Order")
       expect(page).to have_content("Your order has been processed successfully")
     end
 
-    context 'with 3D secure enabled' do
+    context "with 3D secure enabled" do
       let(:three_d_secure_enabled) { true }
 
-      it 'checks out successfully' do
+      it "checks out successfully" do
         authenticate_3ds
 
         within(".confirm-step") do
           expect(page).to have_content(/confirm/i)
         end
 
-        check('accept_terms_and_conditions')
+        check("accept_terms_and_conditions")
 
         click_button("Place Order")
         expect(page).to have_content("Your order has been processed successfully")
       end
 
-      context 'with 3ds authentication error' do
+      context "with 3ds authentication error" do
         let(:card_number) { "4000000000001125" }
 
-        it 'shows a 3ds authentication error' do
+        it "shows a 3ds authentication error" do
           authenticate_3ds
           expect(page).to have_content(
             "3D Secure authentication failed. Please try again using a different payment method."
@@ -150,7 +150,7 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
     end
 
     # Same error should be produced when submitting an empty form again
-    context "when user tries to resubmit an empty form", vcr: { cassette_name: "checkout/invalid_credit_card" } do
+    context "when user tries to resubmit an empty form", vcr: {cassette_name: "checkout/invalid_credit_card"} do
       it "displays an alert with a meaningful error message" do
         expect(page).to have_selector("[type='submit']:enabled")
 
@@ -180,7 +180,7 @@ RSpec.describe 'entering credit card details', type: :feature, js: true do
           expect(page).to have_content(/confirm/i)
         end
 
-        check('accept_terms_and_conditions')
+        check("accept_terms_and_conditions")
 
         click_button("Place Order")
         expect(page).to have_content("Your order has been processed successfully")

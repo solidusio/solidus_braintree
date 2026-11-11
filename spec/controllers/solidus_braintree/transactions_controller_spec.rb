@@ -1,4 +1,4 @@
-require 'solidus_braintree_spec_helper'
+require "solidus_braintree_spec_helper"
 
 RSpec.describe SolidusBraintree::TransactionsController, type: :controller do
   routes { SolidusBraintree::Engine.routes }
@@ -8,7 +8,7 @@ RSpec.describe SolidusBraintree::TransactionsController, type: :controller do
   let(:order) do
     Spree::Order.create!(
       line_items: [line_item],
-      email: 'test@example.com',
+      email: "test@example.com",
       bill_address: create(:address, country: country),
       ship_address: create(:address, country: country),
       user: create(:user)
@@ -31,7 +31,7 @@ RSpec.describe SolidusBraintree::TransactionsController, type: :controller do
   describe "POST create", vcr: cassette_options do
     subject(:post_create) { post :create, params: params }
 
-    let!(:country) { create :country, iso: 'US' }
+    let!(:country) { create :country, iso: "US" }
 
     let(:params) do
       {
@@ -71,7 +71,7 @@ RSpec.describe SolidusBraintree::TransactionsController, type: :controller do
     end
 
     context "when the transaction is valid", vcr: {
-      cassette_name: 'transaction/import/valid',
+      cassette_name: "transaction/import/valid",
       match_requests_on: [:braintree_uri]
     } do
       it "imports the payment" do
@@ -87,7 +87,7 @@ RSpec.describe SolidusBraintree::TransactionsController, type: :controller do
       end
 
       context "when end state provided is delivery" do
-        let(:params) { super().merge(state: 'delivery') }
+        let(:params) { super().merge(state: "delivery") }
 
         it "advances the order to delivery" do
           post_create
@@ -130,7 +130,7 @@ RSpec.describe SolidusBraintree::TransactionsController, type: :controller do
       context "when format is HTML" do
         context "when import! leaves the order in confirm" do
           it "redirects the user to the confirm page" do
-            expect(post_create).to redirect_to '/checkout/confirm'
+            expect(post_create).to redirect_to "/checkout/confirm"
           end
         end
 
