@@ -6,4 +6,4 @@ RSpec.configure do |config|
   end
 end
 
-Capybara.javascript_driver = (ENV["CAPYBARA_JS_DRIVER"] || :selenium_chrome_headless).to_sym
+Capybara.javascript_driver = (ENV["CAPYBARA_JS_DRIVER"] || :selenium_headless).to_sym
