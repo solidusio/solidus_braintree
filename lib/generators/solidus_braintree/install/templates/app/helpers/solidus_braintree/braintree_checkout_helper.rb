@@ -11,6 +11,8 @@ module SolidusBraintree
         onLookupComplete: nil, # populated after tokenization
         amount: order.total,
         email: order.email,
+        collectDeviceData: true,
+        IpAddress: request.remote_ip,
         billingAddress: {
           givenName: bill_address.firstname,
           surname: bill_address.lastname,
