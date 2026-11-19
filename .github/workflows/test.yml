@@ -17,9 +17,61 @@ permissions:
 
 jobs:
   rspec:
-    uses: solidusio/test-solidus-extension/.github/workflows/test.yml@main
-    with:
-      ruby_versions: '["3.4", "4.0"]'
-      rails_versions: '["8.1", "8.0", "7.2"]'
-      solidus_branches: '["v4.6", "v4.7", "v4.8"]'
-      databases: '["postgresql", "mysql", "sqlite"]'
+    name: Solidus ${{ matrix.solidus_branch }}, Rails ${{ matrix.rails_version }} and Ruby ${{ matrix.ruby_version }} on ${{ matrix.database }}
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        rails_version: ["8.1", "8.0", "7.2"]
+        ruby_version: ["3.4", "4.0"]
+        solidus_branch: ["v4.6", "v4.7", "v4.8"]
+        database: ["postgresql", "mysql", "sqlite"]
+        exclude:
+          - solidus_branch: "v4.6"
+            rails_version: "8.1"
+    env:
+      BRAINTREE_PUBLIC_KEY: ${{ secrets.BRAINTREE_PUBLIC_KEY }}
+      BRAINTREE_PRIVATE_KEY: ${{ secrets.BRAINTREE_PRIVATE_KEY }}
+      BRAINTREE_MERCHANT_ID: ${{ secrets.BRAINTREE_MERCHANT_ID }}
+      BRAINTREE_PAYPAL_PAYEE_EMAIL: ${{ secrets.BRAINTREE_PAYPAL_PAYEE_EMAIL }}
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+        ports:
+          - 5432:5432
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+        ports:
+          - 3306:3306
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run extension tests
+        uses: solidusio/test-solidus-extension@main
+        with:
+          database: ${{ matrix.database }}
+          rails-version: ${{ matrix.rails_version }}
+          ruby-version: ${{ matrix.ruby_version }}
+          solidus-branch: ${{ matrix.solidus_branch }}
+      - name: Upload failure artifacts
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failures-solidus${{ matrix.solidus_branch }}-rails${{ matrix.rails_version }}-ruby${{ matrix.ruby_version }}-${{ matrix.database }}
+          path: |
+            dummy-app/tmp/capybara
+            dummy-app/log/test.log
+          if-no-files-found: ignore
