@@ -51,7 +51,7 @@ RSpec.shared_context "with frontend checkout setup" do
   end
 end
 
-RSpec.describe "entering credit card details", type: :feature, js: true do
+RSpec.describe "entering credit card details", type: :feature, js: true, braintree_sandbox: true do
   context "when page loads" do
     include_context "with frontend checkout setup"
 

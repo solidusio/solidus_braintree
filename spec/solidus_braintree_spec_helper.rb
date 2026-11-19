@@ -14,3 +14,12 @@ require "support/solidus_braintree/order_walkthrough"
 require "support/solidus_braintree/vcr"
 
 Braintree::Configuration.logger = Rails.logger
+
+RSpec.configure do |config|
+  # The Braintree JS SDK fetches its client token from the live sandbox in the browser, which VCR cannot record.
+  config.before(:each, braintree_sandbox: true) do
+    unless %w[BRAINTREE_PUBLIC_KEY BRAINTREE_PRIVATE_KEY BRAINTREE_MERCHANT_ID].all? { |key| ENV[key].present? }
+      skip "Requires Braintree sandbox credentials (BRAINTREE_PUBLIC_KEY, BRAINTREE_PRIVATE_KEY, BRAINTREE_MERCHANT_ID)"
+    end
+  end
+end

@@ -9,7 +9,10 @@ RSpec.describe SolidusBraintree::ClientTokensController do
     let(:user) { create(:user) }
     let(:json) { JSON.parse(response.body) }
 
-    before { user.generate_spree_api_key! }
+    before do
+      user.generate_spree_api_key!
+      allow_any_instance_of(SolidusBraintree::Gateway).to receive(:generate_token).and_return("client-token")
+    end
 
     context "without a payment method id" do
       subject(:response) do
