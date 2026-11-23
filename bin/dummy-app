@@ -15,7 +15,9 @@ test "$DB" = "sqlite" && export DB="sqlite3"
 
 rm -rf ./dummy-app
 rails_version=`bundle exec ruby -e'require "rails"; puts Rails.version'`
-bundle exec rails _${rails_version}_ new dummy-app \
+# `bundle exec` would leak the extension's BUNDLE_GEMFILE into the commands
+# `rails new` spawns (importmap:install, ...), which then silently fail.
+bundle exec ruby -e 'ENV.replace(Bundler.original_env); load Gem.bin_path("railties", "rails")' -- new dummy-app \
   --database=${DB:-sqlite3} \
   --skip-git \
   --skip-keeps \
