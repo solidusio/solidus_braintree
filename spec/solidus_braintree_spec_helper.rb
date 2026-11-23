@@ -22,4 +22,8 @@ RSpec.configure do |config|
       skip "Requires Braintree sandbox credentials (BRAINTREE_PUBLIC_KEY, BRAINTREE_PRIVATE_KEY, BRAINTREE_MERCHANT_ID)"
     end
   end
+
+  config.before(:each, braintree_venmo: true) do
+    skip "Requires a Venmo-enabled Braintree sandbox account (BRAINTREE_VENMO_ENABLED)" unless ENV["BRAINTREE_VENMO_ENABLED"].present?
+  end
 end

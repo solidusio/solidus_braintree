@@ -25,13 +25,13 @@ RSpec.describe "Checkout", type: :feature, js: true do
       end
     end
 
-    context "when Venmo is enabled", braintree_sandbox: true do
+    context "when Venmo is enabled", braintree_sandbox: true, braintree_venmo: true do
       it "loads the Venmo payment button" do
         expect(page).to have_selector("#venmo-button")
       end
     end
 
-    context "when Venmo's button style is customized", braintree_sandbox: true do
+    context "when Venmo's button style is customized", braintree_sandbox: true, braintree_venmo: true do
       context 'when venmo_button_color is "blue" and venmo_button_width is "280"' do
         let(:preferences) { {preferred_venmo_button_color: "blue", preferred_venmo_button_width: "280"} }
 
@@ -53,7 +53,7 @@ RSpec.describe "Checkout", type: :feature, js: true do
       end
     end
 
-    context "when the Venmo button is clicked", braintree_sandbox: true do
+    context "when the Venmo button is clicked", braintree_sandbox: true, braintree_venmo: true do
       before { venmo_button.click }
 
       it "opens the QR modal which shows an error when closed" do
