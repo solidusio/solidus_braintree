@@ -25,7 +25,7 @@ RSpec.shared_context "with backend checkout setup" do
   end
 end
 
-RSpec.describe "creating a new payment", type: :feature, js: true do
+RSpec.describe "creating a new payment", type: :feature, js: true, braintree_sandbox: true do
   stub_authorization!
 
   context "with valid credit card data", vcr: {

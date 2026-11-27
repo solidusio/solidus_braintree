@@ -12,6 +12,11 @@ VCR.configure do |c|
   c.ignore_localhost = true
   c.ignore_hosts "chromedriver.storage.googleapis.com"
 
+  # The Basic auth header encodes the Braintree public and private keys.
+  c.before_record do |interaction|
+    interaction.request.headers.delete("Authorization")
+  end
+
   # client token used for the fronted JS lib cannot be mocked:
   # it contains a cryptographically signed string containing the merchant id
   # that's sent back to braintree's server by the JS lib

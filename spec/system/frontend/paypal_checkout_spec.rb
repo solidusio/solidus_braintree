@@ -1,7 +1,7 @@
 require "solidus_braintree_spec_helper"
 require "support/solidus_braintree/with_prepended_view_fixtures"
 
-RSpec.describe "Checkout", type: :feature, js: true do
+RSpec.describe "Checkout", type: :feature, js: true, braintree_sandbox: true do
   include_context "with prepended view fixtures"
 
   Capybara.default_max_wait_time = 60

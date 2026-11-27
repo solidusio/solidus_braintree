@@ -41,17 +41,6 @@ module SolidusBraintree
     if SolidusSupport.backend_available?
       config.assets.precompile += ["spree/backend/solidus_braintree.js"]
       paths["app/controllers"] << "lib/controllers/backend"
-
-      # We support Solidus v1.2, which requires some different markup in the
-      # source form partial. This will take precedence over lib/views/backend.
-      paths["app/views"] << "lib/views/backend_v1.2" if Spree.solidus_gem_version < Gem::Version.new("1.3")
-
-      # Solidus v2.4 introduced preference field partials but does not ship a hash field type.
-      # This is solved in Solidus v2.5.
-      if Spree.solidus_gem_version <= Gem::Version.new("2.5.0")
-        paths["app/views"] << "lib/views/backend_v2.4"
-      end
-
       paths["app/views"] << "lib/views/backend"
 
       initializer "solidus_braintree_admin_menu_item", after: "register_solidus_braintree_gateway" do

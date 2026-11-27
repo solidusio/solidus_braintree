@@ -279,7 +279,7 @@ RSpec.describe SolidusBraintree::Gateway do
               options: {
                 store_in_vault_on_success: true,
                 paypal: {
-                  payee_email: ENV.fetch("BRAINTREE_PAYPAL_PAYEE_EMAIL")
+                  payee_email: ENV.fetch("BRAINTREE_PAYPAL_PAYEE_EMAIL", "paypal+europe@example.com")
                 }
               }
             })).and_call_original
